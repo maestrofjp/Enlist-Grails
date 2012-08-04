@@ -2,7 +2,7 @@
 *Db.properties
 *Db.script
 .settings
-/.link_to_grails_plugin
+/.link_to_grails_plugins
 eclipse
 stacktrace.log
 target
