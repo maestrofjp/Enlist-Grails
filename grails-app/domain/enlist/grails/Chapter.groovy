@@ -5,12 +5,18 @@ class Chapter {
 	
 	String name
 	String location
-	String status
 	Date created = new Date()
+	Status status
+
+	static hasMany = [users:User]
 
     static constraints = {
 		name(blank:false)
 		location(blank:false)
+    }
+
+    String toString() {
+    	return "${name} (${location})"
     }
 	
 }

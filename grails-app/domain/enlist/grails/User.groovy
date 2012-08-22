@@ -2,9 +2,6 @@ package enlist.grails
 
 class User {
 	
-	String status
-	String role
-	String chapterId
 	String firstName
 	String lastName
 	String email
@@ -16,8 +13,17 @@ class User {
 	String city
 	String state
 	String zip
-	String importHashCode
+	Chapter chapter
+	Status status
+	Role role
 
     static constraints = {
+    	firstName(blank:false)
+    	lastName(blank:false)
+    	email(email:true, unique:true)
+    }
+
+    String toString() {
+    	return "${lastName}, ${firstName} (${email})"
     }
 }
