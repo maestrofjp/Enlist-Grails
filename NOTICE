@@ -1,0 +1,53 @@
+Copyright: 2011 GreatBizTools, LLC All rights reserved.
+
+On Going Committers:
+- Peter J. Farrell (maestrofjp) (peter@mach-ii.com)
+- Matthew Woodward (matt@mach-ii.com)
+- Kurt Wiersma (kurt@mach-ii.com)
+- And all additional contributors that have work submitted 
+by committers on their behalf
+
+
+-----------------------------
+
+Enlist Source Code:
+
+Enlist is released under the GPL v3.0 license.  You can 
+use Enlist on any commercial application as long as you 
+abide by the license. For more details, please see the 
+NOTICE, LICENSE and COPYING files that are shipped with the package.
+
+The software in this package is distributed under the 
+GNU General Public License (with a special exception 
+described below).  The term "library" is a reference 
+to the entire Enlist package and all files in which
+the GNU General Public License applies.
+
+    Enlist - Volunteer Management Software
+    Copyright (C) 2012 GreatBizTools, LLC
+
+    This program is free software: you can redistribute 
+    it and/or modify it under the terms of the GNU General 
+    Public License as published by the Free Software 
+    Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it 
+    will be useful, but WITHOUT ANY WARRANTY; without 
+    even the implied warranty of MERCHANTABILITY or FITNESS 
+    FOR A PARTICULAR PURPOSE.  See the GNU General Public 
+    License for more details.
+
+    You should have received a copy of the GNU General 
+    Public License along with this program.  If not, see 
+    <http://www.gnu.org/licenses/>.
+    
+    Linking this library statically or dynamically with 
+    other modules is making a combined work based on this 
+    library.  Thus, the terms and conditions of the GNU 
+    General Public License cover the whole combination.
+
+Enlist's documentation and logos are *not* licensed under 
+the GPL v3.0 license:
+
+Copyright 2012 GreatBizTools, LLC All rights reserved.
