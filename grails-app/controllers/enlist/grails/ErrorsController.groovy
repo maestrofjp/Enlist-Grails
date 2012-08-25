@@ -5,6 +5,6 @@ class ErrorsController {
     def serverError() {
 		// TODO: logging / email?
 		
-		render(view:'/500')
+		render(view:'/errors/500')
 	}
 }
