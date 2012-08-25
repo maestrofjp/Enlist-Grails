@@ -17,4 +17,6 @@ class Address {
 		zip(blank:false)
 		id(nullable:true, display:false)
     }
+	
+	// TODO: create toString() method
 }
