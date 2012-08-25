@@ -19,6 +19,6 @@ class Organization {
     }
 	
 	String toString() {
-		return "${organizationName} (${id})"
+		return "${name} (${id})"
 	}
 }
