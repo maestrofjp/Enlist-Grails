@@ -8,7 +8,7 @@ class Chapter {
 	Date created = new Date()
 	Status status
 
-	static hasMany = [users:User]
+	static hasMany = [users: User]
 	static embedded = ['address']
 
     static constraints = {

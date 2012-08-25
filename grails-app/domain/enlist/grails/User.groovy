@@ -7,9 +7,10 @@ class User {
 	String email
 	String phone
 	Address address = null
-	Chapter chapter = null
 	Status status
 	Role role
+	
+	static belongsTo = [chapter: Chapter]
 	
 	static embedded = ['address']
 
@@ -20,8 +21,8 @@ class User {
     	lastName(blank:false)
     	email(blank:false, email:true, unique:true)
 		phone(nullable: true)
-		chapter(nullable: true)
 		address(nullable: true)
+		chapter(nullable: true)
     }
 
     String toString() {
