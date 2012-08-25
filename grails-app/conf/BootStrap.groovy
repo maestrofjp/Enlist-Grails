@@ -7,7 +7,7 @@ class BootStrap {
 		// Setup some DB defaults
 		if (GrailsUtil.environment == "development") {
 			// Setting
-			new Organization(organizationName: 'Cool Project', organizationAddress: '123 Main Street').save()
+			new Organization(organizationName: 'Cool Project').save()
 			
 			// Statuses
 			new Status(status: 'Active').save()

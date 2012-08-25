@@ -5,7 +5,7 @@ class Organization {
 	String name
 	Address address
 	String pointName
-	Integer pointValuDefault
+	Integer pointValueDefault
 	Boolean sendEmail
 
     static constraints = {
