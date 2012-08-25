@@ -36,7 +36,7 @@
 						<span class="icon-bar"></span>
 					</a>
 					
-					<a class="brand" href="${createLink(uri: '/')}">Grails Twitter Bootstrap</a>
+					<a class="brand" href="${createLink(uri: '/')}">Enlist</a>
 
 					<div class="nav-collapse">
 						<ul class="nav">							
@@ -56,7 +56,7 @@
 			<hr>
 
 			<footer>
-				<p>&copy; Company 2011</p>
+				<p>Enlist - &copy; 2012 GreatBizTools, LLC</p>
 			</footer>
 		</div>
 
