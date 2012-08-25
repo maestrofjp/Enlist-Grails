@@ -5,8 +5,6 @@ class User {
 	String firstName
 	String lastName
 	String email
-	String twitterUsername
-	String identicaUsername
 	String phone
 	Address address
 	Chapter chapter

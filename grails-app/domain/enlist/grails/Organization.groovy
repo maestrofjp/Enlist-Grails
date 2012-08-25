@@ -5,14 +5,16 @@ class Organization {
 	String name
 	Address address
 	String pointName
-	Integer pointValuDefault
-	Boolean sendEmail
+	Integer pointValueDefault
+	Boolean emailSend
+	String emailSender
 
     static constraints = {
 		name(blank:false)
 		pointName(default:'point')
 		pointValueDefault(default:1)
-		sendEmail(default:true)
+		emailSend(default:true)
+		emailSender(blank:false)
     }
 	
 	String toString() {
