@@ -8,6 +8,7 @@ class Organization {
 	Integer pointValueDefault
 	Boolean emailSend
 	String emailSender
+	Boolean sendEmail
 
     static constraints = {
 		name(blank:false)
