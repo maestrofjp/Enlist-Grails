@@ -8,11 +8,7 @@ class User {
 	String twitterUsername
 	String identicaUsername
 	String phone
-	String address1
-	String address2
-	String city
-	String state
-	String zip
+	Address address
 	Chapter chapter
 	Status status
 	Role role
