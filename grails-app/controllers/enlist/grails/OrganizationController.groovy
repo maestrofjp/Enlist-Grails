@@ -1,6 +1,5 @@
 package enlist.grails
 
-
 import org.springframework.dao.DataIntegrityViolationException
 
 class OrganizationController {

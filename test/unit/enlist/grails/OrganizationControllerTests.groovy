@@ -1,7 +1,5 @@
 package enlist.grails
 
-
-
 import org.junit.*
 import grails.test.mixin.*
 
