@@ -1,104 +1,107 @@
 <%=packageName ? "package ${packageName}\n\n" : ''%>import org.springframework.dao.DataIntegrityViolationException
-import grails.converters.JSON
-import static javax.servlet.http.HttpServletResponse.*
 
 class ${className}Controller {
 
-    static final int SC_UNPROCESSABLE_ENTITY = 422
+	static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	def index() {
+		redirect action: 'list', params: params
+	}
 
-    def index() { }
+	def list() {
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		[${propertyName}List: ${className}.list(params), ${propertyName}Total: ${className}.count()]
+	}
 
-    def list() {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-		response.setIntHeader('X-Pagination-Total', ${className}.count())
-		render ${className}.list(params) as JSON
-    }
-
-    def save() {
-        def ${propertyName} = new ${className}(request.JSON)
-        def responseJson = [:]
-        if (${propertyName}.save(flush: true)) {
-            response.status = SC_CREATED
-            responseJson.id = ${propertyName}.id
-            responseJson.message = message(code: 'default.created.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), ${propertyName}.id])
-        } else {
-            response.status = SC_UNPROCESSABLE_ENTITY
-            responseJson.errors = ${propertyName}.errors.fieldErrors.collectEntries {
-                [(it.field): message(error: it)]
-            }
-        }
-        render responseJson as JSON
-    }
-
-    def get() {
-        def ${propertyName} = ${className}.get(params.id)
-        if (${propertyName}) {
-			render ${propertyName} as JSON
-        } else {
-			notFound params.id
-		}
-    }
-
-    def update() {
-        def ${propertyName} = ${className}.get(params.id)
-        if (!${propertyName}) {
-            notFound params.id
-            return
-        }
-
-        def responseJson = [:]
-
-        if (request.JSON.version != null) {
-            if (${propertyName}.version > request.JSON.version) {<% def lowerCaseName = grails.util.GrailsNameUtils.getPropertyName(className) %>
-				response.status = SC_CONFLICT
-				responseJson.message = message(code: 'default.optimistic.locking.failure',
-						args: [message(code: '${domainClass.propertyName}.label', default: '${className}')],
-						default: 'Another user has updated this ${className} while you were editing')
-				cache false
-				render responseJson as JSON
+	def create() {
+		switch (request.method) {
+		case 'GET':
+			[${propertyName}: new ${className}(params)]
+			break
+		case 'POST':
+			def ${propertyName} = new ${className}(params)
+			if (!${propertyName}.save(flush: true)) {
+				render view: 'create', model: [${propertyName}: ${propertyName}]
 				return
-            }
-        }
+			}
 
-        ${propertyName}.properties = request.JSON
+			flash.message = message(code: 'default.created.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), ${propertyName}.id])
+			redirect action: 'show', id: ${propertyName}.id
+			break
+		}
+	}
 
-        if (${propertyName}.save(flush: true)) {
-            response.status = SC_OK
-            responseJson.id = ${propertyName}.id
-            responseJson.message = message(code: 'default.updated.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), ${propertyName}.id])
-        } else {
-            response.status = SC_UNPROCESSABLE_ENTITY
-            responseJson.errors = ${propertyName}.errors.fieldErrors.collectEntries {
-                [(it.field): message(error: it)]
-            }
-        }
+	def show() {
+		def ${propertyName} = ${className}.get(params.id)
+		if (!${propertyName}) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+			redirect action: 'list'
+			return
+		}
 
-        render responseJson as JSON
-    }
+		[${propertyName}: ${propertyName}]
+	}
 
-    def delete() {
-        def ${propertyName} = ${className}.get(params.id)
-        if (!${propertyName}) {
-            notFound params.id
-            return
-        }
+	def edit() {
+		switch (request.method) {
+		case 'GET':
+			def ${propertyName} = ${className}.get(params.id)
+			if (!${propertyName}) {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+				redirect action: 'list'
+				return
+			}
 
-        def responseJson = [:]
-        try {
-            ${propertyName}.delete(flush: true)
-            responseJson.message = message(code: 'default.deleted.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
-        } catch (DataIntegrityViolationException e) {
-            response.status = SC_CONFLICT
-            responseJson.message = message(code: 'default.not.deleted.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
-        }
-        render responseJson as JSON
-    }
+			[${propertyName}: ${propertyName}]
+			break
+		case 'POST':
+			def ${propertyName} = ${className}.get(params.id)
+			if (!${propertyName}) {
+				flash.message = message(code: 'default.not.found.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+				redirect action: 'list'
+				return
+			}
 
-    private void notFound(id) {
-        response.status = SC_NOT_FOUND
-        def responseJson = [message: message(code: 'default.not.found.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])]
-        render responseJson as JSON
-    }
+			if (params.version) {
+				def version = params.version.toLong()
+				if (${propertyName}.version > version) {<% def lowerCaseName = grails.util.GrailsNameUtils.getPropertyName(className) %>
+					${propertyName}.errors.rejectValue('version', 'default.optimistic.locking.failure',
+							  [message(code: '${domainClass.propertyName}.label', default: '${className}')] as Object[],
+							  "Another user has updated this ${className} while you were editing")
+					render view: 'edit', model: [${propertyName}: ${propertyName}]
+					return
+				}
+			}
+
+			${propertyName}.properties = params
+
+			if (!${propertyName}.save(flush: true)) {
+				render view: 'edit', model: [${propertyName}: ${propertyName}]
+				return
+			}
+
+			flash.message = message(code: 'default.updated.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), ${propertyName}.id])
+			redirect action: 'show', id: ${propertyName}.id
+			break
+		}
+	}
+
+	def delete() {
+		def ${propertyName} = ${className}.get(params.id)
+		if (!${propertyName}) {
+			flash.message = message(code: 'default.not.found.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+			redirect action: 'list'
+			return
+		}
+
+		try {
+			${propertyName}.delete(flush: true)
+			flash.message = message(code: 'default.deleted.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+			redirect action: 'list'
+		}
+		catch (DataIntegrityViolationException e) {
+			flash.message = message(code: 'default.not.deleted.message', args: [message(code: '${domainClass.propertyName}.label', default: '${className}'), params.id])
+			redirect action: 'show', id: params.id
+		}
+	}
 }

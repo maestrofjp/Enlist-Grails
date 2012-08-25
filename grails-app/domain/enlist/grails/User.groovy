@@ -7,29 +7,27 @@ class User {
     String firstName
 	String lastName
 	String email
-	//String twitterUsername
-	//String identicaUsername
 	String phone
-	Address address
-	Chapter chapter
+	Address address = null
 	Status status
-	//Role role
-
-    // Spring Security Stuff
-    String username
-    String password
-    boolean enabled
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+	Role role
+	
+	static belongsTo = [chapter: Chapter]
+	
+	static embedded = ['address']
 
     static constraints = {
         username blank: false, unique: true
         password blank: false
 
-        firstName(blank:false)
-        lastName(blank:false)
-        email(email:true, unique:true)
+		status()
+		role()
+		firstName(blank:false)
+    	lastName(blank:false)
+    	email(blank:false, email:true, unique:true)
+		phone(nullable: true)
+		address(nullable: true)
+		chapter(nullable: true)
     }
 
     static mapping = {
@@ -53,7 +51,7 @@ class User {
     protected void encodePassword() {
         password = springSecurityService.encodePassword(password)
     }
-
+    
     String toString() {
     	return "${lastName}, ${firstName} (${email})"
     }

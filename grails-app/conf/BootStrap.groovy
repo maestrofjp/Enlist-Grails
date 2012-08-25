@@ -6,8 +6,14 @@ class BootStrap {
     def init = { servletContext ->
 		// Setup some DB defaults
 		if (GrailsUtil.environment == "development") {
-			// Setting
-			new Organization(organizationName: 'Cool Project').save()
+			// Use save(failOnError:true) otherwise failures are not trapped 
+			
+			// Organization
+			new Address(address1: '123 Main St', city: 'Anywhere', state: 'MN', zip: '12345').save(failOnError:true)
+			new Organization(name: 'Cool Project',
+								emailSender: 'enlist@example.com',
+								address: new Address().findWhere(zip: '12345')
+			).save(failOnError:true)
 			
 			// Statuses
 			new Status(status: 'Active').save()
@@ -16,6 +22,14 @@ class BootStrap {
 			// Roles
 			new Role(role: 'Admin').save()
 			new Role(role: 'User').save()
+			
+			// Users			
+			new User(firstName: 'Joe', 
+						lastName: 'Tester', 
+						email: 'joe@example.com',
+						role: new Role().findWhere(role: 'Admin'), 
+						status: new Status().findWhere(status: 'Active')
+			).save(failOnError:true)
 		}
     }
     def destroy = {
