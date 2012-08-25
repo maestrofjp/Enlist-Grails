@@ -84,13 +84,6 @@
 						
 					</g:if>
 				
-					<g:if test="${organizationInstance?.sendEmail}">
-						<dt><g:message code="organization.sendEmail.label" default="Send Email" /></dt>
-						
-							<dd><g:formatBoolean boolean="${organizationInstance?.sendEmail}" /></dd>
-						
-					</g:if>
-				
 				</dl>
 
 				<g:form>

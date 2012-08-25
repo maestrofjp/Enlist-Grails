@@ -4,21 +4,22 @@ class Organization {
 	
 	String name
 	Address address
-	String pointName
-	Integer pointValueDefault
-	Boolean emailSend
+	String pointName = 'point'
+	Integer pointValueDefault = 1
+	Boolean emailSend = true
 	String emailSender
-	Boolean sendEmail
 
     static constraints = {
 		name(blank:false)
-		pointName(default:'point')
-		pointValueDefault(default:1)
-		emailSend(default:true)
+		pointName(blank:false)
+		pointValueDefault(blank:false)
+		emailSend(blank:false)
 		emailSender(blank:false)
+		importFrom Address
+		id(nullable:true, display:false)
     }
 	
 	String toString() {
-		return "${name} (${id})"
+		return "${name}"
 	}
 }

@@ -6,15 +6,22 @@ class User {
 	String lastName
 	String email
 	String phone
-	Address address
-	Chapter chapter
+	Address address = null
+	Chapter chapter = null
 	Status status
 	Role role
+	
+	static embedded = ['address']
 
     static constraints = {
-    	firstName(blank:false)
+    	status()
+		role()
+		firstName(blank:false)
     	lastName(blank:false)
-    	email(email:true, unique:true)
+    	email(blank:false, email:true, unique:true)
+		phone(nullable: true)
+		chapter(nullable: true)
+		address(nullable: true)
     }
 
     String toString() {
