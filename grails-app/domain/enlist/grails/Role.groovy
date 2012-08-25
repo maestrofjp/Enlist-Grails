@@ -2,13 +2,14 @@ package enlist.grails
 
 class Role {
 
-	String role
+    String authority
+
+    static mapping = {
+        cache true
+    }
 
     static constraints = {
-    	role(blank:false)
+        authority blank: false, unique: true
     }
 
-    String toString() {
-    	return role
-    }
 }

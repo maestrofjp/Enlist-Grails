@@ -11,14 +11,26 @@ class User {
 	Address address = null
 	Status status
 	Role role
+
+    // Spring Security stuff
+    String username
+    String password
+    boolean enabled
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
 	
 	static belongsTo = [chapter: Chapter]
 	
 	static embedded = ['address']
 
     static constraints = {
-        username blank: false, unique: true
-        password blank: false
+        username(blank: false, unique: true)
+        password(blank: false)
+        enabled(default: true, blank: false)
+        accountExpired(default: false, blank: false)
+        accountLocked(default: false, blank: false)
+        passwordExpired(default: false, blank: false)
 
 		status()
 		role()

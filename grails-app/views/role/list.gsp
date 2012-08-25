@@ -44,7 +44,7 @@
 					<thead>
 						<tr>
 						
-							<g:sortableColumn property="role" title="${message(code: 'role.role.label', default: 'Role')}" />
+							<g:sortableColumn property="authority" title="${message(code: 'role.role.label', default: 'Role')}" />
 						
 							<th></th>
 						</tr>
@@ -53,7 +53,7 @@
 					<g:each in="${roleInstanceList}" var="roleInstance">
 						<tr>
 						
-							<td>${fieldValue(bean: roleInstance, field: "role")}</td>
+							<td>${fieldValue(bean: roleInstance, field: "authority")}</td>
 						
 							<td class="link">
 								<g:link action="show" id="${roleInstance.id}" class="btn btn-small">Show &raquo;</g:link>

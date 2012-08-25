@@ -90,5 +90,10 @@ log4j = {
            'net.sf.ehcache.hibernate'
 }
 
-//Fix grails taglib g:paginate to work with bootstrap css.
+// Fix grails taglib g:paginate to work with bootstrap css.
 grails.plugins.twitterbootstrap.fixtaglib = true
+
+// Added by the Spring Security Core plugin:
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'enlist.grails.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'enlist.grails.UserRole'
+grails.plugins.springsecurity.authority.className = 'enlist.grails.Role'

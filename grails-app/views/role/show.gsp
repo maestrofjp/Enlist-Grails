@@ -42,10 +42,10 @@
 
 				<dl>
 				
-					<g:if test="${roleInstance?.role}">
-						<dt><g:message code="role.role.label" default="Role" /></dt>
+					<g:if test="${roleInstance?.authority}">
+						<dt><g:message code="role.authority.label" default="Role" /></dt>
 						
-							<dd><g:fieldValue bean="${roleInstance}" field="role"/></dd>
+							<dd><g:fieldValue bean="${roleInstance}" field="authority"/></dd>
 						
 					</g:if>
 				
