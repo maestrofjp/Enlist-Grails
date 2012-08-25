@@ -9,9 +9,12 @@ class Address {
 	String zip
 
     static constraints = {
+		
 		address1(blank:false)
+		address2()
 		city(blank:false)
 		state(blank:false)
 		zip(blank:false)
+		id(display:false)
     }
 }

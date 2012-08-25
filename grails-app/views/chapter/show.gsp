@@ -49,10 +49,19 @@
 						
 					</g:if>
 				
-					<g:if test="${chapterInstance?.location}">
-						<dt><g:message code="chapter.location.label" default="Location" /></dt>
+					<g:if test="${chapterInstance?.users}">
+						<dt><g:message code="chapter.users.label" default="Users" /></dt>
 						
-							<dd><g:fieldValue bean="${chapterInstance}" field="location"/></dd>
+							<g:each in="${chapterInstance.users}" var="u">
+							<dd><g:link controller="user" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></dd>
+							</g:each>
+						
+					</g:if>
+				
+					<g:if test="${chapterInstance?.address}">
+						<dt><g:message code="chapter.address.label" default="Address" /></dt>
+						
+							<dd><g:link controller="address" action="show" id="${chapterInstance?.address?.id}">${chapterInstance?.address?.encodeAsHTML()}</g:link></dd>
 						
 					</g:if>
 				
@@ -67,15 +76,6 @@
 						<dt><g:message code="chapter.status.label" default="Status" /></dt>
 						
 							<dd><g:link controller="status" action="show" id="${chapterInstance?.status?.id}">${chapterInstance?.status?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
-					<g:if test="${chapterInstance?.users}">
-						<dt><g:message code="chapter.users.label" default="Users" /></dt>
-						
-							<g:each in="${chapterInstance.users}" var="u">
-							<dd><g:link controller="user" action="show" id="${u.id}">${u?.encodeAsHTML()}</g:link></dd>
-							</g:each>
 						
 					</g:if>
 				

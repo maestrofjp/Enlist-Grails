@@ -4,19 +4,23 @@ package enlist.grails
 class Chapter {
 	
 	String name
-	String location
+	Address address
 	Date created = new Date()
 	Status status
 
 	static hasMany = [users:User]
+	static embedded = ['address']
 
     static constraints = {
 		name(blank:false)
-		location(blank:false)
+		importFrom Status
+		created(blank:false)
+		importFrom Address
+		users(display:false)
     }
 
     String toString() {
-    	return "${name} (${location})"
+    	return "${name}"
     }
 	
 }

@@ -46,7 +46,7 @@
 						
 							<g:sortableColumn property="name" title="${message(code: 'chapter.name.label', default: 'Name')}" />
 						
-							<g:sortableColumn property="location" title="${message(code: 'chapter.location.label', default: 'Location')}" />
+							<th class="header"><g:message code="chapter.address.label" default="Address" /></th>
 						
 							<g:sortableColumn property="created" title="${message(code: 'chapter.created.label', default: 'Created')}" />
 						
@@ -61,7 +61,7 @@
 						
 							<td>${fieldValue(bean: chapterInstance, field: "name")}</td>
 						
-							<td>${fieldValue(bean: chapterInstance, field: "location")}</td>
+							<td>${fieldValue(bean: chapterInstance, field: "address")}</td>
 						
 							<td><g:formatDate date="${chapterInstance.created}" /></td>
 						
