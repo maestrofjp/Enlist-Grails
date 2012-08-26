@@ -50,7 +50,7 @@
 				</g:hasErrors>
 
 				<fieldset>
-					<g:form class="form-horizontal" action="create" >
+					<g:form class="form-horizontal" action="save" >
 						<fieldset>
 							<f:all bean="addressInstance"/>
 							<div class="form-actions">
