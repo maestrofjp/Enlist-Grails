@@ -37,14 +37,15 @@
 					
 					<a class="brand" href="${createLink(uri: '/')}"><g:img dir="images" file="Enlist_Logo_Small.png" style="margin-top:-11px;" /></a>
 
-					<div class="nav-collapse">
-						<ul class="nav">							
+					%{--<div class="nav-collapse">
+						<ul class="nav">
 							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
 							<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
 								<li<%= c.logicalPropertyName == controllerName ? ' class="active"' : '' %>><g:link controller="${c.logicalPropertyName}">${c.naturalName}</g:link></li>
 							</g:each>
 						</ul>
-					</div>
+					</div>--}%
+                    <enlist:adminNav />
 				</div>
 			</div>
 		</nav>
