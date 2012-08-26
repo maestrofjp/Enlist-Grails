@@ -16,13 +16,16 @@ class BootStrap {
 			).save(failOnError:true)
 			
 			// Statuses
+			new Status(status: 'Stub').save()
 			new Status(status: 'Active').save()
 			new Status(status: 'Archived').save()
 			
 			// Roles
-			new Role(authority: 'Admin').save()
-			new Role(authority: 'User').save()
-			
+			new Role(authority: 'Organization Administrator').save()
+			new Role(authority: 'Chapter Coordinator').save()
+			new Role(authority: 'Activity Coordinator').save()
+			new Role(authority: 'Volunteer').save()
+						
 			/* Users
 			new User(firstName: 'Joe', 
 						lastName: 'Tester', 
