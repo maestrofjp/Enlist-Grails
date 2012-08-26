@@ -10,11 +10,12 @@ class Event {
 	Date end = new Date()
 	Status status
 
-	static hasMany = [volunteers:User]
+	static hasMany = [volunteers:User, activities:Activity]
 
     static constraints = {
     	name(blank:false)
     	location(blank:false)
+		
     }
 
     String toString() {
