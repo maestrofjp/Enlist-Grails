@@ -18,5 +18,7 @@ class Address {
 		id(nullable:true, display:false)
     }
 	
-	// TODO: create toString() method
+	String toString() {
+        "${address1} ${city}, ${state} ${zip}"
+    }
 }
