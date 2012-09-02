@@ -26,16 +26,18 @@ class BootStrap {
 			new Role(authority: 'Activity Coordinator').save()
 			new Role(authority: 'Volunteer').save()
 						
-			/* Users
-			new User(firstName: 'Joe', 
-						lastName: 'Tester', 
-						email: 'joe@example.com',
-                        username: 'joetester',
-                        password:  'test',
-						role: new Role().findWhere(authority: 'Admin'),
-						status: new Status().findWhere(status: 'Active')
+			/* Users */
+			new User(
+                firstName: 'Joe',
+			    lastName: 'Tester',
+				email: 'joe@example.com',
+                username: 'joetester',
+                password:  'test',
+                enabled: true,
+				role: new Role().findWhere(authority: 'Organization Administrator'),
+				status: new Status().findWhere(status: 'Active')
 			).save(failOnError:true)
-			*/
+
 		}
     }
     def destroy = {

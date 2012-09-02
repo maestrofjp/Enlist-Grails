@@ -7,11 +7,6 @@ class UserRole implements Serializable {
     User secUser
     Role secRole
 
-    static mapping = {
-        id composite: ['secRole', 'secUser']
-        version false
-    }
-
     boolean equals(other) {
         if (!(other instanceof UserRole)) {
             return false
@@ -48,11 +43,11 @@ class UserRole implements Serializable {
     }
 
     static void removeAll(User secUser) {
-        executeUpdate 'DELETE FROM SecUserSecRole WHERE secUser=:secUser', [secUser: secUser]
+        executeUpdate 'DELETE FROM UserRole WHERE secUser=:secUser', [secUser: secUser]
     }
 
     static void removeAll(Role secRole) {
-        executeUpdate 'DELETE FROM SecUserSecRole WHERE secRole=:secRole', [secRole: secRole]
+        executeUpdate 'DELETE FROM UserRole WHERE secRole=:secRole', [secRole: secRole]
     }
 
 }
