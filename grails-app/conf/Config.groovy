@@ -99,3 +99,5 @@ grails.plugins.twitterbootstrap.fixtaglib = true
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'enlist.grails.User'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'enlist.grails.UserRole'
 grails.plugins.springsecurity.authority.className = 'enlist.grails.Role'
+
+grails.sitemesh.default.layout= 'bootstrap'

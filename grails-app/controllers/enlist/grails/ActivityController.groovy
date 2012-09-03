@@ -1,7 +1,9 @@
 package enlist.grails
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
 
+@Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
 class ActivityController {
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']

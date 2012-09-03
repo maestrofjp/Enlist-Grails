@@ -10,15 +10,15 @@ class User {
 	String phone
 	Address address = null
 	Status status
-	Role role
+	//Role role
 
     // Spring Security stuff
     String username
     String password
-    boolean enabled
-    boolean accountExpired
-    boolean accountLocked
-    boolean passwordExpired
+    boolean enabled = true
+    boolean accountExpired = false
+    boolean accountLocked = false
+    boolean passwordExpired = false
 	
 	static belongsTo = [chapter: Chapter]
 	
@@ -33,7 +33,6 @@ class User {
         passwordExpired(default: false, blank: false)
 
 		status()
-		role()
 		firstName(blank:false)
     	lastName(blank:false)
     	email(blank:false, email:true, unique:true)
@@ -47,7 +46,7 @@ class User {
     }
 
     Set<Role> getAuthorities() {
-        UserRole.findAllBySecUser(this).collect { it.Role } as Set
+        UserRole.findAllBySecUser(this).collect { it.secRole } as Set
     }
 
     def beforeInsert() {

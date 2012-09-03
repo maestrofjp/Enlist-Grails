@@ -1,7 +1,9 @@
 package enlist.grails
 
 import org.springframework.dao.DataIntegrityViolationException
+import grails.plugins.springsecurity.Secured
 
+@Secured(['ROLE_ADMIN'])
 class ChapterController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -21,7 +23,8 @@ class ChapterController {
 
     def save() {
         def chapterInstance = new Chapter(params)
-        if (!chapterInstance.save(flush: true)) {
+        //flush: true
+        if (!chapterInstance.save()) {
             render(view: "create", model: [chapterInstance: chapterInstance])
             return
         }

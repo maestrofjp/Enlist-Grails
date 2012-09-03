@@ -5,7 +5,7 @@ class BootStrap {
 
     def init = { servletContext ->
 		// Setup some DB defaults
-		if (GrailsUtil.environment == "development") {
+		if (GrailsUtil.environment == 'development') {
 			// Use save(failOnError:true) otherwise failures are not trapped 
 			
 			// Organization
@@ -21,22 +21,27 @@ class BootStrap {
 			new Status(status: 'Archived').save()
 			
 			// Roles
-			new Role(authority: 'Organization Administrator').save()
-			new Role(authority: 'Chapter Coordinator').save()
-			new Role(authority: 'Activity Coordinator').save()
-			new Role(authority: 'Volunteer').save()
+			new Role(name: 'Organization Administrator', authority: 'ROLE_ADMIN').save()
+			new Role(name: 'Chapter Coordinator', authority: 'ROLE_CHAPTER_ADMIN').save()
+			new Role(name: 'Activity Coordinator', authority: 'ROLE_ACTIVITY_COORDINATOR').save()
+			new Role(name: 'Volunteer', authority: 'ROLE_VOLUNTEER').save()
 						
 			/* Users */
-			new User(
+			User adminUser = new User(
                 firstName: 'Joe',
 			    lastName: 'Tester',
 				email: 'joe@example.com',
                 username: 'joetester',
                 password:  'test',
                 enabled: true,
-				role: new Role().findWhere(authority: 'Organization Administrator'),
+				//role: new Role().findWhere(authority: 'ROLE_ADMIN'),
 				status: new Status().findWhere(status: 'Active')
 			).save(failOnError:true)
+
+            new UserRole(
+                    secUser: adminUser,
+                    secRole: new Role().findWhere(authority: 'ROLE_ADMIN')
+            ).save(failOnError: true)
 
 		}
     }

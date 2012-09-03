@@ -2,6 +2,7 @@ package enlist.grails
 
 class Role {
 
+    String name
     String authority
 
     static mapping = {
@@ -10,9 +11,10 @@ class Role {
 
     static constraints = {
         authority blank: false, unique: true
+        name blank:  false
     }
 
 	String toString() {
-		return authority
+		return "${name} (${authority})"
 	}
 }
