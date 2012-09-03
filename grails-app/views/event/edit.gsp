@@ -50,7 +50,7 @@
 				</g:hasErrors>
 
 				<fieldset>
-					<g:form class="form-horizontal" action="edit" id="${eventInstance?.id}" >
+					<g:form class="form-horizontal" action="update" id="${eventInstance?.id}" >
 						<g:hiddenField name="version" value="${eventInstance?.version}" />
 						<fieldset>
 							<f:all bean="eventInstance"/>
