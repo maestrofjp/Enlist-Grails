@@ -12,6 +12,11 @@ body {
 	vertical-align: middle; /* ensure buttons line up even when they are different tag types [a, button] */
 }
 
+/* Fixes enlist #17 without editing a plugin (plugin: https://github.com/robfletcher/twitter-bootstrap-scaffolding/issues/22)  */
+fieldset.embedded {
+	border: 0;
+}
+
 /* index page */
 
 img#github-ribbon {
