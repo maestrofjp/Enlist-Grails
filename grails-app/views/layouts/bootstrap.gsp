@@ -46,6 +46,7 @@
 			                	<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
 			                </sec:ifLoggedIn>
 			                <sec:ifNotLoggedIn>
+			                	<li><g:link controller="logout" action="index"><i class="icon-star"></i> Register</g:link></li>
 			                   <li<%= request.forwardURI == "${createLink(uri: '/login/auth')}" ? ' class="active"' : '' %>><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
 			                </sec:ifNotLoggedIn>
 		                </ul>
