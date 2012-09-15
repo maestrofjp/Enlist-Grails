@@ -37,15 +37,6 @@
 					
 					<a class="brand" href="${createLink(uri: '/')}"><g:img dir="images" file="Enlist_Logo_Small.png" style="margin-top:-11px;" /></a>
 
-					%{--<div class="nav-collapse">
-						<ul class="nav">
-							<li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
-							<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-								<li<%= c.logicalPropertyName == controllerName ? ' class="active"' : '' %>><g:link controller="${c.logicalPropertyName}">${c.naturalName}</g:link></li>
-							</g:each>
-						</ul>
-					</div>--}%
-
                     <enlist:adminNav />
 
 		            <div class="pull-right">
@@ -55,7 +46,7 @@
 			                	<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
 			                </sec:ifLoggedIn>
 			                <sec:ifNotLoggedIn>
-			                   <li><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
+			                   <li<%= request.forwardURI == "${createLink(uri: '/login/auth')}" ? ' class="active"' : '' %>><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
 			                </sec:ifNotLoggedIn>
 		                </ul>
 		            </div>

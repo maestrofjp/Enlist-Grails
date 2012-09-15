@@ -23,7 +23,7 @@
 		<g:message code="activity.endDate.label" default="End Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="endDate" precision="day"  value="${activityInstance?.endDate}"  />
+	<g:datePicker name="endDate" value="${activityInstance?.endDate}" precision="minute"  />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: activityInstance, field: 'event', 'error')} required">
@@ -71,7 +71,7 @@
 		<g:message code="activity.startDate.label" default="Start Date" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="startDate" precision="day"  value="${activityInstance?.startDate}"  />
+	<g:datePicker name="startDate" value="${activityInstance?.startDate}" precision="minute" />
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: activityInstance, field: 'title', 'error')} ">
