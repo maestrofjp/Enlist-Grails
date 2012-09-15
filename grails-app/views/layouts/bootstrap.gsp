@@ -45,27 +45,31 @@
 							</g:each>
 						</ul>
 					</div>--}%
+
                     <enlist:adminNav />
+
+		            <div class="pull-right">
+		            	<ul class="nav">
+			                <sec:ifLoggedIn>
+			                	<li><g:link controller="logout" action="index"><i class="icon-user"></i> My Profile</g:link></li>
+			                	<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
+			                </sec:ifLoggedIn>
+			                <sec:ifNotLoggedIn>
+			                   <li><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
+			                </sec:ifNotLoggedIn>
+		                </ul>
+		            </div>
 				</div>
 			</div>
 		</nav>
 
 		<div class="container-fluid">
-            <p align="right">
-                <sec:ifLoggedIn>
-                    Welcome <sec:loggedInUserInfo field="username"/> | <g:link controller="logout" action="index">Logout</g:link>
-                </sec:ifLoggedIn>
-                <sec:ifNotLoggedIn>
-                    <g:link controller='login' action='auth'>Login</g:link>
-                </sec:ifNotLoggedIn>
-            </p>
-
 			<g:layoutBody/>
 
 			<hr>
 
 			<footer>
-				<p>Enlist - &copy; 2012 GreatBizTools, LLC</p>
+				<p>Enlist - &copy; 2012 GreatBizTools, LLC All rights reserved.</p>
 			</footer>
 		</div>
 
