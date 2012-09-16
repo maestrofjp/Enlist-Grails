@@ -1,5 +1,7 @@
 package enlist.grails
 
+import java.sql.Timestamp;
+
 class Activity {
 	
 	String title
@@ -15,5 +17,6 @@ class Activity {
 	static hasMany = [coordinators:User, volunteers:User]	
 
     static constraints = {
+		description(maxLength: 500)
     }
 }

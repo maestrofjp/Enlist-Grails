@@ -52,7 +52,8 @@
 				<fieldset>
 					<g:form class="form-horizontal" action="create" >
 						<fieldset>
-							<f:all bean="activityInstance"/>
+							<g:render template="form" bean="activityInstance" />
+							<%--<f:all bean="activityInstance" />--%>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>
