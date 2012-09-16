@@ -23,19 +23,17 @@
 		
 		<form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
 		
-			<div class="well" style="height:175px;">				
+			<div class="well" style="height:125px;">				
 			
 				<div class="control-group">
-					<label for='username' class="control-label"><g:message code="springSecurity.login.username.label"/></label>
 					<div class="controls">
-						<input type='text' class='text_' name='j_username' id='username'/>
+						<input type='text' class='text_' name='j_username' id='username' placeholder="${message(code: 'springSecurity.login.username.label')}" />
 					</div>
 				</div>
 			
 				<div class="control-group">
-					<label for='password' class="control-label"><g:message code="springSecurity.login.password.label"/></label>
 					<div class="controls">
-						<input type='password' class='text_' name='j_password' id='password'/>
+						<input type='password' class='text_' name='j_password' id='password' placeholder="${message(code: 'springSecurity.login.password.label')}" />
 					</div>
 				</div>
 			
@@ -55,7 +53,7 @@
 	</div>
 	<div class="span3">
 		<h3>Register</h3>
-		<div class="well" style="height:175px;">
+		<div class="well" style="height:125px;">
 			<p>Haven't used Enlist before? Then register to become one of our all-star volunteers.</p>
 			<p>We made it simple so we bet you'll get be done in less than 2 minutes!</p>
 		</div>
