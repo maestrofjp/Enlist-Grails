@@ -42,20 +42,34 @@
 		            <div class="pull-right">
 		            	<ul class="nav">
 			                <sec:ifLoggedIn>
+			                	<%-- TODO: Only show if certain roles --%>
+			                	<li class="divider-vertical"></li>
 			                	<li class="dropdown">
-			                		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b> <i class="icon-cog"></i>Settings</a>
-			                		
+			                		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> App Settings<b class="caret"></b></a>
 			                		<ul class="dropdown-menu">
 			                			<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
 			                		</ul>
 			                	</li>
-			                	<li><g:link controller="logout" action="index"><i class="icon-user"></i> My Profile</g:link></li>
-			                	<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
+			                	
+			                	<li class="divider-vertical"></li>
+			                	<li class="dropdown">
+			                		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <sec:loggedInUserInfo field="username"/><b class="caret"></b></a>
+			                		<ul class="dropdown-menu">
+			                			<li><g:link controller="logout" action="index"><i class="icon-book"></i> My Profile</g:link></li>
+			                			<li class="divider"></li>
+			                			<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
+			                		</ul>
+			                	</li>
 			                </sec:ifLoggedIn>
 			                <sec:ifNotLoggedIn>
-			                	<li><g:link controller="logout" action="index"><i class="icon-star"></i> Register</g:link></li>
-			                   <li<%= request.forwardURI == "${createLink(uri: '/login/auth')}" ? ' class="active"' : '' %>><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
+			                	<li class="divider-vertical"></li>
+								<li><g:link controller="logout" action="index"><i class="icon-star"></i> Register</g:link></li>
+								
+								<li class="divider-vertical"></li>
+								<li<%= request.forwardURI == "${createLink(uri: '/login/auth')}" ? ' class="active"' : '' %>><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
 			                </sec:ifNotLoggedIn>
+			                
+			                <li class="divider-vertical"></li>
 		                </ul>
 		            </div>
 				</div>
