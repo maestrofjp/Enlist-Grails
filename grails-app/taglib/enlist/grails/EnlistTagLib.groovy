@@ -16,7 +16,7 @@ class EnlistTagLib {
         out << g.render(template: "/nav", model: [areas: adminAreas])
     }
 
-}
+}	
 
 class NavItem {
     String name;

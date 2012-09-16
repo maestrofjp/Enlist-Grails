@@ -9,10 +9,7 @@
 	<div class="row-fluid">
 		<div class="span3"></div>
 		<div class="span6">
-		    <div class="alert alert-error">
-		    	<button type="button" class="close" data-dismiss="alert">×</button>
-		    	${flash.message}
-		    </div>
+			<bootstrap:alert class="alert-error">${flash.message}</bootstrap:alert>
 		</div>
 		<div class="span3"></div>
 	</div>
