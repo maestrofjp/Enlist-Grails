@@ -42,6 +42,13 @@
 		            <div class="pull-right">
 		            	<ul class="nav">
 			                <sec:ifLoggedIn>
+			                	<li class="dropdown">
+			                		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b> <i class="icon-cog"></i>Settings</a>
+			                		
+			                		<ul class="dropdown-menu">
+			                			<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
+			                		</ul>
+			                	</li>
 			                	<li><g:link controller="logout" action="index"><i class="icon-user"></i> My Profile</g:link></li>
 			                	<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
 			                </sec:ifLoggedIn>
