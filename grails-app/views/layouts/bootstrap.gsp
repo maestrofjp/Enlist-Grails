@@ -21,6 +21,12 @@
 
 		<g:layoutHead/>
 		<r:layoutResources/>
+		
+		<!-- Resources for JQuery timepicker and datepicker -->
+		<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-datepicker.css')}" />
+		<script src="${resource(dir: 'js', file: 'bootstrap-datepicker.js')}"></script>
+		<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-timepicker.css')}" />
+		<script src="${resource(dir: 'js', file: 'bootstrap-timepicker.js')}"></script>
 	</head>
 
 	<body>
