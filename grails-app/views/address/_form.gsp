@@ -31,7 +31,7 @@
 		<g:message code="address.state.label" default="State" />
 		<span class="required-indicator">*</span>
 	</label>
-	<g:textField name="state" required="" value="${addressInstance?.state}"/>
+	<g:textField name="state" required="" value="${addressInstance?.state}" data-provide="typeahead" data-source="['Minnesota','Michigan']"/>
 </div>
 
 <div class="fieldcontain ${hasErrors(bean: addressInstance, field: 'zip', 'error')} required">

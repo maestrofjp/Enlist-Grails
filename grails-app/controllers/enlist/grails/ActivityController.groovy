@@ -24,6 +24,12 @@ class ActivityController {
 			break
 		case 'POST':
 	        def activityInstance = new Activity(params)
+			
+			// Concatenate date/time and add to properties
+			activityInstance.properties.startDate = new Date().parse('MM/dd/yyyy h:mm a', params._startDate + ' ' + params._startTime)
+			activityInstance.properties.endDate = new Date().parse('MM/dd/yyyy h:mm a', params._endDate + ' ' + params._endTime)
+			
+			
 	        if (!activityInstance.save(flush: true)) {
 	            render view: 'create', model: [activityInstance: activityInstance]
 	            return
