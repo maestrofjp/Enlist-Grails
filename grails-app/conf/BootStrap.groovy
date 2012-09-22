@@ -31,8 +31,8 @@ class BootStrap {
                 firstName: 'Joe',
 			    lastName: 'Tester',
 				email: 'joe@example.com',
-                username: 'joetester',
-                password:  'test',
+                username: 'admin',
+                password:  'test123',
                 enabled: true,
 				//role: new Role().findWhere(authority: 'ROLE_ADMIN'),
 				status: new Status().findWhere(status: 'Active')

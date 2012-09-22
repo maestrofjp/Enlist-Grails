@@ -10,6 +10,7 @@ class User {
 	String phone
 	Address address = null
 	Status status
+	UserProfile profile
 	//Role role
 
     // Spring Security stuff
@@ -28,11 +29,10 @@ class User {
         username(blank: false
 			, unique: true
 			, size: 3..12
-			, matches: '[0-9a-zA-Z]'
+			, matches: '[0-9a-zA-Z]{3,12}'
 		)
         password(blank: false
-			, size: 6..24
-			, validator: { password, user -> return password != user.username }
+			, validator: { pwd, user -> return pwd != user.username }
 		)
         enabled(default: true, blank: false)
         accountExpired(default: false, blank: false)
@@ -49,6 +49,7 @@ class User {
 		phone(nullable: true)
 		address(nullable: true)
 		chapter(nullable: true)
+		profile(nullable: true)
     }
 
     static mapping = {
@@ -74,6 +75,6 @@ class User {
     }
     
     String toString() {
-    	return "${lastName}, ${firstName} (${email})"
+    	return "${lastName}, ${firstName} (${username})"
     }
 }
