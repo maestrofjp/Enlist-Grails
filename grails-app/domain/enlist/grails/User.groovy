@@ -25,8 +25,15 @@ class User {
 	static embedded = ['address']
 
     static constraints = {
-        username(blank: false, unique: true)
-        password(blank: false)
+        username(blank: false
+			, unique: true
+			, size: 3..12
+			, matches: '[0-9a-zA-Z]'
+		)
+        password(blank: false
+			, size: 6..24
+			, validator: { password, user -> return password != user.username }
+		)
         enabled(default: true, blank: false)
         accountExpired(default: false, blank: false)
         accountLocked(default: false, blank: false)
@@ -35,7 +42,10 @@ class User {
 		status()
 		firstName(blank:false)
     	lastName(blank:false)
-    	email(blank:false, email:true, unique:true)
+    	email(blank:false
+			, email:true
+			, unique:true
+		)
 		phone(nullable: true)
 		address(nullable: true)
 		chapter(nullable: true)
