@@ -14,7 +14,8 @@ class Event {
 		status(blank: false)
     	name(blank:false)
     	location(blank:false)
-		start()
+        start()
+		end(blank:false, nullable:true)
 		end(validator: {val, obj, errors ->
             if (obj.end && obj.start) {
                 if (obj.end.time < obj.start.time) {
