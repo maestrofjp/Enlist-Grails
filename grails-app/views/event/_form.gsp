@@ -1,52 +1,59 @@
 <%@ page import="enlist.grails.Event" %>
 
-
-
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'name', 'error')} required">
-	<label for="name">
-		<g:message code="event.name.label" default="Name" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="name" required="" value="${eventInstance?.name}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'location', 'error')} required">
-	<label for="location">
-		<g:message code="event.location.label" default="Location" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:textField name="location" required="" value="${eventInstance?.location}"/>
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'end', 'error')} required">
-	<label for="end">
-		<g:message code="event.end.label" default="End" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="end" precision="day"  value="${eventInstance?.end}"  />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'start', 'error')} required">
-	<label for="start">
-		<g:message code="event.start.label" default="Start" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="start" precision="day"  value="${eventInstance?.start}"  />
-</div>
-
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'status', 'error')} required">
-	<label for="status">
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'status', 'error')} required">
+	<label for="status" class="control-label">
 		<g:message code="event.status.label" default="Status" />
-		<span class="required-indicator">*</span>
 	</label>
-	<g:select id="status" name="status.id" from="${enlist.grails.Status.list()}" optionKey="id" required="" value="${eventInstance?.status?.id}" class="many-to-one"/>
+	<div class="controls">
+		<g:select id="status" name="status.id" from="${enlist.grails.Status.list()}" optionKey="id" required="" value="${eventInstance?.status?.id}" class="many-to-one"/>
+	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'volunteers', 'error')} ">
-	<label for="volunteers">
-		<g:message code="event.volunteers.label" default="Volunteers" />
-		
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'name', 'error')} required">
+	<label for="name" class="control-label">
+		<g:message code="event.name.label" default="Name" />
 	</label>
-	<g:select name="volunteers" from="${enlist.grails.User.list()}" multiple="multiple" optionKey="id" size="5" value="${eventInstance?.volunteers*.id}" class="many-to-many"/>
+	<div class="controls">
+		<g:textField name="name" required="" value="${eventInstance?.name}"/>
+	</div>
 </div>
 
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'location', 'error')} required">
+	<label for="location" class="control-label">
+		<g:message code="event.location.label" default="Location" />
+	</label>
+	<div class="controls">
+		<g:textField name="location" required="" value="${eventInstance?.location}"/>
+	</div>
+</div>
+
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'start', 'error')} required">
+	<label for="start" class="control-label">
+		<g:message code="event.start.label" default="Start Date" />
+	</label>
+	<div class="controls">
+		<div class="input-append date datepicker" data-date="${eventInstance?.start}" data-date-format="mm/dd/yyyy">
+			<input name="start" class="span8" size="16" type="text" value="${eventInstance?.start}" />
+			<span class="add-on"><i class="icon-th"></i></span>
+		</div>
+	</div>
+</div>
+
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'end', 'error')} required">
+	<label for="end" class="control-label">
+		<g:message code="event.end.label" default="End Date" />
+	</label>
+	<div class="controls">
+		<div class="input-append date datepicker" data-date="${eventInstance?.end}" data-date-format="mm/dd/yyyy">
+			<input name="end" class="span8" size="16" type="text" value="${eventInstance?.end}" />
+			<span class="add-on"><i class="icon-th"></i></span>
+		</div>
+	</div>
+</div>
+
+<script>
+	$('.timepicker-default').timepicker();
+	$('.datepicker').datepicker();
+	/* TODO: Auto-populate the end date with the same date */
+	/* TODO: Auto-populate the end time with the same time + 1 hour */
+</script>
