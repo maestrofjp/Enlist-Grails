@@ -30,8 +30,22 @@ class BootStrap {
 
 
             // CatalogItemCategories
-            new CatalogItemCategory(category: 'Apparel').save()
-            new CatalogItemCategory(category: 'Race Discount').save()
+            CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save()
+            CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save()
+			
+			// CatalogItems
+			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
+								description: '',
+								category: CICRaceDiscounts,
+								available: true, 
+								points: 3000, 
+								photo: null).save(failOnError:true)
+			new CatalogItem(name: 'Monster Dash Stocking Cap',
+								description: '',
+								category: CICApparel,
+								available: true,
+								points: 500,
+								photo: null).save(failOnError:true)
 						
 			/* Users */
 			User adminUser = new User(
