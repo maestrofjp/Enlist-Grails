@@ -33,7 +33,8 @@
 	</label>
 	<div class="controls">
 		<div class="input-append date datepicker" data-date="${eventInstance?.start}" data-date-format="mm/dd/yyyy">
-			<input name="_start" class="span8" size="16" type="text" value="${eventInstance?.start}" />
+            <g:hiddenField name="start" value="struct" />
+			<input name="start_date" class="span8" size="16" type="text" value="${eventInstance?.start}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 	</div>
@@ -45,7 +46,8 @@
 	</label>
 	<div class="controls">
 		<div class="input-append date datepicker" data-date="${eventInstance?.end}" data-date-format="mm/dd/yyyy">
-			<input name="_end" class="span8" size="16" type="text" value="${eventInstance?.end}" />
+            <g:hiddenField name="end" value="struct" />
+			<input name="end_date" class="span8" size="16" type="text" value="${eventInstance?.end}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 	</div>

@@ -53,7 +53,8 @@
 					<g:form class="form-horizontal" action="update" id="${eventInstance?.id}" >
 						<g:hiddenField name="version" value="${eventInstance?.version}" />
 						<fieldset>
-							<f:all bean="eventInstance"/>
+                            <g:render template="form" bean="eventInstance" />
+							%{--<f:all bean="eventInstance"/>--}%
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

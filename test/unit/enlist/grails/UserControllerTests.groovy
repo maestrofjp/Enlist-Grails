@@ -152,4 +152,22 @@ class UserControllerTests {
         assert User.get(user.id) == null
         assert response.redirectedUrl == '/user/list'
     }
+
+    void testSearch() {
+        def user = new User(
+                firstName: 'Joe',
+                lastName: 'Tester',
+                email: 'joe@example.com',
+                username: 'admin',
+                password:  'test123',
+                enabled: true)
+
+        assert user.save() != null
+        assert User.count() == 1
+        params.q = "joe"
+        controller.search()
+        assert response.redirectedUrl == '/user/list'
+        assert model.userInstanceList.size() == 1
+
+    }
 }

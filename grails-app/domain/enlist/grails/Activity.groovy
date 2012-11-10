@@ -12,11 +12,14 @@ class Activity {
 	Date startDate
 	Date endDate
 	String location
+    Address locationAddress
 	Event event
 	String pointsType
 	Integer points
 	
-	static hasMany = [coordinators:User, volunteers:User]	
+	static hasMany = [coordinators:User, volunteers:User]
+
+    static embedded = ['locationAddress']
 
     static constraints = {
 		title(blank: false
@@ -27,6 +30,6 @@ class Activity {
 		
 		location(blank: false)
 		event(nullable: false)
-		
+        locationAddress(nullable: true)
     }
 }

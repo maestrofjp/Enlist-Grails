@@ -24,8 +24,14 @@
 	</label>
 	<div class="controls">
 		<g:textField name="location" value="${activityInstance?.location}"/>
+        %{--<button type="button" class="btn" data-toggle="collapse" data-target="#user-location-address">--}%
+            %{--Fill in Address--}%
+        %{--</button>--}%
 	</div>
 </div>
+%{--<div id="user-location-address">--}%
+    %{--<f:field bean="activityInstance" property="locationAddress"/>--}%
+%{--</div>--}%
 
 <div class="control-group ${hasErrors(bean: activityInstance, field: 'description', 'error')} required">
 	<label for="description" class="control-label">
@@ -50,12 +56,13 @@
 		<g:message code="activity.startDate.label" default="Start Date" />
 	</label>
 	<div class="controls">
+        <g:hiddenField name="startDate" value="struct" />
 		<div class="input-append date datepicker" data-date="${activityInstance?.startDate}" data-date-format="mm/dd/yyyy">
-			<input name="_startDate" class="span8" size="16" type="text" value="${activityInstance?.startDate}" />
+			<input name="startDate_date" class="span8" size="16" type="text" value="${activityInstance?.startDate}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 		<div class="input-append bootstrap-timepicker-component">
-		    <input name="_startTime" type="text" class="timepicker-default input-small">
+		    <input name="startDate_time" type="text" class="timepicker-default input-small">
 		    <span class="add-on">
 		    	<i class="icon-time"></i>
 		    </span>
@@ -68,12 +75,13 @@
 		<g:message code="activity.endDate.label" default="End Date" />
 	</label>
 	<div class="controls">
+        <g:hiddenField name="endDate" value="struct" />
 		<div class="input-append date datepicker" data-date="${activityInstance?.endDate}" data-date-format="mm/dd/yyyy">
-			<input name="_endDate" class="span8" size="16" type="text" value="${activityInstance?.endDate}" />
+			<input name="endDate_date" class="span8" size="16" type="text" value="${activityInstance?.endDate}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 		<div class="input-append bootstrap-timepicker-component">
-		    <input name="_endTime" type="text" class="timepicker-default input-small">
+		    <input name="endDate_time" type="text" class="timepicker-default input-small">
 		    <span class="add-on">
 		    	<i class="icon-time"></i>
 		    </span>
