@@ -23,6 +23,8 @@ class User {
     boolean accountExpired = false
     boolean accountLocked = false
     boolean passwordExpired = false
+
+    Integer currPoints = 0
 	
 	static belongsTo = [chapter: Chapter]
 	

@@ -34,8 +34,6 @@ class DatePickerPropertyEditor extends PropertyEditorSupport implements Structur
 
     @Override
     Object assemble(Class type, Map fieldValues) throws IllegalArgumentException {
-        println "assemble date... ${type}"
-        fieldValues.each { k,v -> println "$k -> $v"}
         if (fieldValues.isEmpty() || fieldValues.every {StringUtils.isEmpty(it.value) }) return null
         requiredFields.each {
             if (!fieldValues."$it") {
@@ -51,7 +49,6 @@ class DatePickerPropertyEditor extends PropertyEditorSupport implements Structur
         return dateTimeFormatter.parse(dateStr + ' ' + timeStr)
     }
     String getAsText() {
-        println "getAsText ${value}"
         if(!value) return null
         try {
             return dateFormatter.format(value)
@@ -61,13 +58,11 @@ class DatePickerPropertyEditor extends PropertyEditorSupport implements Structur
     }
 
     void setAsText(String text) {
-        println "setAsText ${value} ${text}"
         if(!text) value = null
         try {
             value = dateFormatter.parse(text)
         } catch(Exception e) {
             value = dateTimeFormatter.parse(text)
         }
-        println "after setAsText: value = ${value}"
     }
 }

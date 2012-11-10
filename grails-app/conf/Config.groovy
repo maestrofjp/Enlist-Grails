@@ -116,3 +116,9 @@ grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'enlist.grails
 grails.plugins.springsecurity.authority.className = 'enlist.grails.Role'
 
 grails.sitemesh.default.layout= 'bootstrap'
+
+rule {
+    activity {
+        allowRegistrationAfterEndDate = false
+    }
+}
