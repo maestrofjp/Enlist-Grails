@@ -30,19 +30,33 @@ class BootStrap {
 
 
             // CatalogItemCategories
-            new CatalogItemCategory(category: 'Apparel').save()
-            new CatalogItemCategory(category: 'Race Discount').save()
+            CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save()
+            CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save()
 
             // Events and Activities
             new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
-                        end: new Date().clearTime(), status: Status.findByStatus('Active')).save(failOnError: true)
+                    end: new Date().clearTime(), status: Status.findByStatus('Active')).save(failOnError: true)
             new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
             def nowTime = new Date().getTime()
             new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
-                            endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
-                            event: Event.findByName('Test Event 1'), pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                    event: Event.findByName('Test Event 1'), pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
 
-            /* Users */
+            // CatalogItems
+			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
+								description: '',
+								category: CICRaceDiscounts,
+								available: true, 
+								points: 3000, 
+								photo: null).save(failOnError:true)
+			new CatalogItem(name: 'Monster Dash Stocking Cap',
+								description: '',
+								category: CICApparel,
+								available: true,
+								points: 500,
+								photo: null).save(failOnError:true)
+						
+			/* Users */
 			User adminUser = new User(
                 firstName: 'Joe',
 			    lastName: 'Tester',

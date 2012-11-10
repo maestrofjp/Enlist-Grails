@@ -48,8 +48,6 @@
 						
 							<th class="header"><g:message code="chapter.address.label" default="Address" /></th>
 						
-							<g:sortableColumn property="created" title="${message(code: 'chapter.created.label', default: 'Created')}" />
-						
 							<th class="header"><g:message code="chapter.status.label" default="Status" /></th>
 						
 							<th></th>
@@ -62,8 +60,6 @@
 							<td>${fieldValue(bean: chapterInstance, field: "name")}</td>
 						
 							<td>${fieldValue(bean: chapterInstance, field: "address")}</td>
-						
-							<td><g:formatDate date="${chapterInstance.created}" /></td>
 						
 							<td>${fieldValue(bean: chapterInstance, field: "status")}</td>
 						
