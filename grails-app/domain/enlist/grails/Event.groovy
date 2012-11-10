@@ -10,10 +10,13 @@ class Event {
 
 	static hasMany = [activities:Activity]
 
+    static belongsTo = [chapter: Chapter]
+
     static constraints = {
 		status(blank: false)
     	name(blank:false)
     	location(blank:false)
+        chapter(nullable: true)
 		start()
 		end(validator: {val, obj, errors ->
             if (obj.end && obj.start) {
