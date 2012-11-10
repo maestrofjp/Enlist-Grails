@@ -3,6 +3,7 @@ package enlist.grails
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class ActivityController extends AbstractBaseController {
     /**
@@ -50,6 +51,7 @@ class ActivityController extends AbstractBaseController {
 		}
     }
 
+    def grailsApplication
     def show() {
         def activityInstance = Activity.get(params.id)
         if (!activityInstance) {
@@ -58,22 +60,21 @@ class ActivityController extends AbstractBaseController {
             return
         }
         boolean canVolunteer =  loginUser?.checkVolunteer()
-        if (activityInstance.endDate && activityInstance.endDate.time <= new Date().time)
-            canVolunteer = false // past event.
+        if(!grailsApplication.config.rule?.activity?.allowRegistrationAfterEndDate)
+            if (activityInstance.endDate && activityInstance.endDate.time <= new Date().time)
+                canVolunteer = false // past event.
 
-        [activityInstance: activityInstance, canVolunteer : loginUser?.checkVolunteer(), isAdmin : hasAdminAccess(),
+        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasAdminAccess(),
                 hasSignUp : ActivitySignUp.get(loginUser.id, activityInstance.id)]
     }
     @Secured(['ROLE_VOLUNTEER'])
     def signUp() {
-        println "signUp"
         def activityInstance = Activity.get(params.id)
         ActivitySignUp.create(loginUser, activityInstance, true)
         redirect action: 'show', id: activityInstance.id
     }
     @Secured(['ROLE_VOLUNTEER'])
     def cancelSignUp() {
-        println "cancelSignUp"
         def activityInstance = Activity.get(params.id)
         ActivitySignUp.remove(loginUser, activityInstance, true)
         redirect action: 'show', id: activityInstance.id

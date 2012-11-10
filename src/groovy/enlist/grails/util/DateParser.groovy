@@ -1,6 +1,7 @@
 package enlist.grails.util
 
 import java.text.SimpleDateFormat
+import org.apache.commons.lang.StringUtils
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,9 +21,19 @@ class DateParser {
             dateFormatMap.put(format, new SimpleDateFormat(format))
         }
         SimpleDateFormat fmt = dateFormatMap.get(format)
-        String res = fmt.format(value)
-        println "print : ${res}"
-        res
+        fmt.format(value)
     }
     static String printDefault(Date value ) { print(DEFAULT_DATE_FORMAT, value) }
+    static String printDateTimeDefault(Date value ) { print(DEFAULT_DATE_TIME_FORMAT, value) }
+
+    static Date parse(String format, String value ) {
+        if(StringUtils.isEmpty(value)) return null
+        if(!dateFormatMap.containsKey(format)) {
+            dateFormatMap.put(format, new SimpleDateFormat(format))
+        }
+        SimpleDateFormat fmt = dateFormatMap.get(format)
+        fmt.parse(value)
+    }
+    static Date parseDateDefault(String value ) { parse(DEFAULT_DATE_FORMAT, value) }
+    static Date parseDateTimeDefault(String value ) { parse(DEFAULT_DATE_TIME_FORMAT, value) }
 }
