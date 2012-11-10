@@ -57,12 +57,12 @@
 	</label>
 	<div class="controls">
         <g:hiddenField name="startDate" value="struct" />
-		<div class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.startDate)}" data-date-format="mm/dd/yyyy">
+		<div id="startDatePicker" class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.startDate)}" data-date-format="mm/dd/yyyy">
 			<input name="startDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(activityInstance?.startDate)}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
-		<div class="input-append bootstrap-timepicker-component">
-		    <input name="startDate_time" type="text" class="timepicker-default input-small">
+		<div  class="input-append bootstrap-timepicker-component">
+		    <input id="startTimePicker" name="startDate_time" type="text" class="timepicker-default input-small">
 		    <span class="add-on">
 		    	<i class="icon-time"></i>
 		    </span>
@@ -76,12 +76,12 @@
 	</label>
 	<div class="controls">
         <g:hiddenField name="endDate" value="struct" />
-		<div class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.endDate)}" data-date-format="mm/dd/yyyy">
+		<div id="endDatePicker" class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.endDate)}" data-date-format="mm/dd/yyyy">
 			<input name="endDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(activityInstance?.endDate)}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 		<div class="input-append bootstrap-timepicker-component">
-		    <input name="endDate_time" type="text" class="timepicker-default input-small">
+		    <input id="endTimePicker" name="endDate_time" type="text" class="timepicker-default input-small">
 		    <span class="add-on">
 		    	<i class="icon-time"></i>
 		    </span>
@@ -121,10 +121,21 @@
 
 
 <script>
-	$('.timepicker-default').timepicker();
-	$('.datepicker').datepicker();
-	/* TODO: Auto-populate the end date with the same date */
-	/* TODO: Auto-populate the end time with the same time + 1 hour */
+	$('#startTimePicker').timepicker().on('change',function(event){
+		var timepicker = $('#endTimePicker').val($('#startTimePicker').val()).data('timepicker')
+		timepicker.incrementHour();
+		timepicker.update();
+	});
+
+	$('#endTimePicker').timepicker();
+	$('#startDatePicker').datepicker().on('changeDate', function(ev) {
+		$('#endDatePicker').data('date',ev.date).datepicker('update').datepicker('setValue');
+	});
+
+	$('#endDatePicker').datepicker();
+
+
+
     var requiredEmbeddedField= "req-emb";
     var $embeddedView = $('#user-location-address');
     var isInitiallyShown = $embeddedView.hasClass("in");
