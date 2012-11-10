@@ -10,17 +10,28 @@
 			<aside id="application-status" class="span3">
 				<div class="well sidebar-nav">
 					<h3>Upcoming Events</h3>
-						
-					<ul class="nav nav-list">
-						
-					</ul>
-				</div>
+
+                    <g:if test="${upcomingEvents}">
+                        <ul class="nav nav-list">
+                            <g:each in="${upcomingEvents}">
+                                <li><g:link controller="event" action="show" id="${it.id}">${it.name} (<g:formatDate format="MM-dd-yyyy" date="${it.start}" />)</g:link></li>
+                            </g:each>
+                        </ul>
+                    </g:if>
+                    <g:else>
+                        <p><g:message code="event.noneUpcoming" /></p>
+                    </g:else>
+                </div>
 			</aside>
 
 			<section id="main" class="span9">
 
-				<div class="hero-unit">
-					<h1>Welcome to Enlist</h1>
+                <g:if test="${flash.message}">
+                    <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+                </g:if>
+
+                <div class="hero-unit">
+                    <h1>Welcome to Enlist</h1>
 
 					<p>Organization information would go here</p>
 				</div>
