@@ -1,4 +1,4 @@
-<%@ page import="enlist.grails.Activity" %>
+<%@ page import="enlist.grails.Role; enlist.grails.Activity" %>
 
 <div class="control-group ${hasErrors(bean: activityInstance, field: 'event', 'error')} required">
 	<label for="event" class="control-label">
@@ -47,7 +47,7 @@
 		<g:message code="activity.coordinators.label" default="Coordinators" />
 	</label>
 	<div class="controls">
-		<g:select name="coordinators" from="${enlist.grails.User.list()}" multiple="multiple" optionKey="id" size="5" value="${activityInstance?.coordinators*.id}" class="many-to-many"/>
+		<g:select name="coordinators" from="${enlist.grails.UserRole.findAllByAuthority(Role.ACTIVITY_COORDINATOR)}" multiple="multiple" optionKey="id" size="5" value="${activityInstance?.coordinators*.id}" class="many-to-many"/>
 	</div>
 </div>
 
