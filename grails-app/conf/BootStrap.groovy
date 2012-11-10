@@ -21,19 +21,36 @@ class BootStrap {
 								emailSender: 'enlist@example.com',
 								address: new Address().findWhere(zip: '12345')
 			).save(failOnError:true)
-			
-			// Statuses
-			new Status(status: 'Stub').save()
-			new Status(status: 'Active').save()
-			new Status(status: 'Archived').save()
-			new Status(status: 'Pending').save()
 
+            // Statuses
+            def stubStatus = new Status(status: 'Stub').save()
+            def activeStatus = new Status(status: 'Active').save()
+            def archivedStatus = new Status(status: 'Archived').save()
+            def pendingStatus = new Status(status: 'Pending').save()
+
+            // Addresses
+            def mnAddress = new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
+            def ilAddress = new Address(address1: '456 Another Ave', city: 'Chicago', state: 'IL', zip: '65432').save(failOnError: true)
+            def txAddress = new Address(address1: '789 Big Tex Drive', city: 'Dallas', state: 'TX', zip: '76543').save(failOnError: true)
+
+            // Chapters
+            def mnChapter = new Chapter(name: 'Minneapolis', address: mnAddress, status: activeStatus).save(failOnError: true)
+            def ilChapter = new Chapter(name: 'Chicago', address: ilAddress, status: activeStatus).save(failOnError: true)
+            def txChapter = new Chapter(name: 'Dallas', address: txAddress, status: activeStatus).save(failOnError: true)
 
             // CatalogItemCategories
-            CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save()
-            CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save()
-			
-			// CatalogItems
+            CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save(failOnError: true)
+            CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save(failOnError: true)
+
+            // Events and Activities
+            def testEvent1 = new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
+                    end: new Date().clearTime(), status: activeStatus, chapter: mnChapter).save(failOnError: true)
+            def nowTime = new Date().getTime()
+            new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
+                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                    event: testEvent1, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+
+            // CatalogItems
 			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
 								description: '',
 								category: CICRaceDiscounts,
@@ -72,7 +89,7 @@ class BootStrap {
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
-                    status: new Status().findWhere(status: 'Active')
+                    status: activeStatus
             ).save(failOnError:true)
 
             new UserRole(

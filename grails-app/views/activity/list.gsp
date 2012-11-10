@@ -57,6 +57,8 @@
 							<g:sortableColumn property="numPeopleNeeded" title="${message(code: 'activity.numPeopleNeeded.label', default: 'Num People Needed')}" />
 						
 							<g:sortableColumn property="points" title="${message(code: 'activity.points.label', default: 'Points')}" />
+
+                            <g:sortableColumn property="featured" title="${message(code: 'activity.featured.label', default: 'Featured')}" />
 						
 							<th></th>
 						</tr>
@@ -74,10 +76,12 @@
 							<td>${fieldValue(bean: activityInstance, field: "location")}</td>
 						
 							<td>${fieldValue(bean: activityInstance, field: "numPeopleNeeded")}</td>
-						
-							<td>${fieldValue(bean: activityInstance, field: "points")}</td>
-						
-							<td class="link">
+
+                            <td>${fieldValue(bean: activityInstance, field: "points")}</td>
+
+                            <td>${fieldValue(bean: activityInstance, field: "featured")}</td>
+
+                            <td class="link">
 								<g:link action="show" id="${activityInstance.id}" class="btn btn-small">Show &raquo;</g:link>
 							</td>
 						</tr>

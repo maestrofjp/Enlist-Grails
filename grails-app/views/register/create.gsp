@@ -30,6 +30,7 @@
 
 			<fieldset>
 				<g:form class="form-horizontal" action="submit" >
+					<f:field bean="user" property="chapter"/>
 					<f:field bean="user" property="firstName"/>
 					<f:field bean="user" property="lastName"/>
 					<f:field bean="user" property="username"/>

@@ -119,6 +119,14 @@
 	</div>
 </div>
 
+<div class="control-group ${hasErrors(bean: activityInstance, field: 'featured', 'error')} ">
+    <label for="featured" class="control-label">
+        <g:message code="activity.featured.label" default="Featured" />
+    </label>
+    <div class="controls">
+        <g:checkBox name="featured" value="${activityInstance?.featured}" />
+    </div>
+</div>
 
 <script>
 	$('#startTimePicker').timepicker().on('change',function(event){

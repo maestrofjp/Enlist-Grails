@@ -40,10 +40,22 @@
 					
 					<div class="span6">
 						<h2>Featured Activities</h2>
-						
-						<ul class="nav nav-list">
-						
-						</ul>
+
+                        <g:if test="${featuredActivities}">
+                            <ul class="nav nav-list">
+                                <g:each in="${featuredActivities}">
+                                    <li>
+                                        <g:link controller="activity" action="show" id="${it.id}">
+                                            ${it.title} (<g:formatDate date="${it.startDate}" type="datetime" style="SHORT" /> -
+                                            <g:formatDate date="${it.endDate}" type="datetime" style="SHORT" />)
+                                        </g:link>
+                                    </li>
+                                </g:each>
+                            </ul>
+                        </g:if>
+                        <g:else>
+                            <p><g:message code="activity.noneFeatured" /></p>
+                        </g:else>
 					</div>
 					
 					<div class="span6">

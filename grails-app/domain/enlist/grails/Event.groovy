@@ -20,7 +20,7 @@ class Event {
 		start()
 		end(validator: {val, obj, errors ->
             if (obj.end && obj.start) {
-                if (obj.end.time <= obj.start.time) {
+                if (obj.end.time < obj.start.time) {
                     obj.errors.reject("enddate.shouldbe.after.startdate", "End date should be after the start date.");
                 }
             }
