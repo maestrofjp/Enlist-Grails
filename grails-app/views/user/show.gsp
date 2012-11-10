@@ -84,13 +84,6 @@
 						
 					</g:if>
 				
-					<g:if test="${userInstance?.role}">
-						<dt><g:message code="user.role.label" default="Role" /></dt>
-						
-							<dd><g:link controller="role" action="show" id="${userInstance?.role?.id}">${userInstance?.role?.encodeAsHTML()}</g:link></dd>
-						
-					</g:if>
-				
 					<g:if test="${userInstance?.status}">
 						<dt><g:message code="user.status.label" default="Status" /></dt>
 						
