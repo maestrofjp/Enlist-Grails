@@ -10,6 +10,7 @@ class BootStrap {
 			
 			// Organization
 			new Address(address1: '123 Main St', city: 'Anywhere', state: 'MN', zip: '12345').save(failOnError:true)
+			Email email = new Email(username:"enlistappg48@gmail.com", password:"Grails48Hack", host:"smtp.gmail.com", port:465).save(failOnError:true)
 			new Organization(name: 'Cool Project',
 								emailSender: 'enlist@example.com',
 								address: new Address().findWhere(zip: '12345')
@@ -19,6 +20,7 @@ class BootStrap {
 			new Status(status: 'Stub').save()
 			new Status(status: 'Active').save()
 			new Status(status: 'Archived').save()
+			new Status(status: 'Pending').save()
 			
 			// Roles
 			new Role(name: 'Organization Administrator', authority: 'ROLE_ADMIN').save()

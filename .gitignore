@@ -10,4 +10,3 @@ target
 /web-app/plugins
 /web-app/WEB-INF/classes
 *.iml
-.idea/
