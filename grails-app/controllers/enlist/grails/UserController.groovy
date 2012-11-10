@@ -2,6 +2,9 @@ package enlist.grails
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import org.apache.commons.lang.StringUtils
+import org.compass.core.CompassQuery
+import grails.converters.JSON
 
 @Secured(['ROLE_ADMIN'])
 class UserController {
@@ -100,5 +103,18 @@ class UserController {
             flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
             redirect(action: "show", id: id)
         }
+    }
+    def search() {
+        def keywords = params["q"]
+        if(StringUtils.isEmpty(keywords)) {
+            render(view: "list", model: [userInstanceList: User.list(params), userInstanceTotal: User.count()])
+            return
+        }
+        def searchClosure = {
+            queryString(keywords)
+            sort(CompassQuery.SortImplicitType.SCORE)
+        }
+        def searchResults = User.search(searchClosure, [offset : params.offset ?: 0, max : params.max ?: 10])
+        render(view: "list", model: [userInstanceList: searchResults.results, userInstanceTotal: searchResults.total])
     }
 }

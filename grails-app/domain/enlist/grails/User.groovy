@@ -25,6 +25,11 @@ class User {
 	
 	static embedded = ['address']
 
+    static searchable = {
+        firstName index : "analyzed"
+        lastName index : "analyzed"
+    }
+
     static constraints = {
         username(blank: false
 			, unique: true

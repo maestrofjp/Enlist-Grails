@@ -39,6 +39,13 @@
 				<g:if test="${flash.message}">
 				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
+
+                <div class="search-item">
+                    <form class="form-search" action="search">
+                        <input type="text" class="input-medium search-query" name="q">
+                        <button type="submit" class="btn">Search</button>
+                    </form>
+                </div>
 				
 				<table class="table table-striped">
 					<thead>
