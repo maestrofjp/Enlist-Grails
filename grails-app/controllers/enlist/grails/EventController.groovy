@@ -11,7 +11,9 @@ class EventController {
     }
 
     def list(Integer max) {
+		log.debug "paraams: $params"
         params.max = Math.min(max ?: 10, 100)
+
         [eventInstanceList: Event.list(params), eventInstanceTotal: Event.count()]
     }
 

@@ -27,6 +27,9 @@ class RegisterController {
 	def confirm() {
 		def user = User.get(params.id)
 		user.status = Status.findByStatus("Active")
-		render "Thanks ${user.firstName}, your registration is now confirmed!"
+
+		flash.message = "Thanks ${user.firstName}, your registration is complete"
+		redirect(controller: "event", action: "list")
+//		render "Thanks ${user.firstName}, your registration is now confirmed!"
 	}
 }
