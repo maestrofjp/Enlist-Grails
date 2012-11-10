@@ -7,4 +7,8 @@ class EventService {
         def status = Status.findByStatus('Active')
         return Event.findByStatusAndStartGreaterThan(status, yesterday, [sort:'start', order:'asc'])
     }
+
+    def getFeaturedActivities() {
+        return Activity.findAllByFeatured(true)
+    }
 }
