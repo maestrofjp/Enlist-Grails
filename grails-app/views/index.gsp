@@ -19,7 +19,7 @@
                         </ul>
                     </g:if>
                     <g:else>
-                        <p><g:message code="event.noneUpcoming" />/p>
+                        <p><g:message code="event.noneUpcoming" /></p>
                     </g:else>
                 </div>
 			</aside>
