@@ -13,8 +13,7 @@ class BootStrap {
 			Email email = new Email(username:"enlistappg48@gmail.com", password:"Grails48Hack", host:"smtp.gmail.com", port:465).save(failOnError:true)
 			new Organization(name: 'Cool Project',
 								emailSender: 'enlist@example.com',
-								address: new Address().findWhere(zip: '12345'),
-								email: email
+								address: new Address().findWhere(zip: '12345')
 			).save(failOnError:true)
 			
 			// Statuses
