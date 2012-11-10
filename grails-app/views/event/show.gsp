@@ -20,12 +20,14 @@
 								<g:message code="default.list.label" args="[entityName]" />
 							</g:link>
 						</li>
+						<enlist:isAdmin>
 						<li>
 							<g:link class="create" action="create">
 								<i class="icon-plus"></i>
 								<g:message code="default.create.label" args="[entityName]" />
 							</g:link>
 						</li>
+						</enlist:isAdmin>
 					</ul>
 				</div>
 			</div>
@@ -79,19 +81,21 @@
 
 				</dl>
 
-				<g:form>
-					<g:hiddenField name="id" value="${eventInstance?.id}" />
-					<div class="form-actions">
-						<g:link class="btn" action="edit" id="${eventInstance?.id}">
-							<i class="icon-pencil"></i>
-							<g:message code="default.button.edit.label" default="Edit" />
-						</g:link>
-						<button class="btn btn-danger" type="submit" name="_action_delete">
-							<i class="icon-trash icon-white"></i>
-							<g:message code="default.button.delete.label" default="Delete" />
-						</button>
-					</div>
-				</g:form>
+				<enlist:isAdmin>
+					<g:form>
+						<g:hiddenField name="id" value="${eventInstance?.id}" />
+						<div class="form-actions">
+							<g:link class="btn" action="edit" id="${eventInstance?.id}">
+								<i class="icon-pencil"></i>
+								<g:message code="default.button.edit.label" default="Edit" />
+							</g:link>
+							<button class="btn btn-danger" type="submit" name="_action_delete">
+								<i class="icon-trash icon-white"></i>
+								<g:message code="default.button.delete.label" default="Delete" />
+							</button>
+						</div>
+					</g:form>
+				</enlist:isAdmin>
 
 			</div>
 
