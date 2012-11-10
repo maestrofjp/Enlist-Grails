@@ -31,8 +31,9 @@ class User {
 			, size: 3..12
 			, matches: '[0-9a-zA-Z]{3,12}'
 		)
-        password(blank: false
-			, validator: { pwd, user -> return pwd != user.username }
+        password(blank: false, password: true, validator: { pwd, user ->
+				return pwd != user.username
+			}
 		)
         enabled(default: true, blank: false)
         accountExpired(default: false, blank: false)
