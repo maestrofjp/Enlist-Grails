@@ -127,8 +127,10 @@
 	/* TODO: Auto-populate the end time with the same time + 1 hour */
     var requiredEmbeddedField= "req-emb";
     var $embeddedView = $('#user-location-address');
+    var isInitiallyShown = $embeddedView.hasClass("in");
     $embeddedView.find(":input[required]").each(function(){
         $(this).addClass(requiredEmbeddedField)
+        if(isInitiallyShown == false) $(this).removeAttr("required");
     });
     $embeddedView.on('hidden', function () {
         $embeddedView.find("."+requiredEmbeddedField).each(function(){
