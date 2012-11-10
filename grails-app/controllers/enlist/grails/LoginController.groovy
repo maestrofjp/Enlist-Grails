@@ -16,21 +16,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 class LoginController {
 
-	/**
-	 * Dependency injection for the authenticationTrustResolver.
-	 */
 	def authenticationTrustResolver
-
-	/**
-	 * Dependency injection for the springSecurityService.
-	 */
 	def springSecurityService
+    def eventService
 
 	/**
 	 * Default action; redirects to 'defaultTargetUrl' if logged in, /login/auth otherwise.
 	 */
 	def index = {
 		if (springSecurityService.isLoggedIn()) {
+            flash.upcomingEvents = eventService.getUpcomingEvents()
 			redirect uri: SpringSecurityUtils.securityConfig.successHandler.defaultTargetUrl
 		}
 		else {
