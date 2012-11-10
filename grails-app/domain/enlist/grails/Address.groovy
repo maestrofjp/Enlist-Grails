@@ -16,9 +16,10 @@ class Address {
 		state(blank:false)
 		zip(blank:false)
 		id(nullable:true, display:false)
+		version(nullable:true, display:false)
     }
 	
 	String toString() {
-        "${address1} ${city}, ${state} ${zip}"
+        "${address1}, ${city}, ${state} ${zip}"
     }
 }
