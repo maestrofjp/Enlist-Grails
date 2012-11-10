@@ -20,7 +20,7 @@ class EnlistTagLib {
 		new NavItem(name: "Activites",  controller: "activity")
 	])
 
-	def nav = { lattrs, body ->
+	def nav = { attrs, body ->
 		def user = springSecurityService.getCurrentUser()
 		
 		if (user?.checkAdmin()) {
@@ -30,6 +30,13 @@ class EnlistTagLib {
 		}
 	}
 	
+	def isAdmin = { attrs, body -> 
+		def user = springSecurityService.getCurrentUser()
+		
+		if (user?.checkAdmin()) {
+			out << body()
+		}
+    }
 }	
 
 class NavItem {

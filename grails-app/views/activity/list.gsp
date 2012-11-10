@@ -20,14 +20,14 @@
 								<g:message code="default.list.label" args="[entityName]" />
 							</g:link>
 						</li>
-                        <g:if test="${isAdmin}">
+                        <enlist:isAdmin>
                             <li>
                                 <g:link class="create" action="create">
                                     <i class="icon-plus"></i>
                                     <g:message code="default.create.label" args="[entityName]" />
                                 </g:link>
                             </li>
-                        </g:if>
+                        </enlist:isAdmin>
 					</ul>
 				</div>
 			</div>
