@@ -3,6 +3,8 @@ package enlist.grails
 class EnlistTagLib {
 
     static namespace = "enlist"
+	
+	def springSecurityService
 
     List adminAreas = new ArrayList<NavItem>([
         new NavItem(name: "Home",       controller: "/"),
@@ -18,13 +20,14 @@ class EnlistTagLib {
 		new NavItem(name: "Activites",  controller: "activity")
 	])
 
-	
-    def adminNav = {attrs ->
-        out << g.render(template: "/nav", model: [areas: adminAreas])
-    }
-
-	def volunteerNav = {attrs ->
-		out << g.render(template: "/nav", model: [areas: volunteerAreas])
+	def nav = { lattrs, body ->
+		def user = springSecurityService.getCurrentUser()
+		
+		if (user?.checkAdmin()) {
+			out << g.render(template: "/nav", model: [areas: adminAreas])
+		} else {
+			out << g.render(template: "/nav", model: [areas: volunteerAreas])
+		}
 	}
 	
 }	
