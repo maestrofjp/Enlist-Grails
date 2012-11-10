@@ -1,6 +1,8 @@
 package enlist.grails
 
 import org.springframework.dao.DataIntegrityViolationException
+import org.springframework.context.annotation.Role
+import grails.plugins.springsecurity.Secured
 
 class EventController {
 
@@ -17,10 +19,12 @@ class EventController {
         [eventInstanceList: Event.list(params), eventInstanceTotal: Event.count()]
     }
 
+	@Secured(['ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def create() {
         [eventInstance: new Event(params)]
     }
 
+	@Secured(['ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def save() {
 //        def eventInstance = new Event(params)  // don't use this for Domain class that has Date fields.
         def eventInstance = new Event()
@@ -45,6 +49,7 @@ class EventController {
         [eventInstance: eventInstance]
     }
 
+	@Secured(['ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def edit(Long id) {
         def eventInstance = Event.get(id)
         if (!eventInstance) {
@@ -56,6 +61,7 @@ class EventController {
         [eventInstance: eventInstance]
     }
 
+	@Secured(['ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def update(Long id, Long version) {
         def eventInstance = Event.get(id)
         if (!eventInstance) {
@@ -85,6 +91,7 @@ class EventController {
         redirect(action: "show", id: eventInstance.id)
     }
 
+	@Secured(['ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def delete(Long id) {
         def eventInstance = Event.get(id)
         if (!eventInstance) {
