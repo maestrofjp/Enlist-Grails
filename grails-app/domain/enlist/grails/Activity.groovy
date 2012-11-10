@@ -1,9 +1,5 @@
 package enlist.grails
 
-import groovy.swing.binding.JListProperties;
-
-import java.sql.Timestamp;
-
 class Activity {
 	
 	String title
@@ -23,6 +19,9 @@ class Activity {
     static embedded = ['locationAddress']
 
 
+    static mapping = {
+        endDate index : 'batchActivityIdx'
+    }
     static constraints = {
 		title(blank: false
 			, size: 3..100
