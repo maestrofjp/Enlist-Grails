@@ -11,3 +11,4 @@ target
 /web-app/WEB-INF/classes
 *.iml
 .idea/
+/target-eclipse

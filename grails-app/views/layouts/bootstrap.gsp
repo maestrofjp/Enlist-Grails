@@ -43,7 +43,13 @@
 					
 					<a class="brand" href="${createLink(uri: '/')}"><g:img dir="images" file="Enlist_Logo_Small.png" style="margin-top:-11px;" /></a>
 
-                    <enlist:adminNav />
+					<%-- TODO: This is really hacky, but works --%>
+					<sec:ifAnyGranted roles="ROLE_ADMIN,ROLE_CHAPTER_ADMIN">
+                    	<enlist:adminNav />
+                    </sec:ifAnyGranted>
+                    <sec:ifNotGranted roles="ROLE_ADMIN,ROLE_CHAPTER_ADMIN">
+                    	<enlist:volunteerNav />
+                    </sec:ifNotGranted>
 
 		            <div class="pull-right">
 		            	<ul class="nav">
