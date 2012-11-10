@@ -24,14 +24,14 @@
 	</label>
 	<div class="controls">
 		<g:textField name="location" value="${activityInstance?.location}"/>
-        %{--<button type="button" class="btn" data-toggle="collapse" data-target="#user-location-address">--}%
-            %{--Fill in Address--}%
-        %{--</button>--}%
+        <button type="button" class="btn" data-toggle="collapse" data-target="#user-location-address">
+            Fill in Address
+        </button>
 	</div>
 </div>
-%{--<div id="user-location-address">--}%
-    %{--<f:field bean="activityInstance" property="locationAddress"/>--}%
-%{--</div>--}%
+<div id="user-location-address" class="collapse">
+    <f:field bean="activityInstance" property="locationAddress"/>
+</div>
 
 <div class="control-group ${hasErrors(bean: activityInstance, field: 'description', 'error')} required">
 	<label for="description" class="control-label">
@@ -125,4 +125,18 @@
 	$('.datepicker').datepicker();
 	/* TODO: Auto-populate the end date with the same date */
 	/* TODO: Auto-populate the end time with the same time + 1 hour */
+    var requiredEmbeddedField= "req-emb";
+    var $embeddedView = $('#user-location-address');
+    $embeddedView.find(":input[required]").each(function(){
+        $(this).addClass(requiredEmbeddedField)
+    });
+    $embeddedView.on('hidden', function () {
+        $embeddedView.find("."+requiredEmbeddedField).each(function(){
+            $(this).removeAttr("required");
+        })
+    }).on('shown', function () {
+        $embeddedView.find("."+requiredEmbeddedField).each(function(){
+            $(this).attr("required", "required");
+        })
+    });
 </script>

@@ -2,6 +2,7 @@ package enlist.grails
 
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
+import org.apache.commons.lang.StringUtils
 
 @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
 class ActivityController {
@@ -18,17 +19,18 @@ class ActivityController {
     }
 
     def create() {
+        def activityInstance = new Activity()
+        bindData(activityInstance, params)
+        if (StringUtils.isBlank(activityInstance.locationAddress?.address1))  activityInstance.locationAddress = null
 		switch (request.method) {
 		case 'GET':
-        	[activityInstance: new Activity(params)]
+        	[activityInstance: activityInstance]
 			break
 		case 'POST':
 //	        def activityInstance = new Activity(params)
 //			// Concatenate date/time and add to properties
 //			activityInstance.properties.startDate = new Date().parse('MM/dd/yyyy h:mm a', params._startDate + ' ' + params._startTime)
 //			activityInstance.properties.endDate = new Date().parse('MM/dd/yyyy h:mm a', params._endDate + ' ' + params._endTime)
-            def activityInstance = new Activity()
-            bindData(activityInstance, params)
 			
 	        if (!activityInstance.save(flush: true)) {
 	            render view: 'create', model: [activityInstance: activityInstance]
@@ -84,6 +86,7 @@ class ActivityController {
 	        }
 
 	        activityInstance.properties = params
+            if (StringUtils.isBlank(activityInstance.locationAddress?.address1))  activityInstance.locationAddress = null
 
 	        if (!activityInstance.save(flush: true)) {
 	            render view: 'edit', model: [activityInstance: activityInstance]

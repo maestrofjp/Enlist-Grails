@@ -22,7 +22,9 @@ class ChapterController {
     }
 
     def save() {
-        def chapterInstance = new Chapter(params)
+//        def chapterInstance = new Chapter(params)
+        def chapterInstance = new Chapter()
+        bindData(chapterInstance, params)
         //flush: true
         if (!chapterInstance.save()) {
             render(view: "create", model: [chapterInstance: chapterInstance])
