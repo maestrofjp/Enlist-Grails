@@ -48,14 +48,17 @@
 				<div class="pull-right">
 					<ul class="nav">
 						<sec:ifLoggedIn>
-						<%-- TODO: Only show if certain roles --%>
-							<li class="divider-vertical"></li>
-							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> App Settings<b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
-								</ul>
-							</li>
+							<enlist:isAdmin>
+								<li class="divider-vertical"></li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> App Settings<b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><g:link controller="catalogItem" action="list">Rewards Catalog Items</g:link>
+										<li><g:link controller="catalogItemCategory" action="list">Rewards Catalog Categories</g:link>
+										<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
+									</ul>
+								</li>
+							</enlist:isAdmin>
 
 							<li class="divider-vertical"></li>
 							<li class="dropdown">
