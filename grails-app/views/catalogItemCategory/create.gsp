@@ -1,9 +1,9 @@
-<%=packageName%>
+<%@ page import="enlist.grails.CatalogItemCategory" %>
 <!doctype html>
 <html>
 	<head>
 		<meta name="layout" content="bootstrap">
-		<g:set var="entityName" value="\${message(code: '${domainClass.propertyName}.label', default: '${className}')}" />
+		<g:set var="entityName" value="${message(code: 'catalogItemCategory.label', default: 'CatalogItemCategory')}" />
 		<title><g:message code="default.create.label" args="[entityName]" /></title>
 	</head>
 	<body>
@@ -12,7 +12,7 @@
 			<div class="span3">
 				<div class="well">
 					<ul class="nav nav-list">
-						<li class="nav-header">\${entityName}</li>
+						<li class="nav-header">${entityName}</li>
 						<li>
 							<g:link class="list" action="list">
 								<i class="icon-list"></i>
@@ -35,24 +35,24 @@
 					<h1><g:message code="default.create.label" args="[entityName]" /></h1>
 				</div>
 
-				<g:if test="\${flash.message}">
-				<bootstrap:alert class="alert-info">\${flash.message}</bootstrap:alert>
+				<g:if test="${flash.message}">
+				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
 
-				<g:hasErrors bean="\${${propertyName}}">
+				<g:hasErrors bean="${catalogItemCategoryInstance}">
 				<bootstrap:alert class="alert-error">
 				<ul>
-					<g:eachError bean="\${${propertyName}}" var="error">
-					<li <g:if test="\${error in org.springframework.validation.FieldError}">data-field-id="\${error.field}"</g:if>><g:message error="\${error}"/></li>
+					<g:eachError bean="${catalogItemCategoryInstance}" var="error">
+					<li <g:if test="${error in org.springframework.validation.FieldError}">data-field-id="${error.field}"</g:if>><g:message error="${error}"/></li>
 					</g:eachError>
 				</ul>
 				</bootstrap:alert>
 				</g:hasErrors>
 
 				<fieldset>
-					<g:form class="form-horizontal" action="create" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
+					<g:form class="form-horizontal" action="create" >
 						<fieldset>
-							<f:all bean="${propertyName}"/>
+							<f:all bean="catalogItemCategoryInstance"/>
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>

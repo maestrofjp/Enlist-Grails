@@ -25,6 +25,10 @@ class BootStrap {
 			new Role(name: 'Chapter Coordinator', authority: 'ROLE_CHAPTER_ADMIN').save()
 			new Role(name: 'Activity Coordinator', authority: 'ROLE_ACTIVITY_COORDINATOR').save()
 			new Role(name: 'Volunteer', authority: 'ROLE_VOLUNTEER').save()
+
+            // CatalogItemCategories
+            new CatalogItemCategory(category: 'Apparel').save()
+            new CatalogItemCategory(category: 'Race Discount').save()
 						
 			/* Users */
 			User adminUser = new User(

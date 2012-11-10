@@ -6,16 +6,19 @@ class Event {
 	
 	String name
 	String location
-	Date start = new Date()
-	Date end = new Date()
+	Date start
+	Date end
 	Status status
 
-	static hasMany = [volunteers:User, activities:Activity]
+	static hasMany = [activities:Activity]
 
     static constraints = {
+		status(blank: false)
     	name(blank:false)
     	location(blank:false)
-		
+		start()
+		end()
+		activities(display: false)
     }
 
     String toString() {
