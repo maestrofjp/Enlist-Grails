@@ -1,7 +1,5 @@
 package enlist.grails
 
-import java.sql.Timestamp;
-
 class Event {
 	
 	String name
@@ -17,7 +15,13 @@ class Event {
     	name(blank:false)
     	location(blank:false)
 		start()
-		end()
+		end(validator: {val, obj, errors ->
+            if (obj.end && obj.start) {
+                if (obj.end.time <= obj.start.time) {
+                    obj.errors.reject("enddate.shouldbe.after.startdate", "End date should be after the start date.");
+                }
+            }
+        })
 		activities(display: false)
     }
 

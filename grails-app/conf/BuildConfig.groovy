@@ -62,7 +62,8 @@ grails.project.dependency.resolution = {
 		compile ":mail:1.0"
 		compile ":quartz:0.4.2"
 		compile ":quartz-monitor:0.2"
-
+        compile ":searchable:0.6.4"
 		test ":spock:0.7"
+
     }
 }

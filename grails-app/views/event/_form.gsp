@@ -33,7 +33,7 @@
 	</label>
 	<div class="controls">
 		<div class="input-append date datepicker" data-date="${eventInstance?.start}" data-date-format="mm/dd/yyyy">
-			<input name="start" class="span8" size="16" type="text" value="${eventInstance?.start}" />
+			<input name="_start" class="span8" size="16" type="text" value="${eventInstance?.start}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 	</label>
 	<div class="controls">
 		<div class="input-append date datepicker" data-date="${eventInstance?.end}" data-date-format="mm/dd/yyyy">
-			<input name="end" class="span8" size="16" type="text" value="${eventInstance?.end}" />
+			<input name="_end" class="span8" size="16" type="text" value="${eventInstance?.end}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 	</div>

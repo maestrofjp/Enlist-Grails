@@ -77,15 +77,6 @@
 						
 					</g:if>
 				
-					<g:if test="${eventInstance?.volunteers}">
-						<dt><g:message code="event.volunteers.label" default="Volunteers" /></dt>
-						
-							<g:each in="${eventInstance.volunteers}" var="v">
-							<dd><g:link controller="user" action="show" id="${v.id}">${v?.encodeAsHTML()}</g:link></dd>
-							</g:each>
-						
-					</g:if>
-				
 				</dl>
 
 				<g:form>
