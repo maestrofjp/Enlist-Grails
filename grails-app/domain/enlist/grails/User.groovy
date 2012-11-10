@@ -1,6 +1,7 @@
 package enlist.grails
 
 import org.apache.commons.lang.StringUtils
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
 class User {
 
@@ -22,6 +23,8 @@ class User {
     boolean accountExpired = false
     boolean accountLocked = false
     boolean passwordExpired = false
+
+    Integer currPoints = 0
 	
 	static belongsTo = [chapter: Chapter]
 	
@@ -69,10 +72,15 @@ class User {
     }
     // might as well create similar method for other Role. if the role is dynamic, we can move this to bootstrap (meta programming)
     boolean checkVolunteer() {
-        Set<Role> roles = authorities
-        for(Role role : roles) if(StringUtils.equals(role.authority, Role.VOLUNTEER)) return true
+		Set<Role> roles = authorities
+		for(Role role : roles) if(StringUtils.equals(role.authority, Role.VOLUNTEER)) return true
         return false
     }
+	
+    boolean checkAdmin() {
+        return SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN,ROLE_CHAPTER_ADMIN,ROLE_ACTIVITY_COORDINATOR")
+    }
+	
 
     def beforeInsert() {
         encodePassword()

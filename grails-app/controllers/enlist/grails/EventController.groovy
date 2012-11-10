@@ -20,12 +20,9 @@ class EventController {
     }
 
     def save() {
-        println "save: ${params}"
 //        def eventInstance = new Event(params)  // don't use this for Domain class that has Date fields.
         def eventInstance = new Event()
         bindData(eventInstance, params)
-
-        println "save: ${eventInstance.start} ${eventInstance.end}"
         if (!eventInstance.save(flush: true)) {
             render(view: "create", model: [eventInstance: eventInstance])
             return
@@ -75,7 +72,6 @@ class EventController {
             }
         }
 
-        println "update: ${params}"
         eventInstance.properties = params
 
         if (!eventInstance.save(flush: true)) {

@@ -13,7 +13,6 @@ import org.springframework.beans.PropertyEditorRegistry
 class CustomPropertyEditorRegistrar implements PropertyEditorRegistrar {
 
     void registerCustomEditors(PropertyEditorRegistry registry) {
-        println "registerCustomEditors"
         registry.registerCustomEditor(Date.class, new DatePickerPropertyEditor())
     }
 }

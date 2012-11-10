@@ -43,7 +43,7 @@
 					
 					<a class="brand" href="${createLink(uri: '/')}"><g:img dir="images" file="Enlist_Logo_Small.png" style="margin-top:-11px;" /></a>
 
-                    <enlist:adminNav />
+					<enlist:nav />
 
 		            <div class="pull-right">
 		            	<ul class="nav">
