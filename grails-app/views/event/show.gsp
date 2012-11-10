@@ -9,7 +9,7 @@
 	</head>
 	<body>
 		<div class="row-fluid">
-			
+
 			<div class="span3">
 				<div class="well">
 					<ul class="nav nav-list">
@@ -29,7 +29,7 @@
 					</ul>
 				</div>
 			</div>
-			
+
 			<div class="span9">
 
 				<div class="page-header">
@@ -41,42 +41,42 @@
 				</g:if>
 
 				<dl>
-				
+
 					<g:if test="${eventInstance?.name}">
 						<dt><g:message code="event.name.label" default="Name" /></dt>
-						
+
 							<dd><g:fieldValue bean="${eventInstance}" field="name"/></dd>
-						
+
 					</g:if>
-				
+
 					<g:if test="${eventInstance?.location}">
 						<dt><g:message code="event.location.label" default="Location" /></dt>
-						
+
 							<dd><g:fieldValue bean="${eventInstance}" field="location"/></dd>
-						
+
 					</g:if>
-				
+
 					<g:if test="${eventInstance?.end}">
 						<dt><g:message code="event.end.label" default="End" /></dt>
-						
+
 							<dd><g:formatDate date="${eventInstance?.end}" /></dd>
-						
+
 					</g:if>
-				
+
 					<g:if test="${eventInstance?.start}">
 						<dt><g:message code="event.start.label" default="Start" /></dt>
-						
+
 							<dd><g:formatDate date="${eventInstance?.start}" /></dd>
-						
+
 					</g:if>
-				
+
 					<g:if test="${eventInstance?.status}">
 						<dt><g:message code="event.status.label" default="Status" /></dt>
-						
+
 							<dd><g:link controller="status" action="show" id="${eventInstance?.status?.id}">${eventInstance?.status?.encodeAsHTML()}</g:link></dd>
-						
+
 					</g:if>
-				
+
 				</dl>
 
 				<g:form>

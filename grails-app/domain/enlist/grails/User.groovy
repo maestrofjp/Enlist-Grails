@@ -70,7 +70,7 @@ class User {
     // might as well create similar method for other Role. if the role is dynamic, we can move this to bootstrap (meta programming)
     boolean checkVolunteer() {
         Set<Role> roles = authorities
-        for(Role role : roles) if(StringUtils.equals(role.authority, "ROLE_VOLUNTEER")) return true
+        for(Role role : roles) if(StringUtils.equals(role.authority, Role.VOLUNTEER)) return true
         return false
     }
 

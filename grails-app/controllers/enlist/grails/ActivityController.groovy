@@ -4,7 +4,13 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
 
-class ActivityController {
+class ActivityController extends AbstractBaseController {
+    /**
+     * Can not declare secure tag on the class level because ROLE_VOLUNTEER also need to access the controller
+     * (to read & sign up).
+     * @return
+     */
+    protected def getAdminRoles() {[Role.CHAPTER_ADMIN, Role.ADMIN]}
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
@@ -14,7 +20,7 @@ class ActivityController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count()]
+        [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count(), isAdmin : hasAdminAccess()]
     }
 
     @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
@@ -32,7 +38,7 @@ class ActivityController {
 //			// Concatenate date/time and add to properties
 //			activityInstance.properties.startDate = new Date().parse('MM/dd/yyyy h:mm a', params._startDate + ' ' + params._startTime)
 //			activityInstance.properties.endDate = new Date().parse('MM/dd/yyyy h:mm a', params._endDate + ' ' + params._endTime)
-			
+
 	        if (!activityInstance.save(flush: true)) {
 	            render view: 'create', model: [activityInstance: activityInstance]
 	            return
@@ -51,11 +57,11 @@ class ActivityController {
             redirect action: 'list'
             return
         }
+        boolean canVolunteer =  loginUser?.checkVolunteer()
+        if (activityInstance.endDate && activityInstance.endDate.time <= new Date().time)
+            canVolunteer = false // past event.
 
-        //sign up record
-        // message: "you have (not) sign up", button: "name" , action : ""
-
-        [activityInstance: activityInstance, canVolunteer : loginUser?.checkVolunteer(),
+        [activityInstance: activityInstance, canVolunteer : loginUser?.checkVolunteer(), isAdmin : hasAdminAccess(),
                 hasSignUp : ActivitySignUp.get(loginUser.id, activityInstance.id)]
     }
     @Secured(['ROLE_VOLUNTEER'])
@@ -137,10 +143,5 @@ class ActivityController {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])
             redirect action: 'show', id: params.id
         }
-    }
-    // this could be refactored to Base Controller. So it can be reused.
-    def springSecurityService
-    protected def getLoginUser() {
-        User.findByUsername(springSecurityService.authentication.name)
     }
 }

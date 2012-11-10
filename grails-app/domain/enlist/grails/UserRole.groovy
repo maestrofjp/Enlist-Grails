@@ -32,6 +32,11 @@ class UserRole implements Serializable {
         new UserRole(secUser: secUser, secRole: secRole).save(flush: flush, insert: true)
     }
 
+    static Set<User> findAllByAuthority(String authority) {
+        def res = findAll( 'from UserRole where secRole.authority=:authority', [authority: authority])
+        res.collect {it.user} as Set
+    }
+
     static boolean remove(User secUser, Role secRole, boolean flush = false) {
         UserRole instance = UserRole.findBySecUserAndSecRole(secUser, secRole)
         if (!instance) {
