@@ -21,7 +21,7 @@
 
 		<g:layoutHead/>
 		<r:layoutResources/>
-		
+
 		<!-- Resources for JQuery timepicker and datepicker -->
 		<link rel="stylesheet" type="text/css" href="${resource(dir: 'css', file: 'bootstrap-datepicker.css')}" />
 		<script src="${resource(dir: 'js', file: 'bootstrap-datepicker.js')}"></script>
@@ -34,13 +34,13 @@
 		<nav class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
-					
+
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					
+
 					<a class="brand" href="${createLink(uri: '/')}"><g:img dir="images" file="Enlist_Logo_Small.png" style="margin-top:-11px;" /></a>
 
 					<enlist:nav />
@@ -56,12 +56,12 @@
 			                			<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
 			                		</ul>
 			                	</li>
-			                	
+
 			                	<li class="divider-vertical"></li>
 			                	<li class="dropdown">
 			                		<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <sec:loggedInUserInfo field="username"/><b class="caret"></b></a>
 			                		<ul class="dropdown-menu">
-			                			<li><g:link controller="logout" action="index"><i class="icon-book"></i> My Profile</g:link></li>
+			                			<li><g:link controller="user" action="show" params="[id:sec.loggedInUserInfo(field: 'id')]"><i class="icon-book"></i> My Profile</g:link></li>
 			                			<li class="divider"></li>
 			                			<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
 			                		</ul>
@@ -70,11 +70,11 @@
 			                <sec:ifNotLoggedIn>
 			                	<li class="divider-vertical"></li>
 								<li><g:link controller="register" action="create"><i class="icon-star"></i> Register</g:link></li>
-								
+
 								<li class="divider-vertical"></li>
 								<li<%= request.forwardURI == "${createLink(uri: '/login/auth')}" ? ' class="active"' : '' %>><g:link controller='login' action='auth'><i class="icon-circle-arrow-right"></i> Login</g:link></li>
 			                </sec:ifNotLoggedIn>
-			                
+
 			                <li class="divider-vertical"></li>
 		                </ul>
 		            </div>
