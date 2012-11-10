@@ -75,6 +75,7 @@ class EventController {
             }
         }
 
+        println "update: ${params}"
         eventInstance.properties = params
 
         if (!eventInstance.save(flush: true)) {

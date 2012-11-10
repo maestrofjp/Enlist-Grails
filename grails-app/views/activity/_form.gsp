@@ -1,4 +1,4 @@
-<%@ page import="enlist.grails.Role; enlist.grails.Activity" %>
+<%@ page import="enlist.grails.util.DateParser; enlist.grails.Role; enlist.grails.Activity" %>
 
 <div class="control-group ${hasErrors(bean: activityInstance, field: 'event', 'error')} required">
 	<label for="event" class="control-label">
@@ -57,8 +57,8 @@
 	</label>
 	<div class="controls">
         <g:hiddenField name="startDate" value="struct" />
-		<div class="input-append date datepicker" data-date="${activityInstance?.startDate}" data-date-format="mm/dd/yyyy">
-			<input name="startDate_date" class="span8" size="16" type="text" value="${activityInstance?.startDate}" />
+		<div class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.startDate)}" data-date-format="mm/dd/yyyy">
+			<input name="startDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(activityInstance?.startDate)}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 		<div class="input-append bootstrap-timepicker-component">
@@ -76,8 +76,8 @@
 	</label>
 	<div class="controls">
         <g:hiddenField name="endDate" value="struct" />
-		<div class="input-append date datepicker" data-date="${activityInstance?.endDate}" data-date-format="mm/dd/yyyy">
-			<input name="endDate_date" class="span8" size="16" type="text" value="${activityInstance?.endDate}" />
+		<div class="input-append date datepicker" data-date="${DateParser.printDefault(activityInstance?.endDate)}" data-date-format="mm/dd/yyyy">
+			<input name="endDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(activityInstance?.endDate)}" />
 			<span class="add-on"><i class="icon-th"></i></span>
 		</div>
 		<div class="input-append bootstrap-timepicker-component">
