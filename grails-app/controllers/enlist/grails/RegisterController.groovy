@@ -21,15 +21,15 @@ class RegisterController {
 			subject "Registration Confirmation"
 			html "${user.firstName} ${user.lastName},<br><br>Thanks for registering with Enlist.  Click <a href=${g.createLink(controller:'register',action:'confirm',absolute:true,id:user.id)}>here</a> to confirm your registration."
 		}
-		render("Email Confirmation Sent!")
+		flash.message = "An email confirmation has been sent. Follow the instructions there."
+		redirect(controller: "dashboard", action: "index")
 	}
 
 	def confirm() {
 		def user = User.get(params.id)
 		user.status = Status.findByStatus("Active")
 
-		flash.message = "Thanks ${user.firstName}, your registration is complete"
+		flash.message = "Thanks ${user.firstName}, your registration is complete."
 		redirect(controller: "event", action: "list")
-//		render "Thanks ${user.firstName}, your registration is now confirmed!"
 	}
 }
