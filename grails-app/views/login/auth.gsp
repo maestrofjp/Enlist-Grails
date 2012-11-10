@@ -58,7 +58,7 @@
 			<p>We made it simple so we bet you'll get be done in less than 2 minutes!</p>
 		</div>
 		<div class="form-actions">
-			<g:link url="/${meta(name: 'app.name')}" class="btn btn-large btn-primary pull-left">Register</g:link>
+			<g:link controller="register" action="create" class="btn btn-large btn-primary pull-left">Register</g:link>
 		</div>
 	</div>
 	<div class="span3"></div>
