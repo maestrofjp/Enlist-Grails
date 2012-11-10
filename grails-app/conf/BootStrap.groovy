@@ -49,6 +49,22 @@ class BootStrap {
                     secRole: new Role().findWhere(authority: 'ROLE_ADMIN')
             ).save(failOnError: true)
 
+
+            User volunteerUser = new User(
+                    firstName: 'Volunteer',
+                    lastName: 'Tester',
+                    email: 'joe2@example.com',
+                    username: 'guest',
+                    password:  'test123',
+                    enabled: true,
+                    status: new Status().findWhere(status: 'Active')
+            ).save(failOnError:true)
+
+            new UserRole(
+                    secUser: volunteerUser,
+                    secRole: new Role().findWhere(authority: 'ROLE_VOLUNTEER')
+            ).save(failOnError: true)
+
 		}
     }
     def destroy = {

@@ -4,7 +4,6 @@ import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
 
-@Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
 class ActivityController {
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
@@ -18,6 +17,7 @@ class ActivityController {
         [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count()]
     }
 
+    @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
     def create() {
         def activityInstance = new Activity()
         bindData(activityInstance, params)
@@ -27,6 +27,7 @@ class ActivityController {
         	[activityInstance: activityInstance]
 			break
 		case 'POST':
+            // no need to manually parse the date input. it has been handled in custom property editor.
 //	        def activityInstance = new Activity(params)
 //			// Concatenate date/time and add to properties
 //			activityInstance.properties.startDate = new Date().parse('MM/dd/yyyy h:mm a', params._startDate + ' ' + params._startTime)
@@ -51,9 +52,28 @@ class ActivityController {
             return
         }
 
-        [activityInstance: activityInstance]
+        //sign up record
+        // message: "you have (not) sign up", button: "name" , action : ""
+
+        [activityInstance: activityInstance, canVolunteer : loginUser?.checkVolunteer(),
+                hasSignUp : ActivitySignUp.get(loginUser.id, activityInstance.id)]
+    }
+    @Secured(['ROLE_VOLUNTEER'])
+    def signUp() {
+        println "signUp"
+        def activityInstance = Activity.get(params.id)
+        ActivitySignUp.create(loginUser, activityInstance, true)
+        redirect action: 'show', id: activityInstance.id
+    }
+    @Secured(['ROLE_VOLUNTEER'])
+    def cancelSignUp() {
+        println "cancelSignUp"
+        def activityInstance = Activity.get(params.id)
+        ActivitySignUp.remove(loginUser, activityInstance, true)
+        redirect action: 'show', id: activityInstance.id
     }
 
+    @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
     def edit() {
 		switch (request.method) {
 		case 'GET':
@@ -99,6 +119,7 @@ class ActivityController {
 		}
     }
 
+    @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
     def delete() {
         def activityInstance = Activity.get(params.id)
         if (!activityInstance) {
@@ -116,5 +137,10 @@ class ActivityController {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])
             redirect action: 'show', id: params.id
         }
+    }
+    // this could be refactored to Base Controller. So it can be reused.
+    def springSecurityService
+    protected def getLoginUser() {
+        User.findByUsername(springSecurityService.authentication.name)
     }
 }

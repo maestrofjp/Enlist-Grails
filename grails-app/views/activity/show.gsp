@@ -37,8 +37,21 @@
 				</div>
 
 				<g:if test="${flash.message}">
-				<bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
+				    <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
 				</g:if>
+                <g:if test="${canVolunteer}">
+                    <div class="sign-up">
+                        <g:form class="form-search" action="${hasSignUp ? 'cancelSignUp' : 'signUp'}" id="${activityInstance?.id}">
+                            <g:if test="${hasSignUp}">
+                                <button type="submit" class="btn">Cancel Sign Up</button>
+                            </g:if>
+                            <g:else>
+                                <button type="submit" class="btn btn-info">Sign Up</button>
+                            </g:else>
+                        </g:form>
+                    </div>
+                </g:if>
+
 
 				<dl>
 				
