@@ -32,8 +32,17 @@ class BootStrap {
             // CatalogItemCategories
             CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save()
             CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save()
-			
-			// CatalogItems
+
+            // Events and Activities
+            new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
+                    end: new Date().clearTime(), status: Status.findByStatus('Active')).save(failOnError: true)
+            new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
+            def nowTime = new Date().getTime()
+            new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
+                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                    event: Event.findByName('Test Event 1'), pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+
+            // CatalogItems
 			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
 								description: '',
 								category: CICRaceDiscounts,
