@@ -60,14 +60,23 @@ grails.exceptionresolver.params.exclude = ['password']
 grails.hibernate.cache.queries = false
 
 environments {
-	development {
-		grails.logging.jul.usebridge = true
-		grails.mail.host = '127.0.0.1'
-	}
-	production {
-		grails.logging.jul.usebridge = false
-		// TODO: grails.serverURL = "http://www.changeme.com"
-		// TODO: grails.mail.host = 'IP'
+    development {
+        grails.logging.jul.usebridge = true
+		grails {
+			mail {
+				host = "smtp.gmail.com"
+				port = 465
+				username = "enlistappg48@gmail.com"
+				password = "Grails48Hack"
+				props = ["mail.smtp.auth":"true",
+					"mail.smtp.socketFactory.port":"465",
+					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+					"mail.smtp.socketFactory.fallback":"false"]
+			}
+		}
+    }
+    production {
+        grails.logging.jul.usebridge = false
 	}
 }
 
