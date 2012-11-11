@@ -130,8 +130,7 @@ class UserController {
         render(view: "list", model: [userInstanceList: searchResults.results, userInstanceTotal: searchResults.total])
     }
 	
-	def isUsernameAvailable() {
-		def username = params["username"]
+	def isUsernameAvailable(final String username) {
 		def user = User.findByUsername(username)
 		def result = [available: true]
 		
