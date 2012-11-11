@@ -26,11 +26,7 @@ class DateParser {
     }
     static String printDefault(Date value ) { print(DEFAULT_DATE_FORMAT, value) }
     static String printDateTimeDefault(Date value ) { print(DEFAULT_DATE_TIME_FORMAT, value) }
-    static String printTimeDefault(Date value ) {
-        String str = print(DEFAULT_TIME_ONLY_FORMAT, value)
-        println "printTimeDefault: ${str}"
-        return str;
-    }
+    static String printTimeDefault(Date value ) { print(DEFAULT_TIME_ONLY_FORMAT, value) }
 
     static Date parse(String format, String value ) {
         if(StringUtils.isEmpty(value)) return null

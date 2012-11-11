@@ -37,7 +37,14 @@
 					<f:field bean="user" property="password"/>
 					<f:field bean="user" property="email"/>
 					<f:field bean="user" property="phone"/>
-					<f:field bean="user" property="address"/>
+
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#register-address">
+                        Fill in address now
+                    </button>
+                    <div id="register-address" class="collapse">
+                        <f:field bean="user" property="address"/>
+                    </div>
+					%{--<f:field bean="user" property="address"/>--}%
 
 						<div class="form-actions">
 							<button type="submit" class="btn btn-primary">
@@ -51,5 +58,24 @@
 		</div>
 
 	</div>
+    <script>
+
+        var requiredEmbeddedField= "req-emb";
+        var $embeddedView = $('#register-address');
+        var isInitiallyShown = $embeddedView.hasClass("in");
+        $embeddedView.find(":input[required]").each(function(){
+            $(this).addClass(requiredEmbeddedField)
+            if(isInitiallyShown == false) $(this).removeAttr("required");
+        });
+        $embeddedView.on('hidden', function () {
+            $embeddedView.find("."+requiredEmbeddedField).each(function(){
+                $(this).removeAttr("required");
+            })
+        }).on('shown', function () {
+                    $embeddedView.find("."+requiredEmbeddedField).each(function(){
+                        $(this).attr("required", "required");
+                    })
+        });
+    </script>
 </body>
 </html>
