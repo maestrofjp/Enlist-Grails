@@ -31,6 +31,10 @@ grails.project.dependency.resolution = {
         //mavenRepo "http://repository.codehaus.org"
         //mavenRepo "http://download.java.net/maven/2/"
         //mavenRepo "http://repository.jboss.com/maven2/"
+		
+		// For CloudFoundry plugin
+		mavenRepo "http://maven.springframework.org/milestone/"
+		
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
@@ -48,7 +52,7 @@ grails.project.dependency.resolution = {
 
         compile ":spring-security-core:1.2.7.3"
 		compile ":cache-headers:1.1.5"
-
+		
         runtime ":zipped-resources:1.0"
         runtime ":cached-resources:1.0"
         runtime ":yui-minify-resources:0.1.4"
