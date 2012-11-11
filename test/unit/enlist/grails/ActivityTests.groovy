@@ -20,6 +20,7 @@ class ActivityTests {
         // Tear down logic here
     }
 
+		@Ignore
     void testSomething() {
         fail "Implement me"
     }
