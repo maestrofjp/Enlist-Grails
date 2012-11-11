@@ -4,9 +4,11 @@ package enlist.grails
 
 import org.junit.*
 import grails.test.mixin.*
+import grails.plugins.springsecurity.SpringSecurityService
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 
 @TestFor(PointTransactionController)
-@Mock(PointTransaction)
+@Mock([PointTransaction,Status,Role,User,UserRole,SpringSecurityService])
 class PointTransactionControllerTests {
 
 
@@ -21,139 +23,74 @@ class PointTransactionControllerTests {
         assert "/pointTransaction/list" == response.redirectedUrl
     }
 
-    void testList() {
-
+    void testListByVolunteer() {
+        def users = prepareData()
+        controller.metaClass.getLoginUser = { users.volunteer }
         def model = controller.list()
 
-        assert model.pointTransactionInstanceList.size() == 0
-        assert model.pointTransactionInstanceTotal == 0
+        assert model.pointTransactionInstanceList.size() == 5
+        assert model.pointTransactionInstanceTotal == 5
+    }
+//    void testListByAdmin() {
+//        def users = prepareData()
+//        SpringSecurityUtils.metaClass.static.ifAnyGranted = { true}
+//        controller.metaClass.getLoginUser = { users.admin }
+//        def model = controller.list()
+//
+//        assert model.pointTransactionInstanceList.size() == 10
+//        assert model.pointTransactionInstanceTotal == 10
+//    }
+
+    def prepareData() {
+        User.metaClass.encodePassword = {}
+        User.metaClass.isDirty  = {false}
+        def activeStatus = new Status(status: 'Active').save(failOnError: true)
+        def superAdminRole = new Role(name: 'Organization Administrator', authority: Role.ADMIN).save(failOnError: true)
+        def volunteerRole = new Role(name: 'Volunteer', authority: Role.VOLUNTEER).save(failOnError: true)
+
+        User adminUser = new User(
+                firstName: 'Joe',
+                lastName: 'Tester',
+                email: 'joe@example.com',
+                username: 'admin',
+                password:  'test123',
+                enabled: true,
+                status: activeStatus
+        ).save(failOnError:true)
+
+        new UserRole(
+                secUser: adminUser,
+                secRole: superAdminRole
+        ).save(failOnError: true)
+        User volunteerUser = new User(
+                firstName: 'Volunteer',
+                lastName: 'Tester',
+                email: 'joe2@example.com',
+                username: 'guest',
+                password:  'test123',
+                enabled: true,
+                status: activeStatus
+        ).save(failOnError:true)
+
+        new UserRole(
+                secUser: volunteerUser,
+                secRole: volunteerRole
+        ).save(failOnError: true)
+        buildTestDataPointTxn()
+        [volunteer : volunteerUser, admin : adminUser]
     }
 
-    void testCreate() {
-        def model = controller.create()
-
-        assert model.pointTransactionInstance != null
-    }
-
-    void testSave() {
-        controller.save()
-
-        assert model.pointTransactionInstance != null
-        assert view == '/pointTransaction/create'
-
-        response.reset()
-
-        populateValidParams(params)
-        controller.save()
-
-        assert response.redirectedUrl == '/pointTransaction/show/1'
-        assert controller.flash.message != null
-        assert PointTransaction.count() == 1
-    }
-
-    void testShow() {
-        controller.show()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/pointTransaction/list'
-
-
-        populateValidParams(params)
-        def pointTransaction = new PointTransaction(params)
-
-        assert pointTransaction.save() != null
-
-        params.id = pointTransaction.id
-
-        def model = controller.show()
-
-        assert model.pointTransactionInstance == pointTransaction
-    }
-
-    void testEdit() {
-        controller.edit()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/pointTransaction/list'
-
-
-        populateValidParams(params)
-        def pointTransaction = new PointTransaction(params)
-
-        assert pointTransaction.save() != null
-
-        params.id = pointTransaction.id
-
-        def model = controller.edit()
-
-        assert model.pointTransactionInstance == pointTransaction
-    }
-
-    void testUpdate() {
-        controller.update()
-
-        assert flash.message != null
-        assert response.redirectedUrl == '/pointTransaction/list'
-
-        response.reset()
-
-
-        populateValidParams(params)
-        def pointTransaction = new PointTransaction(params)
-
-        assert pointTransaction.save() != null
-
-        // test invalid parameters in update
-        params.id = pointTransaction.id
-        //TODO: add invalid values to params object
-
-        controller.update()
-
-        assert view == "/pointTransaction/edit"
-        assert model.pointTransactionInstance != null
-
-        pointTransaction.clearErrors()
-
-        populateValidParams(params)
-        controller.update()
-
-        assert response.redirectedUrl == "/pointTransaction/show/$pointTransaction.id"
-        assert flash.message != null
-
-        //test outdated version number
-        response.reset()
-        pointTransaction.clearErrors()
-
-        populateValidParams(params)
-        params.id = pointTransaction.id
-        params.version = -1
-        controller.update()
-
-        assert view == "/pointTransaction/edit"
-        assert model.pointTransactionInstance != null
-        assert model.pointTransactionInstance.errors.getFieldError('version')
-        assert flash.message != null
-    }
-
-    void testDelete() {
-        controller.delete()
-        assert flash.message != null
-        assert response.redirectedUrl == '/pointTransaction/list'
-
-        response.reset()
-
-        populateValidParams(params)
-        def pointTransaction = new PointTransaction(params)
-
-        assert pointTransaction.save() != null
-        assert PointTransaction.count() == 1
-
-        params.id = pointTransaction.id
-
-        controller.delete()
-
-        assert PointTransaction.count() == 0
-        assert PointTransaction.get(pointTransaction.id) == null
-        assert response.redirectedUrl == '/pointTransaction/list'
+    def buildTestDataPointTxn() {
+        for(User user : User.list()) {
+            (1..5).each { int count ->
+                PointTransaction txn = new PointTransaction( acctOwner: user, txnDate: new Date().minus(count),
+                        txnType: PointTransaction.VOLUNTEER, amount: count * (Math.random() * 10),
+                        description: "Dummy testing ${count}")
+                if(count % 2 == 0) txn.amount *= -1
+                txn.save(failOnError: true, validate: false)
+                user.currPoints = (user.currPoints ?:0) + txn.amount
+            }
+            user.save(validate: false)
+        }
     }
 }

@@ -17,8 +17,22 @@ class PointTransactionController extends AbstractBaseController {
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
         // if not admin, only shows his own transaction
-        def txnList = loginUser ? (loginUser.checkAdmin() ? PointTransaction.list(params) : loginUserPointTransactions) : []
+        def txnList = loginUser ? (loginUser?.checkAdmin() ? PointTransaction.list(params) : loginUserPointTransactions) : []
         [currBalance : loginUser?.currPoints , pointTransactionInstanceList: txnList, pointTransactionInstanceTotal: txnList.size()]
+    }
+
+    def pointTransactionService
+
+    @Secured(['ROLE_VOLUNTEER'])
+    def transfer() {
+        if(loginUser && params['recipient.id'] && params['point']) {
+            long recipientId = params.long('recipient.id')
+            int point = params.int('point')
+            String descr = params.description ?: ""
+            User recipient = User.get(recipientId)
+            if(recipient && point > 0) pointTransactionService.transfer(loginUser, recipient, point, descr)
+        }
+        redirect action: 'list', params: params
     }
 
     def show() {
