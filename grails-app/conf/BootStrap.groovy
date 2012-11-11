@@ -27,10 +27,10 @@ class BootStrap {
 			).save(failOnError:true)
 
             // Statuses
-            def stubStatus = new Status(status: 'Stub').save()
-            def activeStatus = new Status(status: 'Active').save()
-            def archivedStatus = new Status(status: 'Archived').save()
-            def pendingStatus = new Status(status: 'Pending').save()
+            def stubStatus = new Status(status: 'Stub').save(failOnError: true)
+            def activeStatus = new Status(status: 'Active').save(failOnError: true)
+            def archivedStatus = new Status(status: 'Archived').save(failOnError: true)
+            def pendingStatus = new Status(status: 'Pending').save(failOnError: true)
 
             // Chapters
             def mnChapter = new Chapter(name: 'Minneapolis', address: mnAddress, status: activeStatus).save(failOnError: true)
@@ -71,7 +71,7 @@ class BootStrap {
                 username: 'admin',
                 password:  'test123',
                 enabled: true,
-				status: new Status().findWhere(status: 'Active')
+				status: activeStatus
 			).save(failOnError:true)
 
             new UserRole(
