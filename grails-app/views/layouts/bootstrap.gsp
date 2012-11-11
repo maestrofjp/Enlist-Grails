@@ -60,7 +60,7 @@
 												<li><g:link controller="catalogItemCategory" action="list">Rewards Catalog Categories</g:link>
 											</ul>
 										</li>
-										<li class="divider"></li>
+										<li><g:link controller="chapter" action="list">Chapters</g:link>
 										<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
 									</ul>
 								</li>

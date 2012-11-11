@@ -8,7 +8,6 @@ class EnlistTagLib {
 
     List adminAreas = new ArrayList<NavItem>([
         new NavItem(name: "Home",       controller: "/"),
-        new NavItem(name: "Chapters",   controller: "chapter"),
         new NavItem(name: "Events",     controller: "event"),
         new NavItem(name: "Activites",  controller: "activity"),
         new NavItem(name: "Users",      controller: "user")
