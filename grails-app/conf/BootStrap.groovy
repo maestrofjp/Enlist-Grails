@@ -85,7 +85,7 @@ class BootStrap {
             User volunteerUser = new User(
                     firstName: 'Volunteer',
                     lastName: 'Tester',
-                    email: 'volunteer@example.com',
+                    email: 'enlistappg48@gmail.com',  // test email reminder. must use valid address.
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
@@ -99,9 +99,25 @@ class BootStrap {
                     secRole: volunteerRole
             ).save(failOnError: true)
 
-
             //test display PointTransaction
             buildTestDataPointTxn()
+
+            User volunteerUser2 = new User(
+                    firstName: 'Volunteer2',
+                    lastName: 'Tester',
+                    email: 'volunteer2@example.com',
+                    username: 'guest2',
+                    password:  'test123',
+                    enabled: true,
+                    status: activeStatus,
+                    phone: '651-555-1234',
+                    chapter: mnChapter
+            ).save(failOnError:true)
+
+            new UserRole(
+                    secUser: volunteerUser2,
+                    secRole: volunteerRole
+            ).save(failOnError: true)
 		}
     }
     def buildTestDataPointTxn() {
@@ -114,6 +130,7 @@ class BootStrap {
                 txn.save(failOnError: true, validate: false)
                 user.currPoints = (user.currPoints ?:0) + txn.amount
             }
+
             user.save(validate: false)
         }
     }

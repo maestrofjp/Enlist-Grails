@@ -59,21 +59,42 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
+grails.mail.default.from="enlistappg48@gmail.com"
+grails {
+//    grails.mail.default.from="imms.noreply@gmail.com"
+    mail {
+        host = "smtp.gmail.com"
+				username = "enlistappg48@gmail.com"
+				password = "Grails48Hack"
+        port = 587
+        props = ["mail.smtp.auth":"true",
+                "mail.smtp.socketFactory.port":"587",
+                "mail.smtp.starttls.enable": "true",
+                "mail.smtp.socketFactory.fallback":"false"]
+//                // it's not recommended to use 465.
+//                port = 465
+//				props = ["mail.smtp.auth":"true",
+//					"mail.smtp.socketFactory.port":"465",
+//					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+//					"mail.smtp.socketFactory.fallback":"false"]
+    }
+}
 environments {
     development {
         grails.logging.jul.usebridge = true
-		grails {
-			mail {
-				host = "smtp.gmail.com"
-				port = 465
-				username = "enlistappg48@gmail.com"
-				password = "Grails48Hack"
-				props = ["mail.smtp.auth":"true",
-					"mail.smtp.socketFactory.port":"465",
-					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-					"mail.smtp.socketFactory.fallback":"false"]
-			}
-		}
+        // mail plugin unable to pickup this configuration if we put inside the env specific clause.
+//		grails {
+//			mail {
+////				host = "smtp.gmail.com"
+////				username = "enlistappg48@gmail.com"
+////				password = "Grails48Hack"
+////                port = 465
+////				props = ["mail.smtp.auth":"true",
+////					"mail.smtp.socketFactory.port":"465",
+////					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+////					"mail.smtp.socketFactory.fallback":"false"]
+//			}
+//		}
     }
     production {
         grails.logging.jul.usebridge = false
@@ -120,11 +141,14 @@ grails.sitemesh.default.layout= 'bootstrap'
 rule {
     activity {
         allowRegistrationAfterEndDate = false
+
+        generateReminderJobForNext = 1   // day(s) from the moment batch job run.
     }
 }
 batch {
     // run every 6 hours?
     ActivityPointJob = "0 0 0/6 * * ?"
+    ActivityReminderJob = "0 0 1/6 * * ?"
 }
 
 environments {
@@ -132,6 +156,7 @@ environments {
     development {
         rule.activity.allowRegistrationAfterEndDate = true
         // run every 5 minutes?
-        batch.ActivityPointJob = "0 0/5 * * * ?"
+//        batch.ActivityPointJob = "0 0/5 * * * ?"
+        batch.ActivityReminderJob = "0 1/3 * * * ?"
     }
 }

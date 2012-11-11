@@ -71,11 +71,9 @@ class User {
     Set<Role> getAuthorities() {
         UserRole.findAllBySecUser(this).collect { it.secRole } as Set
     }
-    // might as well create similar method for other Role. if the role is dynamic, we can move this to bootstrap (meta programming)
+
     boolean checkVolunteer() {
-		Set<Role> roles = authorities
-		for(Role role : roles) if(StringUtils.equals(role.authority, Role.VOLUNTEER)) return true
-        return false
+		return SpringSecurityUtils.ifAnyGranted("ROLE_VOLUNTEER")
     }
 	
     boolean checkAdmin() {

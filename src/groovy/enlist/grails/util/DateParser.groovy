@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils
 class DateParser {
     public static final String DEFAULT_DATE_FORMAT = 'MM/dd/yyyy'
     public static final String DEFAULT_DATE_TIME_FORMAT = 'MM/dd/yyyy h:mm a'
+    public static final String DEFAULT_TIME_ONLY_FORMAT = 'hh:mm a'
     private static Map<String, SimpleDateFormat> dateFormatMap = new HashMap<String, SimpleDateFormat>()
 
     static String print(String format, Date value ) {
@@ -25,6 +26,7 @@ class DateParser {
     }
     static String printDefault(Date value ) { print(DEFAULT_DATE_FORMAT, value) }
     static String printDateTimeDefault(Date value ) { print(DEFAULT_DATE_TIME_FORMAT, value) }
+    static String printTimeDefault(Date value ) { print(DEFAULT_TIME_ONLY_FORMAT, value) }
 
     static Date parse(String format, String value ) {
         if(StringUtils.isEmpty(value)) return null
