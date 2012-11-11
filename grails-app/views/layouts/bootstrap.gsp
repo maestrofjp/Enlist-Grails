@@ -60,6 +60,7 @@
 												<li><g:link controller="catalogItemCategory" action="list">Rewards Catalog Categories</g:link>
 											</ul>
 										</li>
+                                        <li><g:link controller="user" action="list">Users</g:link></li>
 										<li><g:link controller="chapter" action="list">Chapters</g:link>
 										<li><g:link controller="quartz" action="list">Quartz Jobs</g:link>
 									</ul>
@@ -70,6 +71,7 @@
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <sec:loggedInUserInfo field="username"/><b class="caret"></b></a>
 								<ul class="dropdown-menu">
+                                    <li><g:link controller="user" action="index"><i class="icon-tasks"></i> My Dashboard</g:link></li>
 									<li><g:link controller="user" action="show" params="[id:sec.loggedInUserInfo(field: 'id')]"><i class="icon-book"></i> My Profile</g:link></li>
         							<li><g:link controller="pointTransaction" action="list"><i class="icon-gift"></i> My Points</g:link></li>
 									<li class="divider"></li>

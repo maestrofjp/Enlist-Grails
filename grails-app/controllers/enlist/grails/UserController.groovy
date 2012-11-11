@@ -11,11 +11,17 @@ import grails.converters.JSON
 
 class UserController {
 
+    def springSecurityService
+    def eventService
+
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 	
 	@Secured(['ROLE_ADMIN'])
     def index() {
-        redirect(action: "list", params: params)
+        def userInstance = springSecurityService.getCurrentUser()
+        def registeredEvents = eventService.getRegisteredEvents(userInstance)
+        def upcomingEvents = eventService.getUpcomingEvents(userInstance.chapter)
+        render(view: "index", model: [userInstance: userInstance, registeredEvents: registeredEvents, upcomingEvents: upcomingEvents])
     }
 
 	@Secured(['ROLE_ADMIN'])
@@ -129,7 +135,7 @@ class UserController {
         def searchResults = User.search(searchClosure, [offset : params.offset ?: 0, max : params.max ?: 10])
         render(view: "list", model: [userInstanceList: searchResults.results, userInstanceTotal: searchResults.total])
     }
-	
+
 	def isUsernameAvailable(final String username) {
 		def user = User.findByUsername(username)
 		def result = [available: true]
