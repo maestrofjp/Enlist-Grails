@@ -3,25 +3,30 @@
 <!doctype html>
 <html>
 <head>
-    <meta name="layout" content="ng-app">
-    <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}"/>
-    <title><g:message code="default.list.label" args="[entityName]"/></title>
-    <r:require module="angular-scaffolding"/>
+    <meta name="layout" content="bootstrap">
+    <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
+    <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
+<body>
+<div class="row-fluid">
 
-<body data-ng-app="scaffolding" data-base-url="${createLink(action: 'index')}">
-<a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label"
-                                                                                  default="Skip to content&hellip;"/></a>
+    <aside id="application-status" class="span3">
+        <div class="well sidebar-nav">
+            <h3>Upcoming Events</h3>
 
-<div class="nav" role="navigation">
-    <ul>
-        <li><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></li>
-        <li><a class="list" href="#list"><g:message code="default.list.label" args="[entityName]"/></a></li>
-        <li><a class="create" href="#create"><g:message code="default.new.label" args="[entityName]"/></a></li>
-    </ul>
-</div>
+            <g:if test="${upcomingEvents}">
+                <ul class="nav nav-list">
+                    <g:each in="${upcomingEvents}">
+                        <li><g:link controller="event" action="show" id="${it.id}">${it.name} (<g:formatDate format="MM-dd-yyyy" date="${it.start}" />)</g:link></li>
+                    </g:each>
+                </ul>
+            </g:if>
+            <g:else>
+                <p><g:message code="event.noneUpcoming" /></p>
+            </g:else>
+        </div>
+    </aside>
 
-<div class="content" role="main" data-ng-view>
 </div>
 </body>
 </html>
