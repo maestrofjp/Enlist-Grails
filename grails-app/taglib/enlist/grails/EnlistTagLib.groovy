@@ -17,7 +17,8 @@ class EnlistTagLib {
 	List volunteerAreas = new ArrayList<NavItem>([
 		new NavItem(name: "Home",       controller: "/"),
 		new NavItem(name: "Events",     controller: "event"),
-		new NavItem(name: "Activites",  controller: "activity")
+		new NavItem(name: "Activites",  controller: "activity"),
+        new NavItem(name: "Points",  controller: "pointTransaction")
 	])
 
 	def nav = { attrs, body ->

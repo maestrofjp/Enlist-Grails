@@ -104,6 +104,13 @@
 
             </g:if>
 
+            <g:if test="${activityInstance?.featured}">
+                <dt><g:message code="activity.featured.label" default="Featured" /></dt>
+
+                <dd><g:fieldValue bean="${activityInstance}" field="featured"/></dd>
+
+            </g:if>
+
             <g:if test="${activityInstance?.coordinators}">
                 <dt><g:message code="activity.coordinators.label" default="Coordinators" /></dt>
 

@@ -27,6 +27,17 @@
 	</div>
 </div>
 
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'chapter', 'error')}">
+    <label for="chapter" class="control-label">
+        <g:message code="event.chapter.label" default="Chapter" />
+    </label>
+    <div class="controls">
+        <g:select id="chapter" name="chapter.id"
+                  from="${enlist.grails.Chapter.list()}" optionKey="id" required=""
+                  value="${eventInstance?.chapter?.id}" class="many-to-one"/>
+    </div>
+</div>
+
 <div class="control-group ${hasErrors(bean: eventInstance, field: 'start', 'error')} required">
 	<label for="start" class="control-label">
 		<g:message code="event.start.label" default="Start Date" />

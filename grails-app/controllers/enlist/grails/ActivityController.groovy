@@ -3,7 +3,6 @@ package enlist.grails
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
-import org.codehaus.groovy.grails.commons.ConfigurationHolder
 
 class ActivityController extends AbstractBaseController {
     /**
@@ -11,7 +10,7 @@ class ActivityController extends AbstractBaseController {
      * (to read & sign up).
      * @return
      */
-    protected def getAdminRoles() {[Role.CHAPTER_ADMIN, Role.ADMIN]}
+    protected def getRolesWithWriteAccess() {[Role.CHAPTER_ADMIN, Role.ADMIN]}
 
     static allowedMethods = [create: ['GET', 'POST'], edit: ['GET', 'POST'], delete: 'POST']
 
@@ -21,7 +20,7 @@ class ActivityController extends AbstractBaseController {
 
     def list() {
         params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count(), isAdmin : hasAdminAccess()]
+        [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count(), isAdmin : hasControllerWriteAccess()]
     }
 
     @Secured(['ROLE_CHAPTER_ADMIN', 'ROLE_ADMIN'])
@@ -64,8 +63,8 @@ class ActivityController extends AbstractBaseController {
             if (activityInstance.endDate && activityInstance.endDate.time <= new Date().time)
                 canVolunteer = false // past event.
 
-        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasAdminAccess(),
-                hasSignUp : ActivitySignUp.get(loginUser.id, activityInstance.id)]
+        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
+                hasSignUp : loginUser ? ActivitySignUp.get(loginUser.id, activityInstance.id) : null]
     }
     @Secured(['ROLE_VOLUNTEER'])
     def signUp() {

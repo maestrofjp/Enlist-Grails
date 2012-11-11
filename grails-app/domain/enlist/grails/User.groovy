@@ -14,7 +14,7 @@ class User {
 	Address address = null
 	Status status
 	UserProfile profile
-	//Role role
+    Chapter chapter
 
     // Spring Security stuff
     String username
@@ -80,6 +80,8 @@ class User {
     boolean checkAdmin() {
         return SpringSecurityUtils.ifAnyGranted("ROLE_ADMIN,ROLE_CHAPTER_ADMIN,ROLE_ACTIVITY_COORDINATOR")
     }
+
+    def retrievePointTransactions() { PointTransaction.findAllByAcctOwner(this, [sort: "txnDate", order : "desc"]) }
 	
 
     def beforeInsert() {

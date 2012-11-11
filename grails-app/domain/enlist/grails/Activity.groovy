@@ -12,6 +12,7 @@ class Activity {
 	Event event
 	String pointsType
 	Integer points = 0
+    Boolean featured = false
 
 	static hasMany = [coordinators:User]
     def getVolunteers() { ActivitySignUp.findAllByActivityId(this.id)}

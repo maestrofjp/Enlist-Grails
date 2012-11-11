@@ -4,34 +4,64 @@ import enlist.grails.*
 class BootStrap {
 
     def init = { servletContext ->
-        // Roles.
-        new Role(name: 'Organization Administrator', authority: Role.ADMIN).save()
-        new Role(name: 'Chapter Coordinator', authority: Role.CHAPTER_ADMIN).save()
-        new Role(name: 'Activity Coordinator', authority: Role.ACTIVITY_COORDINATOR).save()
-        new Role(name: 'Volunteer', authority: Role.VOLUNTEER).save()
-
 		// Setup some DB defaults
 		if (GrailsUtil.environment == 'development') {
 			// Use save(failOnError:true) otherwise failures are not trapped 
-			
-			// Organization
-			new Address(address1: '123 Main St', city: 'Anywhere', state: 'MN', zip: '12345').save(failOnError:true)
+
+            // Roles.
+            def superAdminRole = new Role(name: 'Organization Administrator', authority: Role.ADMIN).save(failOnError: true)
+            def chapAdminRole = new Role(name: 'Chapter Coordinator', authority: Role.CHAPTER_ADMIN).save(failOnError: true)
+            def actCoordRole = new Role(name: 'Activity Coordinator', authority: Role.ACTIVITY_COORDINATOR).save(failOnError: true)
+            def volunteerRole = new Role(name: 'Volunteer', authority: Role.VOLUNTEER).save(failOnError: true)
+
+            // Addresses
+            def mnAddress = new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
+            def ilAddress = new Address(address1: '456 Another Ave', city: 'Chicago', state: 'IL', zip: '65432').save(failOnError: true)
+            def txAddress = new Address(address1: '789 Big Tex Drive', city: 'Dallas', state: 'TX', zip: '76543').save(failOnError: true)
+
+            // Organization
 			Email email = new Email(username:"enlistappg48@gmail.com", password:"Grails48Hack", host:"smtp.gmail.com", port:465).save(failOnError:true)
 			new Organization(name: 'Cool Project',
 								emailSender: 'enlist@example.com',
-								address: new Address().findWhere(zip: '12345')
+								address: mnAddress
 			).save(failOnError:true)
-			
-			// Statuses
-			new Status(status: 'Stub').save()
-			new Status(status: 'Active').save()
-			new Status(status: 'Archived').save()
-			new Status(status: 'Pending').save()
 
+            // Statuses
+            def stubStatus = new Status(status: 'Stub').save(failOnError: true)
+            def activeStatus = new Status(status: 'Active').save(failOnError: true)
+            def archivedStatus = new Status(status: 'Archived').save(failOnError: true)
+            def pendingStatus = new Status(status: 'Pending').save(failOnError: true)
+
+            // Chapters
+            def mnChapter = new Chapter(name: 'Minneapolis', address: mnAddress, status: activeStatus).save(failOnError: true)
+            def ilChapter = new Chapter(name: 'Chicago', address: ilAddress, status: activeStatus).save(failOnError: true)
+            def txChapter = new Chapter(name: 'Dallas', address: txAddress, status: activeStatus).save(failOnError: true)
 
             // CatalogItemCategories
-            new CatalogItemCategory(category: 'Apparel').save()
-            new CatalogItemCategory(category: 'Race Discount').save()
+            CatalogItemCategory CICApparel = new CatalogItemCategory(category: 'Apparel').save(failOnError: true)
+            CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save(failOnError: true)
+
+            // Events and Activities
+            def testEvent1 = new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
+                    end: new Date().clearTime(), status: activeStatus, chapter: mnChapter).save(failOnError: true)
+            def nowTime = new Date().getTime()
+            new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
+                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                    event: testEvent1, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+
+            // CatalogItems
+			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
+								description: '',
+								category: CICRaceDiscounts,
+								available: true, 
+								points: 3000, 
+								photo: null).save(failOnError:true)
+			new CatalogItem(name: 'Monster Dash Stocking Cap',
+								description: '',
+								category: CICApparel,
+								available: true,
+								points: 500,
+								photo: null).save(failOnError:true)
 						
 			/* Users */
 			User adminUser = new User(
@@ -41,13 +71,12 @@ class BootStrap {
                 username: 'admin',
                 password:  'test123',
                 enabled: true,
-				//role: new Role().findWhere(authority: 'ROLE_ADMIN'),
-				status: new Status().findWhere(status: 'Active')
+				status: activeStatus
 			).save(failOnError:true)
 
             new UserRole(
                     secUser: adminUser,
-                    secRole: new Role().findWhere(authority: Role.ADMIN)
+                    secRole: superAdminRole
             ).save(failOnError: true)
 
 
@@ -58,15 +87,31 @@ class BootStrap {
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
-                    status: new Status().findWhere(status: 'Active')
+                    status: activeStatus
             ).save(failOnError:true)
 
             new UserRole(
                     secUser: volunteerUser,
-                    secRole: new Role().findWhere(authority: Role.VOLUNTEER)
+                    secRole: volunteerRole
             ).save(failOnError: true)
 
+
+            //test display PointTransaction
+            buildTestDataPointTxn()
 		}
+    }
+    def buildTestDataPointTxn() {
+        for(User user : User.list()) {
+            (1..5).each { int count ->
+                PointTransaction txn = new PointTransaction( acctOwner: user, txnDate: new Date().minus(count),
+                        txnType: PointTransaction.VOLUNTEER, amount: count * (Math.random() * 10),
+                        description: "Dummy testing ${count}")
+                if(count % 2 == 0) txn.amount *= -1
+                txn.save(failOnError: true, validate: false)
+                user.currPoints = (user.currPoints ?:0) + txn.amount
+            }
+            user.save(validate: false)
+        }
     }
     def destroy = {
     }

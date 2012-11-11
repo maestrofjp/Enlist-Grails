@@ -5,7 +5,6 @@ class Chapter {
 	
 	String name
 	Address address
-	Date created = new Date()
 	Status status
 
 	static hasMany = [users: User]
@@ -14,7 +13,6 @@ class Chapter {
     static constraints = {
 		name(blank:false)
 		importFrom Status
-		created(blank:false)
 		importFrom Address
 		users(display:false)
     }

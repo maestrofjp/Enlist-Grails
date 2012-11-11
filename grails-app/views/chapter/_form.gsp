@@ -18,14 +18,6 @@
 	<g:select id="address" name="address.id" from="${enlist.grails.Address.list()}" optionKey="id" required="" value="${chapterInstance?.address?.id}" class="many-to-one"/>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: chapterInstance, field: 'created', 'error')} required">
-	<label for="created">
-		<g:message code="chapter.created.label" default="Created" />
-		<span class="required-indicator">*</span>
-	</label>
-	<g:datePicker name="created" precision="day"  value="${chapterInstance?.created}"  />
-</div>
-
 <div class="fieldcontain ${hasErrors(bean: chapterInstance, field: 'status', 'error')} required">
 	<label for="status">
 		<g:message code="chapter.status.label" default="Status" />
