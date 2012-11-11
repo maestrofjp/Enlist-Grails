@@ -14,6 +14,11 @@ class Activity {
 	Integer points = 0
     Boolean featured = false
 
+    static searchable = {
+        startDate index : "analyzed",  format:'MM/dd/yyyy'
+        event  component: true
+    }
+
 	static hasMany = [coordinators:User]
     def getVolunteers() { ActivitySignUp.findAllByActivityId(this.id)}
 

@@ -7,6 +7,7 @@ class ActivitySignUp implements Serializable {
     User user
     Activity activity
     Date signUpTime
+    Date reminderAt
 
     boolean equals(other) {
         if (!(other instanceof ActivitySignUp)) {
@@ -62,5 +63,6 @@ class ActivitySignUp implements Serializable {
         activity index : 'userActivityIdx'
     }
     static constraints = {
+        reminderAt nullable : true
     }
 }

@@ -9,6 +9,11 @@ class Event {
 	Status status
     Chapter chapter
 
+    static searchable = {
+        name index : "analyzed"
+        chapter component : true
+    }
+
 	static hasMany = [activities:Activity]
 
     static belongsTo = [chapter: Chapter]

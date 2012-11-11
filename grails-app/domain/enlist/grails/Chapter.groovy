@@ -7,6 +7,10 @@ class Chapter {
 	Address address
 	Status status
 
+    static searchable = {
+        name index : 'analyzed'
+    }
+
 	static hasMany = [users: User]
 	static embedded = ['address']
 
