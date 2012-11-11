@@ -30,7 +30,8 @@ class PointTransactionController extends AbstractBaseController {
             int point = params.int('point')
             String descr = params.description ?: ""
             User recipient = User.get(recipientId)
-            if(recipient && point > 0) pointTransactionService.transfer(loginUser, recipient, point, descr)
+            if(recipient && point > 0 && recipient.id != loginUser.id)
+                pointTransactionService.transfer(loginUser, recipient, point, descr)
         }
         redirect action: 'list', params: params
     }
