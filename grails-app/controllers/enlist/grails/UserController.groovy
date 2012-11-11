@@ -1,29 +1,35 @@
 package enlist.grails
 
+import java.awt.GraphicsConfiguration.DefaultBufferCapabilities;
+
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
 import org.compass.core.CompassQuery
 import grails.converters.JSON
 
-@Secured(['ROLE_ADMIN'])
+
 class UserController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-
+	
+	@Secured(['ROLE_ADMIN'])
     def index() {
         redirect(action: "list", params: params)
     }
 
+	@Secured(['ROLE_ADMIN'])
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     }
 
+	@Secured(['ROLE_ADMIN'])
     def create() {
         [userInstance: new User(params)]
     }
 
+	@Secured(['ROLE_ADMIN'])
     def save() {
         def userInstance = new User(params)
         if (!userInstance.save(flush: true)) {
@@ -35,6 +41,7 @@ class UserController {
         redirect(action: "show", id: userInstance.id)
     }
 
+	@Secured(['ROLE_ADMIN'])
     def show(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -46,6 +53,7 @@ class UserController {
         [userInstance: userInstance]
     }
 
+	@Secured(['ROLE_ADMIN'])
     def edit(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -57,6 +65,7 @@ class UserController {
         [userInstance: userInstance]
     }
 
+	@Secured(['ROLE_ADMIN'])
     def update(Long id, Long version) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -86,6 +95,7 @@ class UserController {
         redirect(action: "show", id: userInstance.id)
     }
 
+	@Secured(['ROLE_ADMIN'])
     def delete(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -104,6 +114,8 @@ class UserController {
             redirect(action: "show", id: id)
         }
     }
+
+	@Secured(['ROLE_ADMIN'])
     def search() {
         def keywords = params["q"]
         if(StringUtils.isEmpty(keywords)) {
@@ -117,4 +129,16 @@ class UserController {
         def searchResults = User.search(searchClosure, [offset : params.offset ?: 0, max : params.max ?: 10])
         render(view: "list", model: [userInstanceList: searchResults.results, userInstanceTotal: searchResults.total])
     }
+	
+	def isUsernameAvailable() {
+		def username = params["username"]
+		def user = User.findByUsername(username)
+		def result = [available: true]
+		
+		if (user?.id) {
+			result = [available: false]
+		}
+		
+		render result as JSON
+	}
 }
