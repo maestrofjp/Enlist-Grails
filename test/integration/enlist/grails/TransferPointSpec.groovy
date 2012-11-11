@@ -21,9 +21,6 @@ class TransferPointSpec extends IntegrationSpec {
     @Shared User jack
     @Shared def pointTransactionService
     @Shared def daoAuthenticationProvider
-    @Shared def springSecurityService
-
-
 
     def setupSpec() {
         controller = new PointTransactionController()

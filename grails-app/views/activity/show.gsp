@@ -1,5 +1,5 @@
 
-<%@ page import="enlist.grails.Activity" %>
+<%@ page import="enlist.grails.util.DateParser; enlist.grails.Activity" %>
 <!doctype html>
 <html>
 <head>
@@ -147,6 +147,9 @@
                             <strong><g:message code="default.button.signUp.label" default="Sign Up" /></strong>
 
                         </g:link>
+                        <button type="button" class="btn" data-toggle="collapse" data-target="#activity-set-reminder">
+                            Set reminder
+                        </button>
                     </g:else>
                 </g:if>
                 <g:if test="${isAdmin}">
@@ -159,6 +162,26 @@
                         <g:message code="default.button.delete.label" default="Delete" />
                     </button>
                 </g:if>
+            </div>
+            <div id="activity-set-reminder">
+                <div class="control-group">
+                    <label for="reminderDate" class="control-label checkbox">
+                        <input type="checkbox" name="remindMe"> <g:message code="activity.reminderDate.label" default="Remind me at" />
+                    </label>
+                    <div class="controls">
+                        <g:hiddenField name="reminderDate" value="struct" />
+                        <div id="startDatePicker" class="input-append date datepicker" data-date="${DateParser.printDefault(reminderAt ?: activityInstance?.startDate)}" data-date-format="mm/dd/yyyy">
+                            <input name="reminderDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(reminderAt ?: activityInstance?.startDate)}" />
+                            <span class="add-on"><i class="icon-th"></i></span>
+                        </div>
+                        <div  class="input-append bootstrap-timepicker-component">
+                            <input id="startTimePicker" name="reminderDate_time" type="text" class="timepicker-default input-small">
+                            <span class="add-on">
+                                <i class="icon-time"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </g:form>
 

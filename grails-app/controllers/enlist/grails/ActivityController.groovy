@@ -3,6 +3,8 @@ package enlist.grails
 import org.springframework.dao.DataIntegrityViolationException
 import grails.plugins.springsecurity.Secured
 import org.apache.commons.lang.StringUtils
+import enlist.grails.util.DateParser
+import org.compass.core.CompassQuery
 
 class ActivityController extends AbstractBaseController {
     /**
@@ -63,8 +65,30 @@ class ActivityController extends AbstractBaseController {
             if (activityInstance.endDate && activityInstance.endDate.time <= new Date().time)
                 canVolunteer = false // past event.
 
-        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
-                hasSignUp : loginUser ? ActivitySignUp.get(loginUser.id, activityInstance.id) : null]
+//        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
+//                hasSignUp : loginUser ? ActivitySignUp.get(loginUser.id, activityInstance.id) : null]
+        if(loginUser) {
+            return [activityInstance: activityInstance, canVolunteer : false, isAdmin : false, hasSignUp : false,
+                    reminderAt : null]
+        } else {
+            ActivitySignUp signUp = ActivitySignUp.findByActivityAndUser(activityInstance, loginUser)
+            return [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
+                    hasSignUp : signUp != null, reminderAt : signUp.reminderAt ]
+        }
+    }
+    @Secured(['ROLE_VOLUNTEER'])
+    def changeReminder() {
+        println "change reminder ${params}"
+        Date reminderAt = null
+        if(params["remindMe"] && params.boolean('remindMe') &&
+                params["reminderDate_date"] && params["reminderDate_time"]) {
+            reminderAt = DateParser.parseDateTimeDefault("${params.reminderDate_date} ${params.reminderDate_time}")
+        }
+        def activityInstance = Activity.get(params.id)
+        ActivitySignUp signUp = ActivitySignUp.findByActivityAndUser(activityInstance, loginUser)
+        signUp.reminderAt = reminderAt
+        signUp.save(failOnError: true, validate: false)
+        redirect action: 'show', id: activityInstance.id
     }
     @Secured(['ROLE_VOLUNTEER'])
     def signUp() {
@@ -143,5 +167,21 @@ class ActivityController extends AbstractBaseController {
 			flash.message = message(code: 'default.not.deleted.message', args: [message(code: 'activity.label', default: 'Activity'), params.id])
             redirect action: 'show', id: params.id
         }
+    }
+
+    def search() {
+        String keywords =params.q ? "${params.q}" : null
+        if(StringUtils.isEmpty(keywords)) {
+            render(view: "list", model: [activityInstanceList: Activity.list(params), activityInstanceTotal: Activity.count(),
+                    isAdmin: hasControllerWriteAccess()])
+            return
+        }
+        def searchClosure = {
+            queryString(keywords)
+            sort(CompassQuery.SortImplicitType.SCORE)
+        }
+        def searchResults = Activity.search(searchClosure, [offset : params.offset ?: 0, max : params.max ?: 10])
+        render(view: "list", model: [activityInstanceList: searchResults.results, activityInstanceTotal: searchResults.total,
+                isAdmin: hasControllerWriteAccess()])
     }
 }
