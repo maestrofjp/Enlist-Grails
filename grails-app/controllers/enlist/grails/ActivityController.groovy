@@ -68,19 +68,19 @@ class ActivityController extends AbstractBaseController {
 //        [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
 //                hasSignUp : loginUser ? ActivitySignUp.get(loginUser.id, activityInstance.id) : null]
         if(loginUser) {
-            return [activityInstance: activityInstance, canVolunteer : false, isAdmin : false, hasSignUp : false,
-                    reminderAt : null]
-        } else {
             ActivitySignUp signUp = ActivitySignUp.findByActivityAndUser(activityInstance, loginUser)
             return [activityInstance: activityInstance, canVolunteer : canVolunteer, isAdmin : hasControllerWriteAccess(),
-                    hasSignUp : signUp != null, reminderAt : signUp.reminderAt ]
+                    hasSignUp : signUp != null, reminderAt : signUp?.reminderAt ]
+        } else {
+            return [activityInstance: activityInstance, canVolunteer : false, isAdmin : false, hasSignUp : false,
+                    reminderAt : null]
         }
     }
     @Secured(['ROLE_VOLUNTEER'])
     def changeReminder() {
         println "change reminder ${params}"
         Date reminderAt = null
-        if(params["remindMe"] && params.boolean('remindMe') &&
+        if(StringUtils.equals('on',params["remindMe"]) &&
                 params["reminderDate_date"] && params["reminderDate_time"]) {
             reminderAt = DateParser.parseDateTimeDefault("${params.reminderDate_date} ${params.reminderDate_time}")
         }
