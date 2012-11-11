@@ -13,36 +13,40 @@
 		</div>
 		<div class="span3"></div>
 	</div>
-</g:if>	
+</g:if>
 
 <div class="row-fluid">
 	<!-- Cheesy way to center a form, but it works for a fluid layout -->
 	<div class="span3"></div>
     <div class="span3">
 		<h3><g:message code="springSecurity.login.header"/></h3>
-		
+
 		<form action='${postUrl}' method='POST' id='loginForm' autocomplete='off'>
-		
-			<div class="well" style="height:125px;">				
-			
+
+			<div class="well" style="height:125px;">
+
 				<div class="control-group">
 					<div class="controls">
 						<input type='text' class='text_' name='j_username' id='username' placeholder="${message(code: 'springSecurity.login.username.label')}" />
 					</div>
 				</div>
-			
+
 				<div class="control-group">
 					<div class="controls">
 						<input type='password' class='text_' name='j_password' id='password' placeholder="${message(code: 'springSecurity.login.password.label')}" />
 					</div>
 				</div>
-			
+
 				<div class="control-group">
 					<div class="controls">
 						<label for='remember_me' class="checkbox">
 							<input type='checkbox' class='chk' name='${rememberMeParameter}' id='remember_me' <g:if test='${hasCookie}'>checked='checked'</g:if>/>
 							<g:message code="springSecurity.login.remember.me.label"/>
 						</label>
+						<span class="forgot-link">
+							<g:link controller='register' action='forgotPassword'><g:message code='spring.security.ui.login.forgotPassword'/></g:link>
+						</span>
+
 					</div>
 				</div>
 			</div>

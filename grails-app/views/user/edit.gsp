@@ -28,7 +28,7 @@
 					</ul>
 				</div>
 			</div>
-			
+
 			<div class="span9">
 
 				<div class="page-header">
@@ -49,11 +49,22 @@
 				</bootstrap:alert>
 				</g:hasErrors>
 
+
+				user: "${userInstance.username}"
+				<br />pwd: "${userInstance.password}"
 				<fieldset>
 					<g:form class="form-horizontal" action="update" id="${userInstance?.id}" >
 						<g:hiddenField name="version" value="${userInstance?.version}" />
 						<fieldset>
-							<f:all bean="userInstance"/>
+							<f:field bean="userInstance" property="firstName"/>
+							<f:field bean="userInstance" property="lastName"/>
+							<f:field bean="userInstance" property="username"/>
+							<f:field bean="userInstance" property="status"/>
+							<f:field bean="userInstance" property="email"/>
+							<f:field bean="userInstance" property="phone"/>
+							<f:field bean="userInstance" property="chapter"/>
+							<f:field bean="userInstance" property="address"/>
+
 							<div class="form-actions">
 								<button type="submit" class="btn btn-primary">
 									<i class="icon-ok icon-white"></i>
