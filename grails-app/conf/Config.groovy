@@ -62,16 +62,24 @@ grails.hibernate.cache.queries = false
 environments {
     development {
         grails.logging.jul.usebridge = true
+        grails.mail.default.from="enlistappg48@gmail.com"
 		grails {
 			mail {
 				host = "smtp.gmail.com"
-				port = 465
 				username = "enlistappg48@gmail.com"
 				password = "Grails48Hack"
-				props = ["mail.smtp.auth":"true",
-					"mail.smtp.socketFactory.port":"465",
-					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
-					"mail.smtp.socketFactory.fallback":"false"]
+//                port = 465
+//				props = ["mail.smtp.auth":"true",
+//					"mail.smtp.socketFactory.port":"465",
+//					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+//					"mail.smtp.socketFactory.fallback":"false"]
+
+                port = 587
+                props = [
+                        "mail.smtp.auth":"true",
+                        "mail.smtp.socketFactory.port":"587",
+                        "mail.smtp.starttls.enable": "true",
+                        "mail.smtp.socketFactory.fallback":"false"]
 			}
 		}
     }
@@ -125,6 +133,7 @@ rule {
 batch {
     // run every 6 hours?
     ActivityPointJob = "0 0 0/6 * * ?"
+    ActivityReminderJob = "0 0 1/6 * * ?"
 }
 
 environments {
@@ -132,6 +141,8 @@ environments {
     development {
         rule.activity.allowRegistrationAfterEndDate = true
         // run every 5 minutes?
-        batch.ActivityPointJob = "0 0/5 * * * ?"
+//        batch.ActivityPointJob = "0 0/5 * * * ?"
+//        batch.ActivityReminderJob = "0 2/5 * * * ?"
+        batch.ActivityReminderJob = "0 1/3 * * * ?"
     }
 }

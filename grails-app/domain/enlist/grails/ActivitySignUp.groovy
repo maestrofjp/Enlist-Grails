@@ -61,6 +61,7 @@ class ActivitySignUp implements Serializable {
         version false
         user index : 'userActivityIdx'
         activity index : 'userActivityIdx'
+        reminderAt index : 'userActivityIdx_1'
     }
     static constraints = {
         reminderAt nullable : true

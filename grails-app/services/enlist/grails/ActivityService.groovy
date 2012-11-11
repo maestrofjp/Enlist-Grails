@@ -55,4 +55,49 @@ class ActivityService {
         }
         return activity.points
     }
+
+    def mailService
+    @Transactional
+    Date batchSendEmailReminder(BatchJobParameter batchJobParameter) {
+        Date lastReminder = batchJobParameter ? DateParser.parseDateTimeDefault(batchJobParameter.value) : null
+        def signUpList = ActivitySignUp.createCriteria().list {
+            isNotNull("reminderAt")
+            lte("reminderAt", new Date())
+            if(lastReminder) gt("reminderAt", lastReminder)
+            order "reminderAt", "asc"
+        }
+        def userSignUpMap = [:]
+        Status active = Status.findWhere(status: 'Active')
+        for(ActivitySignUp signUp : signUpList) {
+            if(!StringUtils.isBlank(signUp.user?.email) && signUp.user?.status.id == active.id) {
+                String email =signUp.user.email.toLowerCase()
+                def activities = userSignUpMap.get(email) ?: []
+                activities << signUp.activity
+                userSignUpMap.put(email,activities)
+            }
+            if(lastReminder == null || lastReminder.time < signUp.reminderAt.time) lastReminder = signUp.reminderAt
+        }
+        userSignUpMap.each { String email, def activities ->
+             sendEmailReminderForMultipleEvents(email, activities)
+        }
+        lastReminder
+    }
+    void sendEmailReminderForMultipleEvents(String userEmail, def activities) {
+        log.debug("send email to ${userEmail}")
+        String content = "Upcoming event's activities:\n"
+        activities.each { Activity it ->
+            content += " ** '${it.title}' @ ${it.location} will start at: ${it.startDate}"
+        }
+        try {
+            mailService.sendMail {
+                to userEmail
+                subject "[Enlist Reminder] Get Ready!"
+                body content
+            }
+        } catch(Exception e) {
+            e.printStackTrace()
+            while(e.cause != null) e = e.cause
+            log.error("Failed to send email. ${e.message}")
+        }
+    }
 }

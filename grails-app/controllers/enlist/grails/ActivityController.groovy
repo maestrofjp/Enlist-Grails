@@ -78,7 +78,6 @@ class ActivityController extends AbstractBaseController {
     }
     @Secured(['ROLE_VOLUNTEER'])
     def changeReminder() {
-        println "change reminder ${params}"
         Date reminderAt = null
         if(StringUtils.equals('on',params["remindMe"]) &&
                 params["reminderDate_date"] && params["reminderDate_time"]) {
