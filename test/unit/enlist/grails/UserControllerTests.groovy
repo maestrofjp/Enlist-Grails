@@ -5,6 +5,7 @@ import grails.plugins.springsecurity.SpringSecurityService
 import grails.test.mixin.Mock
 import grails.test.mixin.TestFor
 import org.junit.Ignore
+import grails.converters.JSON
 
 @TestFor(UserController)
 @Mock(SpringSecurityService)
@@ -25,6 +26,7 @@ class UserControllerTests {
 		//params["name"] = 'someValidName'
 	}
 
+	@Ignore //This thing will need work to deal with the logged in user mocking
 	void testIndex() {
 		controller.index()
 		assert "/user/list" == response.redirectedUrl
@@ -180,6 +182,26 @@ class UserControllerTests {
 		controller.search()
 		assert response.redirectedUrl == '/user/list'
 		assert model.userInstanceList.size() == 1
+
+	}
+
+
+	void testIsUsernameAvailable()
+	{
+		controller.isUsernameAvailable("bobDole")
+
+		def json = JSON.parse(response.contentAsString)
+
+		assert json.available
+		response.reset()
+		def user = User.build(username: "bobDole")
+		user.save()
+
+		controller.isUsernameAvailable("bobDole")
+		json = JSON.parse(response.contentAsString)
+
+		assert json.available == false
+
 
 	}
 }

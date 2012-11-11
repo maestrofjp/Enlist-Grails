@@ -60,6 +60,48 @@
 	</div>
     <script>
 
+		$('#username').on('change',function(event){
+			var url = '<g:createLink controller="user" action="isUsernameAvailable"/>';
+
+			//Clean up any info already there
+			var container = $(this).parents('.control-group');
+		    container.removeClass("error").removeClass("success");
+			container.find(".help-inline").remove();
+
+			var username = $(this).val();
+
+			container.addClass("info");
+			container.find('.controls').append('<span class="help-inline"><r:img uri="/images/spinner.gif" /> </span>');
+
+			$.ajax({
+				url: url,
+				data: {username:username},
+				success: function(data){
+					container.removeClass("info");
+					container.find(".help-inline").remove();
+					if(data.available)
+					{
+						container.addClass("success");
+						container.find('.controls').append('<span class="help-inline">Username available.</span>');
+					}
+					else
+					{
+						//Username is taken so warn the user.
+						container.addClass("error");
+						container.find('.controls').append('<span class="help-inline">Username already taken.</span>');
+					}
+				},
+				error: function(jqXHR,status,error) {
+					container.find(".help-inline").remove();
+					container.find('.controls').append('<span class="help-inline">Could not check username.</span>');
+				}
+			});
+
+
+		});
+
+
+
         var requiredEmbeddedField= "req-emb";
         var $embeddedView = $('#register-address');
         var isInitiallyShown = $embeddedView.hasClass("in");
