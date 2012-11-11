@@ -34,7 +34,7 @@ class UserRole implements Serializable {
 
     static Set<User> findAllByAuthority(String authority) {
         def res = findAll( 'from UserRole where secRole.authority=:authority', [authority: authority])
-        res.collect {it.user} as Set
+        res.collect {it.secUser} as Set
     }
 
     static boolean remove(User secUser, Role secRole, boolean flush = false) {
