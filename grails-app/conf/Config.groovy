@@ -122,3 +122,16 @@ rule {
         allowRegistrationAfterEndDate = false
     }
 }
+batch {
+    // run every 6 hours?
+    ActivityPointJob = "0 0 0/6 * * ?"
+}
+
+environments {
+    // override this
+    development {
+        rule.activity.allowRegistrationAfterEndDate = true
+        // run every 5 minutes?
+        batch.ActivityPointJob = "0 0/5 * * * ?"
+    }
+}

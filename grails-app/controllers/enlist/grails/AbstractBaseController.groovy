@@ -6,15 +6,19 @@ abstract class AbstractBaseController {
         if (!springSecurityService.isLoggedIn()) return null
         User.findByUsername(springSecurityService.authentication.name)
     }
-    protected boolean hasAdminAccess() {
+    /**
+     * not necessary to be admin
+     * @return
+     */
+    protected boolean hasControllerWriteAccess() {
         if (loginUser)
             for(Role role : loginUser.authorities)
-                if(role.authority in adminRoles) return true
+                if(role.authority in rolesWithWriteAccess) return true
         return false
     }
     /**
      * define roles that can perform admin tasks. such as delete, edit, create.
      * @return
      */
-     protected abstract def getAdminRoles();
+     protected abstract def getRolesWithWriteAccess();
 }
