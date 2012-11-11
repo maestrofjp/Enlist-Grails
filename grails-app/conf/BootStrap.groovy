@@ -4,22 +4,26 @@ import enlist.grails.*
 class BootStrap {
 
     def init = { servletContext ->
-        // Roles.
-        new Role(name: 'Organization Administrator', authority: Role.ADMIN).save()
-        new Role(name: 'Chapter Coordinator', authority: Role.CHAPTER_ADMIN).save()
-        new Role(name: 'Activity Coordinator', authority: Role.ACTIVITY_COORDINATOR).save()
-        new Role(name: 'Volunteer', authority: Role.VOLUNTEER).save()
-
 		// Setup some DB defaults
 		if (GrailsUtil.environment == 'development') {
 			// Use save(failOnError:true) otherwise failures are not trapped 
-			
-			// Organization
-			new Address(address1: '123 Main St', city: 'Anywhere', state: 'MN', zip: '12345').save(failOnError:true)
+
+            // Roles.
+            def superAdminRole = new Role(name: 'Organization Administrator', authority: Role.ADMIN).save(failOnError: true)
+            def chapAdminRole = new Role(name: 'Chapter Coordinator', authority: Role.CHAPTER_ADMIN).save(failOnError: true)
+            def actCoordRole = new Role(name: 'Activity Coordinator', authority: Role.ACTIVITY_COORDINATOR).save(failOnError: true)
+            def volunteerRole = new Role(name: 'Volunteer', authority: Role.VOLUNTEER).save(failOnError: true)
+
+            // Addresses
+            def mnAddress = new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
+            def ilAddress = new Address(address1: '456 Another Ave', city: 'Chicago', state: 'IL', zip: '65432').save(failOnError: true)
+            def txAddress = new Address(address1: '789 Big Tex Drive', city: 'Dallas', state: 'TX', zip: '76543').save(failOnError: true)
+
+            // Organization
 			Email email = new Email(username:"enlistappg48@gmail.com", password:"Grails48Hack", host:"smtp.gmail.com", port:465).save(failOnError:true)
 			new Organization(name: 'Cool Project',
 								emailSender: 'enlist@example.com',
-								address: new Address().findWhere(zip: '12345')
+								address: mnAddress
 			).save(failOnError:true)
 
             // Statuses
@@ -27,11 +31,6 @@ class BootStrap {
             def activeStatus = new Status(status: 'Active').save()
             def archivedStatus = new Status(status: 'Archived').save()
             def pendingStatus = new Status(status: 'Pending').save()
-
-            // Addresses
-            def mnAddress = new Address(address1: '123 Main Street', city: 'Minneapolis', state: 'MN', zip: '54321').save(failOnError: true)
-            def ilAddress = new Address(address1: '456 Another Ave', city: 'Chicago', state: 'IL', zip: '65432').save(failOnError: true)
-            def txAddress = new Address(address1: '789 Big Tex Drive', city: 'Dallas', state: 'TX', zip: '76543').save(failOnError: true)
 
             // Chapters
             def mnChapter = new Chapter(name: 'Minneapolis', address: mnAddress, status: activeStatus).save(failOnError: true)
@@ -72,13 +71,12 @@ class BootStrap {
                 username: 'admin',
                 password:  'test123',
                 enabled: true,
-				//role: new Role().findWhere(authority: 'ROLE_ADMIN'),
 				status: new Status().findWhere(status: 'Active')
 			).save(failOnError:true)
 
             new UserRole(
                     secUser: adminUser,
-                    secRole: new Role().findWhere(authority: Role.ADMIN)
+                    secRole: superAdminRole
             ).save(failOnError: true)
 
 
@@ -94,7 +92,7 @@ class BootStrap {
 
             new UserRole(
                     secUser: volunteerUser,
-                    secRole: new Role().findWhere(authority: Role.VOLUNTEER)
+                    secRole: volunteerRole
             ).save(failOnError: true)
 
 		}
