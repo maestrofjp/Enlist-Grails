@@ -48,11 +48,13 @@
 
 							<g:sortableColumn property="name" title="${message(code: 'event.name.label', default: 'Name')}" />
 
+                            <g:sortableColumn property="chapter" title="${message(code: 'event.chapter.label', default:'Chapter')}" />
+
 							<g:sortableColumn property="location" title="${message(code: 'event.location.label', default: 'Location')}" />
 
-							<g:sortableColumn property="end" title="${message(code: 'event.end.label', default: 'End')}" />
+                            <g:sortableColumn property="start" title="${message(code: 'event.start.label', default: 'Start')}" />
 
-							<g:sortableColumn property="start" title="${message(code: 'event.start.label', default: 'Start')}" />
+                            <g:sortableColumn property="end" title="${message(code: 'event.end.label', default: 'End')}" />
 
 							<th class="header"><g:message code="event.status.label" default="Status" /></th>
 
@@ -65,11 +67,13 @@
 
 							<td>${fieldValue(bean: eventInstance, field: "name")}</td>
 
+                            <td>${fieldValue(bean: eventInstance, field: "chapter")}</td>
+
 							<td>${fieldValue(bean: eventInstance, field: "location")}</td>
 
-							<td><g:formatDate date="${eventInstance.end}" /></td>
+							<td><g:formatDate date="${eventInstance.end}" format="MM-dd-yyyy" /></td>
 
-							<td><g:formatDate date="${eventInstance.start}" /></td>
+							<td><g:formatDate date="${eventInstance.start}" format="MM-dd-yyyy" /></td>
 
 							<td>${fieldValue(bean: eventInstance, field: "status")}</td>
 

@@ -27,7 +27,7 @@
 	</div>
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: eventInstance, field: 'chapter', 'error')}">
+<div class="control-group ${hasErrors(bean: eventInstance, field: 'chapter', 'error')}">
     <label for="chapter" class="control-label">
         <g:message code="event.chapter.label" default="Chapter" />
     </label>
