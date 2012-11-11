@@ -1,5 +1,5 @@
 
-<%@ page import="enlist.grails.PointTransaction" %>
+<%@ page import="enlist.grails.Role; enlist.grails.PointTransaction" %>
 <!doctype html>
 <html>
 <head>
@@ -39,10 +39,26 @@
         <g:if test="${flash.message}">
             <bootstrap:alert class="alert-info">${flash.message}</bootstrap:alert>
         </g:if>
-        <div class="">
-            <p>You have <span class="badge badge-success">${currBalance ?: 0}</span> <inf:pluralize count="${currBalance ?: 0}">point</inf:pluralize></p>
-            <button class="btn">Transfer</button>
-            <button class="btn">Redeem</button>
+        <div class="row-fluid">
+            <div class="span9">
+                <div class="row-fluid">
+                    <div class="span9">
+                        <p>You have <span class="badge badge-success">${currBalance ?: 0}</span> <inf:pluralize count="${currBalance ?: 0}">point</inf:pluralize></p>
+                        <button class="btn"  data-toggle="collapse" data-target="#point-transfer">Transfer</button>
+                        <button class="btn">Redeem</button>
+                    </div>
+                </div>
+                <div  id="point-transfer" class="row-fluid collapse" style="margin-top: 10px">
+                    <g:form action="transfer" class="form-inline">
+                        <label for="point">Sent </label>
+                        <g:field type="number" name="point" required="" value="0"/>
+                        <label for="recipient"> point(s) to </label>
+                        <g:select id="recipient" name="recipient.id" from="${enlist.grails.UserRole.findAllByAuthority(Role.VOLUNTEER)}"
+                                  optionKey="id" required="" value="" class="many-to-one"/>
+                        <button type="submit" class="btn">Transfer Now</button>
+                    </g:form>
+                </div>
+            </div>
         </div>
 
         <table class="table table-striped">
