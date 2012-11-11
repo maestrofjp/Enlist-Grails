@@ -43,9 +43,9 @@ class BootStrap {
 
             // Events and Activities
             def testEvent1 = new Event(name: 'Minneapolis Marathon', location: 'Event Location', start: new Date().clearTime(),
-                    end: new Date().clearTime(), status: activeStatus, chapter: mnChapter).save(failOnError: true)
+                    end: new Date().clearTime() + 7, status: activeStatus, chapter: mnChapter).save(failOnError: true)
             def testEvent2 = new Event(name: 'Chicago Marathon', location: 'The Location', start: new Date().clearTime(),
-                    end: new Date().clearTime(), status: activeStatus, chapter: ilChapter).save(failOnError: true)
+                    end: new Date().clearTime() + 5, status: activeStatus, chapter: ilChapter).save(failOnError: true)
             def nowTime = new Date().getTime()
             new Activity(title: 'Coorindate Vendors', description: 'Coordinate all the vendors so they know where they need to be and when',
                         numPeopleNeeded: 10, startDate: new Date(nowTime), endDate: new Date(nowTime + (60 * 60 * 1000)),
@@ -79,7 +79,8 @@ class BootStrap {
                 enabled: true,
 				status: activeStatus,
 				phone: '612-555-6789',
-				chapter: mnChapter
+				chapter: mnChapter,
+                currPoints: 1000
 			).save(failOnError:true)
 
             new UserRole(
@@ -97,7 +98,8 @@ class BootStrap {
                     enabled: true,
                     status: activeStatus,
 					phone: '651-555-1234',
-					chapter: mnChapter
+					chapter: mnChapter,
+                    currPoints: 5000
             ).save(failOnError:true)
 
             new UserRole(
