@@ -7,6 +7,7 @@ class Event {
 	Date start
 	Date end
 	Status status
+    Chapter chapter
 
 	static hasMany = [activities:Activity]
 
