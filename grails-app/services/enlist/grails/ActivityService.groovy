@@ -25,7 +25,8 @@ class ActivityService {
                 Integer point = calculatePoint(signUp.activity)
                 UserActivityHistory.create(signUp.user, signUp.activity, calculatePoint(signUp.activity))
                 PointTransaction txn = new PointTransaction( acctOwner: signUp.user, txnDate: new Date(),
-                        txnType: PointTransaction.VOLUNTEER, amount: point, description: "${signUp.activity}")
+                        txnType: PointTransaction.VOLUNTEER, amount: point,
+                        description: "${signUp.activity?.event} ${signUp.activity.title}")
                 txn.save(failOnError: true, validate: false)
                 ActivitySignUp.remove(signUp.user, signUp.activity)
                 userMap.put(signUp.user.id, signUp.user)
