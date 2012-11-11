@@ -99,9 +99,25 @@ class BootStrap {
                     secRole: volunteerRole
             ).save(failOnError: true)
 
-
             //test display PointTransaction
             buildTestDataPointTxn()
+
+            User volunteerUser2 = new User(
+                    firstName: 'Volunteer2',
+                    lastName: 'Tester',
+                    email: 'volunteer2@example.com',
+                    username: 'guest2',
+                    password:  'test123',
+                    enabled: true,
+                    status: activeStatus,
+                    phone: '651-555-1234',
+                    chapter: mnChapter
+            ).save(failOnError:true)
+
+            new UserRole(
+                    secUser: volunteerUser2,
+                    secRole: volunteerRole
+            ).save(failOnError: true)
 		}
     }
     def buildTestDataPointTxn() {
