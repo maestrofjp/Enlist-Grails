@@ -95,7 +95,23 @@ class BootStrap {
                     secRole: volunteerRole
             ).save(failOnError: true)
 
+
+            //test display PointTransaction
+            buildTestDataPointTxn()
 		}
+    }
+    def buildTestDataPointTxn() {
+        for(User user : User.list()) {
+            (1..5).each { int count ->
+                PointTransaction txn = new PointTransaction( acctOwner: user, txnDate: new Date().minus(count),
+                        txnType: PointTransaction.VOLUNTEER, amount: count * (Math.random() * 10),
+                        description: "Dummy testing ${count}")
+                if(count % 2 == 0) txn.amount *= -1
+                txn.save(failOnError: true, validate: false)
+                user.currPoints = (user.currPoints ?:0) + txn.amount
+            }
+            user.save(validate: false)
+        }
     }
     def destroy = {
     }
