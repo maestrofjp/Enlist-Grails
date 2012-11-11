@@ -18,6 +18,11 @@ class RegisterController {
 		user.status = Status.findByStatus("Pending")
         if (StringUtils.isBlank(user.address?.address1))  user.address = null
 		user.save(failOnError:true)
+		def userRole = new UserRole()
+		userRole.secUser = user
+		userRole.secRole = Role.findByAuthority(Role.VOLUNTEER)
+		userRole.save(failOnError: true)
+
 		log.debug "Sending email for registration confirmation for ${user.username}"
 		mailService.sendMail {
 			to user.email
@@ -31,6 +36,7 @@ class RegisterController {
 	def confirm() {
 		def user = User.get(params.id)
 		user.status = Status.findByStatus("Active")
+		user.save()
 
 		flash.message = "Thanks ${user.firstName}, your registration is complete."
 		redirect(controller: "event", action: "list")

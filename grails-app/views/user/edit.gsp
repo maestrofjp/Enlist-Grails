@@ -49,9 +49,6 @@
 				</bootstrap:alert>
 				</g:hasErrors>
 
-
-				user: "${userInstance.username}"
-				<br />pwd: "${userInstance.password}"
 				<fieldset>
 					<g:form class="form-horizontal" action="update" id="${userInstance?.id}" >
 						<g:hiddenField name="version" value="${userInstance?.version}" />

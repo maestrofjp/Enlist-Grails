@@ -15,8 +15,8 @@ class UserController {
     def eventService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
-	
-	@Secured(['ROLE_ADMIN'])
+
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def index() {
         def userInstance = springSecurityService.getCurrentUser()
         def registeredEvents = eventService.getRegisteredEvents(userInstance)
@@ -24,18 +24,18 @@ class UserController {
         render(view: "index", model: [userInstance: userInstance, registeredEvents: registeredEvents, upcomingEvents: upcomingEvents])
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY', 'ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def list(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY', 'ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def create() {
         [userInstance: new User(params)]
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def save() {
         def userInstance = new User(params)
         if (!userInstance.save(flush: true)) {
@@ -47,7 +47,7 @@ class UserController {
         redirect(action: "show", id: userInstance.id)
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def show(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -59,7 +59,7 @@ class UserController {
         [userInstance: userInstance]
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def edit(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -71,7 +71,7 @@ class UserController {
         [userInstance: userInstance]
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def update(Long id, Long version) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -101,7 +101,7 @@ class UserController {
         redirect(action: "show", id: userInstance.id)
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY'])
     def delete(Long id) {
         def userInstance = User.get(id)
         if (!userInstance) {
@@ -121,7 +121,7 @@ class UserController {
         }
     }
 
-	@Secured(['ROLE_ADMIN'])
+	@Secured(['IS_AUTHENTICATED_FULLY', 'ROLE_ADMIN', 'ROLE_CHAPTER_ADMIN', 'ROLE_ACTIVITY_COORDINATOR'])
     def search() {
         def keywords = params["q"]
         if(StringUtils.isEmpty(keywords)) {
@@ -139,11 +139,11 @@ class UserController {
 	def isUsernameAvailable(final String username) {
 		def user = User.findByUsername(username)
 		def result = [available: true]
-		
+
 		if (user?.id) {
 			result = [available: false]
 		}
-		
+
 		render result as JSON
 	}
 }
