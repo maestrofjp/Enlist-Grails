@@ -78,15 +78,21 @@ class ActivityController extends AbstractBaseController {
     }
     @Secured(['ROLE_VOLUNTEER'])
     def changeReminder() {
-        Date reminderAt = null
-        if(StringUtils.equals('on',params["remindMe"]) &&
-                params["reminderDate_date"] && params["reminderDate_time"]) {
-            reminderAt = DateParser.parseDateTimeDefault("${params.reminderDate_date} ${params.reminderDate_time}")
-        }
         def activityInstance = Activity.get(params.id)
         ActivitySignUp signUp = ActivitySignUp.findByActivityAndUser(activityInstance, loginUser)
-        signUp.reminderAt = reminderAt
-        signUp.save(failOnError: true, validate: false)
+        if(signUp ) {
+            if(signUp.mailJobAssigned) {
+                flash.message = "You are no longer allowed to change the reminder."
+            } else {
+                Date reminderAt = null
+                if(StringUtils.equals('on',params["remindMe"]) &&
+                        params["reminderDate_date"] && params["reminderDate_time"]) {
+                    reminderAt = DateParser.parseDateTimeDefault("${params.reminderDate_date} ${params.reminderDate_time}")
+                }
+                signUp.reminderAt = reminderAt
+                signUp.save(failOnError: true, validate: false)
+            }
+        }
         redirect action: 'show', id: activityInstance.id
     }
     @Secured(['ROLE_VOLUNTEER'])

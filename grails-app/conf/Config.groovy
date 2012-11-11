@@ -141,6 +141,8 @@ grails.sitemesh.default.layout= 'bootstrap'
 rule {
     activity {
         allowRegistrationAfterEndDate = false
+
+        generateReminderJobForNext = 1   // day(s) from the moment batch job run.
     }
 }
 batch {
@@ -155,7 +157,6 @@ environments {
         rule.activity.allowRegistrationAfterEndDate = true
         // run every 5 minutes?
 //        batch.ActivityPointJob = "0 0/5 * * * ?"
-//        batch.ActivityReminderJob = "0 2/5 * * * ?"
         batch.ActivityReminderJob = "0 1/3 * * * ?"
     }
 }

@@ -8,6 +8,7 @@ class ActivitySignUp implements Serializable {
     Activity activity
     Date signUpTime
     Date reminderAt
+    Boolean mailJobAssigned = false
 
     boolean equals(other) {
         if (!(other instanceof ActivitySignUp)) {
