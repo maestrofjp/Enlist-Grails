@@ -10,7 +10,7 @@ import org.junit.*
  */
 @TestFor(UserRole)
 class UserRoleTests {
-
+	@Ignore
     void testSomething() {
         fail "Implement me"
     }

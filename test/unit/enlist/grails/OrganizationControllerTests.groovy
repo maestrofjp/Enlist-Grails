@@ -19,7 +19,7 @@ class OrganizationControllerTests {
     void tearDown() {
         // Tear down logic here
     }
-
+	@Ignore
     void testSomething() {
         fail "Implement me"
     }
