@@ -59,29 +59,42 @@ grails.exceptionresolver.params.exclude = ['password']
 // configure auto-caching of queries by default (if false you can cache individual queries with 'cache: true')
 grails.hibernate.cache.queries = false
 
-environments {
-    development {
-        grails.logging.jul.usebridge = true
-        grails.mail.default.from="enlistappg48@gmail.com"
-		grails {
-			mail {
-				host = "smtp.gmail.com"
+grails.mail.default.from="enlistappg48@gmail.com"
+grails {
+//    grails.mail.default.from="imms.noreply@gmail.com"
+    mail {
+        host = "smtp.gmail.com"
 				username = "enlistappg48@gmail.com"
 				password = "Grails48Hack"
+        port = 587
+        props = ["mail.smtp.auth":"true",
+                "mail.smtp.socketFactory.port":"587",
+                "mail.smtp.starttls.enable": "true",
+                "mail.smtp.socketFactory.fallback":"false"]
+//                // it's not recommended to use 465.
 //                port = 465
 //				props = ["mail.smtp.auth":"true",
 //					"mail.smtp.socketFactory.port":"465",
 //					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
 //					"mail.smtp.socketFactory.fallback":"false"]
-
-                port = 587
-                props = [
-                        "mail.smtp.auth":"true",
-                        "mail.smtp.socketFactory.port":"587",
-                        "mail.smtp.starttls.enable": "true",
-                        "mail.smtp.socketFactory.fallback":"false"]
-			}
-		}
+    }
+}
+environments {
+    development {
+        grails.logging.jul.usebridge = true
+        // mail plugin unable to pickup this configuration if we put inside the env specific clause.
+//		grails {
+//			mail {
+////				host = "smtp.gmail.com"
+////				username = "enlistappg48@gmail.com"
+////				password = "Grails48Hack"
+////                port = 465
+////				props = ["mail.smtp.auth":"true",
+////					"mail.smtp.socketFactory.port":"465",
+////					"mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+////					"mail.smtp.socketFactory.fallback":"false"]
+//			}
+//		}
     }
     production {
         grails.logging.jul.usebridge = false
