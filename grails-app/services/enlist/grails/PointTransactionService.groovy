@@ -1,6 +1,7 @@
 package enlist.grails
 
 import org.springframework.transaction.annotation.Transactional
+import org.apache.commons.lang.StringUtils
 
 class PointTransactionService {
 
@@ -10,9 +11,11 @@ class PointTransactionService {
         println "Transfer ${point} points from ${from} to ${to}. Description : ${description}"
         Date txnDate = new Date()
         PointTransaction txnFrom = new PointTransaction(acctOwner: from, txnDate: txnDate,
-                txnType: PointTransaction.TRANSFER, description: description, amount: (-1 * point))
+                txnType: PointTransaction.TRANSFER, amount: (-1 * point),
+                description: StringUtils.isEmpty(description) ? "Transfer to ${to.username}" : description)
         PointTransaction txnTo = new PointTransaction(acctOwner: to, txnDate: txnDate,
-                txnType: PointTransaction.TRANSFER, description: description, amount: (point))
+                txnType: PointTransaction.TRANSFER, amount: (point),
+                description: StringUtils.isEmpty(description) ? "Transfer from ${from.username}" : description)
         saveTxn(txnFrom)
         saveTxn(txnTo)
     }

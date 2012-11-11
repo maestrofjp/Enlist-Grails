@@ -44,7 +44,9 @@
                 <div class="row-fluid">
                     <div class="span9">
                         <p>You have <span class="badge badge-success">${currBalance ?: 0}</span> <inf:pluralize count="${currBalance ?: 0}">point</inf:pluralize></p>
-                        <button class="btn"  data-toggle="collapse" data-target="#point-transfer">Transfer</button>
+                        <g:if test="${currBalance > 0}">
+                            <button class="btn"  data-toggle="collapse" data-target="#point-transfer">Transfer</button>
+                        </g:if>
                         <button class="btn">Redeem</button>
                     </div>
                 </div>

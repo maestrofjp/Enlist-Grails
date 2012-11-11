@@ -42,12 +42,18 @@ class BootStrap {
             CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save(failOnError: true)
 
             // Events and Activities
-            def testEvent1 = new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
-                    end: new Date().clearTime(), status: activeStatus, chapter: mnChapter).save(failOnError: true)
+            def testEvent1 = new Event(name: 'Minneapolis Marathon', location: 'Event Location', start: new Date().clearTime(),
+                    end: new Date().clearTime() + 7, status: activeStatus, chapter: mnChapter).save(failOnError: true)
+            def testEvent2 = new Event(name: 'Chicago Marathon', location: 'The Location', start: new Date().clearTime(),
+                    end: new Date().clearTime() + 5, status: activeStatus, chapter: ilChapter).save(failOnError: true)
             def nowTime = new Date().getTime()
-            new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
-                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
-                    event: testEvent1, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+            new Activity(title: 'Coorindate Vendors', description: 'Coordinate all the vendors so they know where they need to be and when',
+                        numPeopleNeeded: 10, startDate: new Date(nowTime), endDate: new Date(nowTime + (60 * 60 * 1000)),
+                        location: 'Somewhere over the rainbow', event: testEvent1, pointsType: 'Flat', points: 100,
+                        featured: true).save(failOnError: true)
+            new Activity(title: 'Stuff Bags', description: 'Stuff the bags for all the runners', numPeopleNeeded: 10, startDate: new Date(nowTime),
+                        endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                        event: testEvent2, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
 
             // CatalogItems
 			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
@@ -73,7 +79,8 @@ class BootStrap {
                 enabled: true,
 				status: activeStatus,
 				phone: '612-555-6789',
-				chapter: mnChapter
+				chapter: mnChapter,
+                currPoints: 1000
 			).save(failOnError:true)
 
             new UserRole(
@@ -85,13 +92,14 @@ class BootStrap {
             User volunteerUser = new User(
                     firstName: 'Volunteer',
                     lastName: 'Tester',
-                    email: 'volunteer@example.com',
+                    email: 'enlistappg48@gmail.com',  // test email reminder. must use valid address.
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
                     status: activeStatus,
 					phone: '651-555-1234',
-					chapter: mnChapter
+					chapter: mnChapter,
+                    currPoints: 5000
             ).save(failOnError:true)
 
             new UserRole(
@@ -99,9 +107,25 @@ class BootStrap {
                     secRole: volunteerRole
             ).save(failOnError: true)
 
-
             //test display PointTransaction
             buildTestDataPointTxn()
+
+            User volunteerUser2 = new User(
+                    firstName: 'Volunteer2',
+                    lastName: 'Tester',
+                    email: 'volunteer2@example.com',
+                    username: 'guest2',
+                    password:  'test123',
+                    enabled: true,
+                    status: activeStatus,
+                    phone: '651-555-1234',
+                    chapter: mnChapter
+            ).save(failOnError:true)
+
+            new UserRole(
+                    secUser: volunteerUser2,
+                    secRole: volunteerRole
+            ).save(failOnError: true)
 		}
     }
     def buildTestDataPointTxn() {
@@ -114,6 +138,7 @@ class BootStrap {
                 txn.save(failOnError: true, validate: false)
                 user.currPoints = (user.currPoints ?:0) + txn.amount
             }
+
             user.save(validate: false)
         }
     }

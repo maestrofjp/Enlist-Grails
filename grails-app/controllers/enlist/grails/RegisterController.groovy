@@ -1,5 +1,7 @@
 package enlist.grails
 
+import org.apache.commons.lang.StringUtils
+
 class RegisterController {
 
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -14,6 +16,7 @@ class RegisterController {
 		log.debug "Saving new user for registration params:$params"
 		def user = new User(params)
 		user.status = Status.findByStatus("Pending")
+        if (StringUtils.isBlank(user.address?.address1))  user.address = null
 		user.save(failOnError:true)
 		log.debug "Sending email for registration confirmation for ${user.username}"
 		mailService.sendMail {

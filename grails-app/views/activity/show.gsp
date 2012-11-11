@@ -1,5 +1,5 @@
 
-<%@ page import="enlist.grails.Activity" %>
+<%@ page import="enlist.grails.util.DateParser; enlist.grails.Activity" %>
 <!doctype html>
 <html>
 <head>
@@ -130,12 +130,43 @@
             </g:if>
 
         </dl>
-
+        <g:form>
+            <g:hiddenField name="id" value="${activityInstance?.id}" />
+            <div id="activity-set-reminder" class="collapse">
+                <div class="form-inline">
+                    <label for="reminderDate" class="control-label checkbox">
+                        <input type="checkbox" <g:if test="${reminderAt}">checked</g:if> id="activity-remindMe" name="remindMe"> <g:message code="activity.reminderDate.label" default="Remind me at" />
+                        <div id="startDatePicker" class="input-append date datepicker" data-date="${DateParser.printDefault(reminderAt ?: activityInstance?.startDate)}" data-date-format="mm/dd/yyyy">
+                            <input name="reminderDate_date" class="span8" size="16" type="text" value="${DateParser.printDefault(reminderAt ?: activityInstance?.startDate)}" />
+                            <span class="add-on"><i class="icon-th"></i></span>
+                        </div>
+                        <div  class="input-append bootstrap-timepicker-component">
+                            <input id="startTimePicker" name="reminderDate_time" type="text" value="${DateParser.printTimeDefault(reminderAt ?: activityInstance?.startDate)}"  class="timepicker-default input-small">
+                            <span class="add-on">
+                                <i class="icon-time"></i>
+                            </span>
+                        </div>
+                    </label>
+                    %{--<g:link class="btn" action="changeReminder" id="${activityInstance?.id}">--}%
+                        %{--<i class="icon-star-empty"></i>--}%
+                        %{--<g:message code="default.button.confirm.label" default="Confirm" />--}%
+                    %{--</g:link>--}%
+                    <button class="btn" type="submit" name="_action_changeReminder">
+                        <i class="icon-ok"></i>
+                    <g:message code="default.button.confirm.label" default="Confirm" />
+                    </button>
+                </div>
+            </div>
+        </g:form>
         <g:form>
             <g:hiddenField name="id" value="${activityInstance?.id}" />
             <div class="form-actions">
                 <g:if test="${canVolunteer}">
                     <g:if test="${hasSignUp}">
+                        <button type="button" class="btn" data-toggle="collapse" data-target="#activity-set-reminder">
+                            <i class="icon-time"></i>
+                            Set reminder
+                        </button>
                         <g:link class="btn" action="cancelSignUp" id="${activityInstance?.id}">
                             <i class="icon-star-empty"></i>
                             <g:message code="default.button.cancelSignUp.label" default="Cancel Sign Up" />
@@ -165,5 +196,18 @@
     </div>
 
 </div>
+<g:if test="${canVolunteer && hasSignUp}">
+    <script>
+        // if it has value, set defaultTime to 'value'.
+        var opts = { defaultTime: 'value'}
+        if($('#startTimePicker').val() == "") { defaultTime: 'current'}
+        $('#startTimePicker').timepicker(opts).on('change',function(event){
+            $('#activity-remindMe').prop('checked', true);
+        });
+        $('#startDatePicker').datepicker().on('changeDate', function(ev) {
+            $('#activity-remindMe').prop('checked', true);
+        });
+    </script>
+</g:if>
 </body>
 </html>
