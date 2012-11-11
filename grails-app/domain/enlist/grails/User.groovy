@@ -15,7 +15,6 @@ class User {
 	Status status
 	UserProfile profile
 	Chapter chapter
-	//Role role
 
     // Spring Security stuff
     String username

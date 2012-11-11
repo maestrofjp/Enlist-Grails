@@ -19,8 +19,8 @@ class UserController {
 	@Secured(['ROLE_ADMIN'])
     def index() {
         def userInstance = springSecurityService.getCurrentUser()
-        def upcomingEvents = eventService.getUpcomingEvents()
-        render(view: "index", model: [userInstance: userInstance])
+        def upcomingEvents = eventService.getUpcomingEvents(userInstance.chapter)
+        render(view: "index", model: [userInstance: userInstance, upcomingEvents: upcomingEvents])
     }
 
 	@Secured(['ROLE_ADMIN'])

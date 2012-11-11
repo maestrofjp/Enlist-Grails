@@ -7,9 +7,9 @@ class EventService {
         def status = Status.findByStatus('Active')
 
         if (chapter) {
-            return Event.findAllByStatusAndStartGreaterThanEqualsAndChapter(status, today, chapter)
+            return Event.findAllByStatusAndStartGreaterThanEqualsAndChapter(status, today, chapter, [sort:'start', order:'asc'])
         } else {
-            return Event.findAllByStatusAndStartGreaterThanEquals(status, today)
+            return Event.findAllByStatusAndStartGreaterThanEquals(status, today, [sort:'start', order:'asc'])
         }
    }
 

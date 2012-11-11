@@ -42,12 +42,18 @@ class BootStrap {
             CatalogItemCategory CICRaceDiscounts = new CatalogItemCategory(category: 'Race Discounts').save(failOnError: true)
 
             // Events and Activities
-            def testEvent1 = new Event(name: 'Test Event 1', location: 'Event Location', start: new Date().clearTime(),
+            def testEvent1 = new Event(name: 'Minneapolis Marathon', location: 'Event Location', start: new Date().clearTime(),
                     end: new Date().clearTime(), status: activeStatus, chapter: mnChapter).save(failOnError: true)
+            def testEvent2 = new Event(name: 'Chicago Marathon', location: 'The Location', start: new Date().clearTime(),
+                    end: new Date().clearTime(), status: activeStatus, chapter: ilChapter).save(failOnError: true)
             def nowTime = new Date().getTime()
-            new Activity(title: 'Test Activity 1', description: 'Test activity!', numPeopleNeeded: 10, startDate: new Date(nowTime),
-                    endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
-                    event: testEvent1, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
+            new Activity(title: 'Coorindate Vendors', description: 'Coordinate all the vendors so they know where they need to be and when',
+                        numPeopleNeeded: 10, startDate: new Date(nowTime), endDate: new Date(nowTime + (60 * 60 * 1000)),
+                        location: 'Somewhere over the rainbow', event: testEvent1, pointsType: 'Flat', points: 100,
+                        featured: true).save(failOnError: true)
+            new Activity(title: 'Stuff Bags', description: 'Stuff the bags for all the runners', numPeopleNeeded: 10, startDate: new Date(nowTime),
+                        endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
+                        event: testEvent2, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
 
             // CatalogItems
 			new CatalogItem(name: 'Minneapolis Marathon - 50% Race Discount',
