@@ -71,6 +71,7 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <sec:loggedInUserInfo field="username"/><b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><g:link controller="user" action="show" params="[id:sec.loggedInUserInfo(field: 'id')]"><i class="icon-book"></i> My Profile</g:link></li>
+        							<li><g:link controller="pointTransaction" action="list"><i class="icon-gift"></i> My Points</g:link></li>
 									<li class="divider"></li>
 									<li><g:link controller="logout" action="index"><i class="icon-remove-circle"></i> Logout</g:link></li>
 								</ul>
