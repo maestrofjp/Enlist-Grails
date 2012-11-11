@@ -85,7 +85,7 @@ class BootStrap {
             User volunteerUser = new User(
                     firstName: 'Volunteer',
                     lastName: 'Tester',
-                    email: 'mr.arief.hidayat@gmail.com',  // test email reminder. must use valid address.
+                    email: 'enlistappg48@gmail.com',  // test email reminder. must use valid address.
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
@@ -118,24 +118,7 @@ class BootStrap {
                     secUser: volunteerUser2,
                     secRole: volunteerRole
             ).save(failOnError: true)
-            testSendMail()
 		}
-    }
-    def mailService
-    def testSendMail() {
-
-        try {
-            mailService.sendMail {
-                to "mr.arief.hidayat@gmail.com"
-                from "imms.noreply@gmail.com"
-                subject "[Enlist Reminder] Get Ready!"
-                body "testing"
-            }
-        } catch(Exception e) {
-            e.printStackTrace()
-            while(e.cause != null) e = e.cause
-            log.error("Failed to send email. ${e.message}")
-        }
     }
     def buildTestDataPointTxn() {
         for(User user : User.list()) {
