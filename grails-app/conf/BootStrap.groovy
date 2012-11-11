@@ -71,7 +71,9 @@ class BootStrap {
                 username: 'admin',
                 password:  'test123',
                 enabled: true,
-				status: activeStatus
+				status: activeStatus,
+				phone: '612-555-6789',
+				chapter: mnChapter
 			).save(failOnError:true)
 
             new UserRole(
@@ -83,11 +85,13 @@ class BootStrap {
             User volunteerUser = new User(
                     firstName: 'Volunteer',
                     lastName: 'Tester',
-                    email: 'joe2@example.com',
+                    email: 'volunteer@example.com',
                     username: 'guest',
                     password:  'test123',
                     enabled: true,
-                    status: activeStatus
+                    status: activeStatus,
+					phone: '651-555-1234',
+					chapter: mnChapter
             ).save(failOnError:true)
 
             new UserRole(

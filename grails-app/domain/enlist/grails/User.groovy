@@ -14,6 +14,7 @@ class User {
 	Address address = null
 	Status status
 	UserProfile profile
+	Chapter chapter
 	//Role role
 
     // Spring Security stuff
