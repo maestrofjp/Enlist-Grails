@@ -11,7 +11,11 @@ class EventService {
         } else {
             return Event.findAllByStatusAndStartGreaterThanEquals(status, today, [sort:'start', order:'asc'])
         }
-   }
+    }
+
+    def getRegisteredEvents(User user) {
+        return ActivitySignUp.findAllByUser(user)
+    }
 
     def getFeaturedActivities() {
         return Activity.findAllByFeatured(true)

@@ -47,11 +47,11 @@ class BootStrap {
             def testEvent2 = new Event(name: 'Chicago Marathon', location: 'The Location', start: new Date().clearTime(),
                     end: new Date().clearTime() + 5, status: activeStatus, chapter: ilChapter).save(failOnError: true)
             def nowTime = new Date().getTime()
-            new Activity(title: 'Coorindate Vendors', description: 'Coordinate all the vendors so they know where they need to be and when',
+            def activity1 = new Activity(title: 'Coorindate Vendors', description: 'Coordinate all the vendors so they know where they need to be and when',
                         numPeopleNeeded: 10, startDate: new Date(nowTime), endDate: new Date(nowTime + (60 * 60 * 1000)),
                         location: 'Somewhere over the rainbow', event: testEvent1, pointsType: 'Flat', points: 100,
                         featured: true).save(failOnError: true)
-            new Activity(title: 'Stuff Bags', description: 'Stuff the bags for all the runners', numPeopleNeeded: 10, startDate: new Date(nowTime),
+            def activity2 = new Activity(title: 'Stuff Bags', description: 'Stuff the bags for all the runners', numPeopleNeeded: 10, startDate: new Date(nowTime),
                         endDate: new Date(nowTime + (60 * 60 * 1000)), location: 'Somewhere over the rainbow',
                         event: testEvent2, pointsType: 'Flat', points: 100, featured: true).save(failOnError: true)
 
@@ -106,6 +106,10 @@ class BootStrap {
                     secUser: volunteerUser,
                     secRole: volunteerRole
             ).save(failOnError: true)
+
+            // ActivitySignUps
+            new ActivitySignUp(user: adminUser, activity: activity1, signUpTime: new Date(), reminderAt: new Date()).save(failOnError: true)
+            new ActivitySignUp(user: volunteerUser, activity: activity2, signUpTime: new Date(), reminderAt: new Date()).save(failOnError: true)
 
             //test display PointTransaction
             buildTestDataPointTxn()
