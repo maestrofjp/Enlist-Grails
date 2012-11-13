@@ -24,10 +24,23 @@ environments {
             url = "jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
         }
     }
+//    production {
+//        dataSource {
+//            dbCreate = "update"
+//            driverClassName = "com.mysql.jdbc.Driver"
+//        }
+//    }
     production {
+        def envVar = System.getenv("VCAP_SERVICES")
+        def credentials = envVar?grails.converters.JSON.parse(envVar)["mysql-5.1"][0]["credentials"]:null
+
         dataSource {
+            pooled = true
             dbCreate = "update"
             driverClassName = "com.mysql.jdbc.Driver"
+            url =  credentials?"jdbc:mysql://${credentials.hostname}:${credentials.port}/${credentials.name}?useUnicode=yes&characterEncoding=UTF-8":""
+            username = credentials?credentials.username:""
+            password = credentials?credentials.password:""
         }
     }
 }
