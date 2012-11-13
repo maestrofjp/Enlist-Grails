@@ -108,7 +108,7 @@ log4j = {
 	//appenders {
 	//    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
 	//}
-	info   'AuthenticationEvents'
+	info   'AuthenticationEvents', "buildtestdata"
 
 	debug  'grails.app'
 
@@ -152,6 +152,8 @@ batch {
 }
 
 grails.gorm.failOnError=true
+bootstrap.cleanupData = true
+bootstrap.createSampleData = true
 environments {
     // override this
     development {
@@ -173,5 +175,10 @@ environments {
 		    compassConnection = new File("index").absolutePath
 		    bulkIndexOnStartup = false
         }
+    }
+    test {
+        // make sure it's clean before run integration test
+        bootstrap.cleanupData = true
+        bootstrap.createSampleData = false
     }
 }

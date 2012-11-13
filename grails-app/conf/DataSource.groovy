@@ -33,7 +33,9 @@ environments {
     production {
         def envVar = System.getenv("VCAP_SERVICES")
         def credentials = envVar?grails.converters.JSON.parse(envVar)["mysql-5.1"][0]["credentials"]:null
-
+        println "envVar ${credentials}"
+        // add the following to system environment to simulate AppFog
+        //VCAP_SERVICES="{'mysql-5.1':[{'name':'mysql-4f700','label':'mysql-5.1', 'plan':'free', 'tags':['mysql','mysql-5.1','relational'], 'credentials':{ 'name':'enlist', 'hostname':'localhost', 'host':'localhost', 'port':3306, 'user':'root', 'username':'root', 'password':'root' } } ]}"
         dataSource {
             pooled = true
             dbCreate = "update"
