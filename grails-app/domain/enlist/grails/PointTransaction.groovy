@@ -13,6 +13,10 @@ class PointTransaction {
         acctOwner index: "pointTxnIdx,pointTxnIdx1"
         txnDate index: "pointTxnIdx"
     }
+    
+    static void removeAll(User acctOwner) {
+        executeUpdate 'DELETE FROM PointTransaction WHERE acctOwner=:acctOwner', [acctOwner: acctOwner]
+    }
 
     static constraints = {
         txnType inList: [TRANSFER, VOLUNTEER, REDEEM]
