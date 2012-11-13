@@ -54,10 +54,11 @@ grails.project.dependency.resolution = {
 		compile ":spring-security-ui:0.2"
 		compile ":jquery-ui:1.8.24"
 		compile ":famfamfam:1.0.1"
-		compile ":cache-headers:1.1.5"
+		// if not commented out, can not create war
+		//compile ":cache-headers:1.1.5"
 		
-        runtime ":zipped-resources:1.0"
-        runtime ":cached-resources:1.0"
+        //runtime ":zipped-resources:1.0"
+        //runtime ":cached-resources:1.0"
         runtime ":yui-minify-resources:0.1.4"
 
         build ":tomcat:$grailsVersion"
@@ -71,6 +72,7 @@ grails.project.dependency.resolution = {
 		compile ":quartz-monitor:0.2"
         compile ":searchable:0.6.4"
         compile ":inflector:0.2"
+        compile ":rollback-on-exception:0.1"
 
         test ":spock:0.7"
 
