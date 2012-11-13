@@ -151,12 +151,27 @@ batch {
     ActivityReminderJob = "0 0 1/6 * * ?"
 }
 
+grails.gorm.failOnError=true
 environments {
     // override this
     development {
         rule.activity.allowRegistrationAfterEndDate = true
         // run every 5 minutes?
-//        batch.ActivityPointJob = "0 0/5 * * * ?"
-        batch.ActivityReminderJob = "0 1/3 * * * ?"
+        batch.ActivityPointJob = "0 0/5 * * * ?"
+        batch.ActivityReminderJob = "0 1/5 * * * ?"
+    }
+    // only for appFog
+    production {
+        rule.activity.allowRegistrationAfterEndDate = true
+        // run every 5 minutes?
+        batch.ActivityPointJob = "0 0/5 * * * ?"
+        batch.ActivityReminderJob = "0 1/5 * * * ?"
+        searchable {       
+        	//"enlist' => Error (JSON 500): Internal Server Error 	
+        	//"/logs" => Error: Application [enlist] failed to start, logs information below.
+
+		    compassConnection = new File("index").absolutePath
+		    bulkIndexOnStartup = false
+        }
     }
 }
