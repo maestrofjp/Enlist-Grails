@@ -12,6 +12,7 @@ grails.project.dependency.resolution = {
     inherits("global") {
         // specify dependency exclusions here; for example, uncomment this to disable ehcache:
         // excludes 'ehcache'
+        //if(Environment.current == Environment.PRODUCTION) { excludes "grails-plugin-log4j", "   log4j" }
     }
     log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
     checksums true // Whether to verify checksums on resolve
@@ -37,6 +38,8 @@ grails.project.dependency.resolution = {
 		
     }
     dependencies {
+        //if(Environment.current == Environment.PRODUCTION) { runtime "org.slf4j:slf4j-jdk14:1.6.4" }
+
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         runtime 'mysql:mysql-connector-java:5.1.18'
@@ -78,3 +81,7 @@ grails.project.dependency.resolution = {
 
     }
 }
+//grails.war.resources = { stagingDir, args ->
+//    copy(file: "logging.properties",
+//            tofile: "${stagingDir}/WEB-INF/classes/logging.properties")
+//}
